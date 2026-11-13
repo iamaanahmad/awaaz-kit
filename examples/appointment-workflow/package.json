@@ -1,0 +1,16 @@
+{
+  "name": "@awaaz-kit/example-appointment-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@awaaz-kit/catalog-matcher": "workspace:*",
+    "@awaaz-kit/confidence-engine": "workspace:*",
+    "@awaaz-kit/confirmation-engine": "workspace:*",
+    "@awaaz-kit/intent-engine": "workspace:*",
+    "@awaaz-kit/language-normalizer": "workspace:*"
+  }
+}

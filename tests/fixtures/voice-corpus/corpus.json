@@ -1,0 +1,824 @@
+{
+  "version": 1,
+  "description": "Text-only Voice_Corpus. No audio. Fictional Demo_Shop utterances; expected results are hand-authored from the specified behavior (Req 7, 8, 9, 10) against packages/local-data/src/seed/demo-shop.json. Line 'status' is the product Field_Status; qtyMilli is quantity x 1000 (null when the quantity is missing); productId is null when the product is not resolved.",
+  "entries": [
+    {
+      "id": "hindi-001",
+      "group": "hindi",
+      "app": "order",
+      "referenceTranscript": "दो किलो आटा और एक लीटर तेल",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000001",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hindi-002",
+      "group": "hindi",
+      "app": "order",
+      "referenceTranscript": "पांच किलो चावल, एक किलो चीनी",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 5000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hindi-003",
+      "group": "hindi",
+      "app": "order",
+      "referenceTranscript": "आधा किलो जीरा",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000013",
+            "qtyMilli": 500,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hindi-004",
+      "group": "hindi",
+      "app": "bill",
+      "referenceTranscript": "तीन किलो आलू और दो किलो प्याज और एक किलो टमाटर",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000018",
+            "qtyMilli": 3000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000019",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000020",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hindi-005",
+      "group": "hindi",
+      "app": "order",
+      "referenceTranscript": "दो लीटर दूध",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "qtyMilli": 2000,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hindi-006",
+      "group": "hindi",
+      "app": "order",
+      "referenceTranscript": "डेढ़ किलो नमक",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000010",
+            "qtyMilli": 1500,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+
+    {
+      "id": "hinglish-001",
+      "group": "hinglish",
+      "app": "order",
+      "referenceTranscript": "do kilo aata, ek litre tel aur paanch kilo chawal",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000001",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 5000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hinglish-002",
+      "group": "hinglish",
+      "app": "bill",
+      "referenceTranscript": "teen kilo chini aur do kilo namak",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": 3000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000010",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hinglish-003",
+      "group": "hinglish",
+      "app": "order",
+      "referenceTranscript": "ek kilo toor dal, aadha kilo moong dal",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000007",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000008",
+            "qtyMilli": 500,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hinglish-004",
+      "group": "hinglish",
+      "app": "order",
+      "referenceTranscript": "paanch kilo aloo aur do kilo pyaaz",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000018",
+            "qtyMilli": 5000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000019",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hinglish-005",
+      "group": "hinglish",
+      "app": "order",
+      "referenceTranscript": "do litre doodh aur ek litre ghee",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "qtyMilli": 2000,
+            "unit": "litre",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000015",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "hinglish-006",
+      "group": "hinglish",
+      "app": "order",
+      "referenceTranscript": "char piece sabun aur do piece biscuit",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000021",
+            "qtyMilli": 4000,
+            "unit": "piece",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000023",
+            "qtyMilli": 2000,
+            "unit": "piece",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+
+    {
+      "id": "english-001",
+      "group": "english",
+      "app": "order",
+      "referenceTranscript": "two kg rice and one litre cooking oil",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "english-002",
+      "group": "english",
+      "app": "bill",
+      "referenceTranscript": "five kilo potato, three kilo onion",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000018",
+            "qtyMilli": 5000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000019",
+            "qtyMilli": 3000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "english-003",
+      "group": "english",
+      "app": "bill",
+      "referenceTranscript": "one litre milk and two kg sugar",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "english-004",
+      "group": "english",
+      "app": "order",
+      "referenceTranscript": "two pieces bread and one piece butter",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000016",
+            "qtyMilli": 2000,
+            "unit": "piece",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000014",
+            "qtyMilli": 1000,
+            "unit": "piece",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "english-005",
+      "group": "english",
+      "app": "order",
+      "referenceTranscript": "3 kg tomatoes and 1 kg salt",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000020",
+            "qtyMilli": 3000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000010",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+
+    {
+      "id": "code-switching-001",
+      "group": "code-switching",
+      "app": "order",
+      "referenceTranscript": "bhaiya two kilo atta aur ek litre refined tel",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000001",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000002",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "code-switching-002",
+      "group": "code-switching",
+      "app": "bill",
+      "referenceTranscript": "teen kilo rice aur one kilo chini please",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 3000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "code-switching-003",
+      "group": "code-switching",
+      "app": "order",
+      "referenceTranscript": "ek kilo haldi powder and aadha kilo lal mirch",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000011",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000012",
+            "qtyMilli": 500,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "code-switching-004",
+      "group": "code-switching",
+      "app": "order",
+      "referenceTranscript": "do piece maggi aur three piece bread",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000024",
+            "qtyMilli": 2000,
+            "unit": "piece",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000016",
+            "qtyMilli": 3000,
+            "unit": "piece",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+
+    {
+      "id": "brand-001",
+      "group": "brand-names",
+      "app": "order",
+      "referenceTranscript": "do kilo Aashirvaad atta",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000001",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "brand-002",
+      "group": "brand-names",
+      "app": "order",
+      "referenceTranscript": "ek kilo Tata namak aur ek piece Amul butter",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000010",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000014",
+            "qtyMilli": 1000,
+            "unit": "piece",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "brand-003",
+      "group": "brand-names",
+      "app": "order",
+      "referenceTranscript": "do kilo basmati chawal",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "brand-004",
+      "group": "brand-names",
+      "app": "bill",
+      "referenceTranscript": "ek kilo surf excel aur teen piece lux sabun",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000022",
+            "qtyMilli": 1000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000021",
+            "qtyMilli": 3000,
+            "unit": "piece",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "brand-005",
+      "group": "brand-names",
+      "app": "order",
+      "referenceTranscript": "do litre Amul Gold doodh",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "qtyMilli": 2000,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "brand-006",
+      "group": "brand-names",
+      "app": "order",
+      "referenceTranscript": "ek litre Amul ghee aur ek piece Parle G",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000015",
+            "qtyMilli": 1000,
+            "unit": "litre",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000023",
+            "qtyMilli": 1000,
+            "unit": "piece",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+
+    {
+      "id": "quantity-001",
+      "group": "quantity-words",
+      "app": "order",
+      "referenceTranscript": "sava kilo chini",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": 1250,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "quantity-002",
+      "group": "quantity-words",
+      "app": "order",
+      "referenceTranscript": "paun kilo jeera",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000013",
+            "qtyMilli": 750,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "quantity-003",
+      "group": "quantity-words",
+      "app": "order",
+      "referenceTranscript": "dhai kilo aloo",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000018",
+            "qtyMilli": 2500,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "quantity-004",
+      "group": "quantity-words",
+      "app": "bill",
+      "referenceTranscript": "dedh litre doodh",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000004",
+            "qtyMilli": 1500,
+            "unit": "litre",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "quantity-005",
+      "group": "quantity-words",
+      "app": "order",
+      "referenceTranscript": "half kg sugar and one and a half kg rice",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": 500,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 1500,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "quantity-006",
+      "group": "quantity-words",
+      "app": "order",
+      "referenceTranscript": "quarter kg haldi",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000011",
+            "qtyMilli": 250,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+    {
+      "id": "quantity-007",
+      "group": "quantity-words",
+      "app": "order",
+      "referenceTranscript": "दस किलो आलू",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000018",
+            "qtyMilli": 10000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": null
+    },
+
+    {
+      "id": "ambiguity-001",
+      "group": "ambiguity",
+      "app": "order",
+      "referenceTranscript": "ek litre Amul",
+      "expected": {
+        "lines": [
+          { "productId": null, "qtyMilli": 1000, "unit": "litre", "status": "needs_review" }
+        ]
+      },
+      "seededUncertainty": { "lineIndex": 0, "field": "product", "expectedStatus": "needs_review" }
+    },
+    {
+      "id": "ambiguity-002",
+      "group": "ambiguity",
+      "app": "order",
+      "referenceTranscript": "do kilo laptop",
+      "expected": {
+        "lines": [{ "productId": null, "qtyMilli": 2000, "unit": "kg", "status": "unmatched" }]
+      },
+      "seededUncertainty": { "lineIndex": 0, "field": "product", "expectedStatus": "unmatched" }
+    },
+    {
+      "id": "ambiguity-003",
+      "group": "ambiguity",
+      "app": "order",
+      "referenceTranscript": "kilo chini",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000005",
+            "qtyMilli": null,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": { "lineIndex": 0, "field": "quantity", "expectedStatus": "missing" }
+    },
+    {
+      "id": "ambiguity-004",
+      "group": "ambiguity",
+      "app": "order",
+      "referenceTranscript": "do kilo aata aur ek litre Amul",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000001",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          { "productId": null, "qtyMilli": 1000, "unit": "litre", "status": "needs_review" }
+        ]
+      },
+      "seededUncertainty": { "lineIndex": 1, "field": "product", "expectedStatus": "needs_review" }
+    },
+    {
+      "id": "ambiguity-005",
+      "group": "ambiguity",
+      "app": "order",
+      "referenceTranscript": "ek kilo xyzzy masala",
+      "expected": {
+        "lines": [{ "productId": null, "qtyMilli": 1000, "unit": "kg", "status": "unmatched" }]
+      },
+      "seededUncertainty": { "lineIndex": 0, "field": "product", "expectedStatus": "unmatched" }
+    },
+    {
+      "id": "ambiguity-006",
+      "group": "ambiguity",
+      "app": "bill",
+      "referenceTranscript": "kilo namak aur do kilo chawal",
+      "expected": {
+        "lines": [
+          {
+            "productId": "00000000-0000-4000-8000-000000000010",
+            "qtyMilli": null,
+            "unit": "kg",
+            "status": "confirmed"
+          },
+          {
+            "productId": "00000000-0000-4000-8000-000000000003",
+            "qtyMilli": 2000,
+            "unit": "kg",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "seededUncertainty": { "lineIndex": 0, "field": "quantity", "expectedStatus": "missing" }
+    }
+  ]
+}

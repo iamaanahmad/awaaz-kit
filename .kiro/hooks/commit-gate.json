@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Commit gate",
+      "trigger": "PreToolUse",
+      "description": "Block git commit unless lint, typecheck, test and build pass",
+      "matcher": "execute_pwsh|executeBash|shell",
+      "action": {
+        "type": "command",
+        "command": "node scripts/commit-gate.mjs --hook",
+        "timeout": 1800
+      }
+    }
+  ]
+}

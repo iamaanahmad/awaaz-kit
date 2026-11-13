@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shruti spike</title>
+  </head>
+  <body>
+    <main>
+      <h1>Shruti spike</h1>
+
+      <section aria-labelledby="model-h">
+        <h2 id="model-h">Model</h2>
+        <label for="manifest-url">Model manifest URL</label>
+        <input id="manifest-url" type="url" size="60" value="/model-manifest.json" />
+        <p>
+          <button id="download-btn" type="button">Download model</button>
+          <button id="load-btn" type="button">Load from cache</button>
+          <button id="remove-btn" type="button">Remove cached model</button>
+        </p>
+        <p>Status: <strong id="model-status" role="status" aria-live="polite">unknown</strong></p>
+        <progress id="download-progress" max="1" value="0" hidden></progress>
+        <p>Runtime: <span id="runtime-info">not loaded</span></p>
+      </section>
+
+      <section aria-labelledby="rec-h">
+        <h2 id="rec-h">Recording</h2>
+        <button id="record-btn" type="button">Record</button>
+        <p id="record-status" role="status" aria-live="polite">idle</p>
+        <p id="audio-info"></p>
+      </section>
+
+      <section aria-labelledby="tx-h">
+        <h2 id="tx-h">Transcription settings</h2>
+        <p>
+          <label for="cfg-input">Audio input name</label>
+          <input id="cfg-input" type="text" />
+          <label for="cfg-length">Length input name (optional)</label>
+          <input id="cfg-length" type="text" />
+          <label for="cfg-output">Output name</label>
+          <input id="cfg-output" type="text" />
+        </p>
+        <p>
+          <label for="cfg-mode">Output mode</label>
+          <select id="cfg-mode">
+            <option value="text">text (string tensor)</option>
+            <option value="ids">ids (token ids + vocab)</option>
+            <option value="ctc">ctc (logits + vocab)</option>
+          </select>
+          <label for="cfg-blank">Blank id</label>
+          <input id="cfg-blank" type="number" value="0" />
+          <label for="cfg-joiner">Joiner</label>
+          <input id="cfg-joiner" type="text" value="" size="2" />
+        </p>
+        <p>Vocab: <span id="vocab-info">none (put a vocab.json entry in the manifest if needed)</span></p>
+        <p>
+          <button id="transcribe-btn" type="button">Transcribe last recording</button>
+        </p>
+        <p>Transcript: <output id="transcript" aria-live="polite"></output></p>
+        <p id="last-latency"></p>
+      </section>
+
+      <section aria-labelledby="clips-h">
+        <h2 id="clips-h">30-clip benchmark</h2>
+        <p>
+          Record each clip by reading the reference text aloud, or choose 30 audio files
+          sorted in table order (names sorted alphabetically map to rows 1 to 30). No audio is saved.
+        </p>
+        <p>
+          <label for="clip-files">Audio files</label>
+          <input id="clip-files" type="file" accept="audio/*" multiple />
+          <button id="run-files-btn" type="button">Run on files</button>
+          <button id="reload-check-btn" type="button">Check reload from cache</button>
+          <button id="summary-btn" type="button">Build summary</button>
+        </p>
+        <table id="clip-table">
+          <thead>
+            <tr><th>#</th><th>Group</th><th>Reference</th><th>Hypothesis</th><th>ms</th><th>Record</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <h3>Summary (paste into docs/model-benchmark.md)</h3>
+        <pre id="summary" aria-label="Summary"></pre>
+      </section>
+
+      <pre id="log" aria-label="Log"></pre>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

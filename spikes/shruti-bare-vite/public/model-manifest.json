@@ -1,0 +1,4 @@
+{
+  "_comment": "Fill in the real Shruti model file URLs. sha256 is optional in the spike (hex, lowercase). The first .onnx entry is loaded by onnxruntime-web.",
+  "files": []
+}

@@ -1,0 +1,259 @@
+{
+  "seedVersion": 1,
+  "label": "Fictional demo shop. All names, prices and customers are made up for demonstration.",
+  "shop": {
+    "id": "00000000-0000-4000-8000-000000000000",
+    "name": "Sharma Kirana (Demo)",
+    "currency": "INR",
+    "locale": "hi-IN"
+  },
+  "products": [
+    {
+      "id": "00000000-0000-4000-8000-000000000001",
+      "name": "Aashirvaad Atta",
+      "brand": "Aashirvaad",
+      "unit": "kg",
+      "pricePaise": 5800,
+      "aliases": ["atta", "aata", "आटा", "आटा गेहूं", "wheat flour", "gehu ka atta", "gehun ka aata"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000002",
+      "name": "Fortune Sunflower Oil",
+      "brand": "Fortune",
+      "unit": "litre",
+      "pricePaise": 14500,
+      "aliases": [
+        "tel",
+        "tail",
+        "तेल",
+        "refined tel",
+        "cooking oil",
+        "sunflower oil",
+        "khane ka tel"
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000003",
+      "name": "India Gate Basmati Rice",
+      "brand": "India Gate",
+      "unit": "kg",
+      "pricePaise": 9000,
+      "aliases": ["chawal", "chaawal", "चावल", "rice", "basmati", "basmati chawal"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000004",
+      "name": "Amul Gold Milk",
+      "brand": "Amul",
+      "unit": "litre",
+      "pricePaise": 7200,
+      "aliases": [
+        "Amul Gold",
+        "amul gold doodh",
+        "amul gold milk",
+        "doodh",
+        "dudh",
+        "दूध",
+        "milk",
+        "full cream milk"
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000005",
+      "name": "Sugar",
+      "unit": "kg",
+      "pricePaise": 4800,
+      "aliases": ["chini", "cheeni", "चीनी", "shakkar", "sugar", "cheeni kilo"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000006",
+      "name": "Tata Tea Gold",
+      "brand": "Tata",
+      "unit": "kg",
+      "pricePaise": 52000,
+      "aliases": [
+        "chai patti",
+        "chai pati",
+        "चाय पत्ती",
+        "chaay patti",
+        "tea",
+        "tea leaves",
+        "tata chai"
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "name": "Toor Dal",
+      "unit": "kg",
+      "pricePaise": 16500,
+      "aliases": ["arhar dal", "tuvar dal", "toor dal", "दाल", "dal", "arhar ki dal"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000008",
+      "name": "Moong Dal",
+      "unit": "kg",
+      "pricePaise": 12500,
+      "aliases": ["moong dal", "mung dal", "मूंग दाल", "moong ki dal", "green gram dal"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "name": "Chana Dal",
+      "unit": "kg",
+      "pricePaise": 9800,
+      "aliases": ["chana dal", "chane ki dal", "चना दाल", "bengal gram dal"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000010",
+      "name": "Tata Salt",
+      "brand": "Tata",
+      "unit": "kg",
+      "pricePaise": 2800,
+      "aliases": ["namak", "नमक", "salt", "tata namak", "iodised salt"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000011",
+      "name": "Turmeric Powder",
+      "unit": "kg",
+      "pricePaise": 24000,
+      "aliases": ["haldi", "हल्दी", "haldi powder", "turmeric", "turmeric powder"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000012",
+      "name": "Red Chilli Powder",
+      "unit": "kg",
+      "pricePaise": 32000,
+      "aliases": [
+        "mirch",
+        "lal mirch",
+        "लाल मिर्च",
+        "mirchi powder",
+        "red chilli powder",
+        "chilli powder"
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000013",
+      "name": "Cumin Seeds",
+      "unit": "kg",
+      "pricePaise": 38000,
+      "aliases": ["jeera", "zeera", "जीरा", "cumin", "cumin seeds"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000014",
+      "name": "Amul Butter",
+      "brand": "Amul",
+      "unit": "piece",
+      "pricePaise": 5800,
+      "aliases": ["makhan", "मक्खन", "butter", "amul butter", "amul makhan"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000015",
+      "name": "Amul Ghee",
+      "brand": "Amul",
+      "unit": "litre",
+      "pricePaise": 65000,
+      "aliases": ["ghee", "घी", "desi ghee", "amul ghee", "clarified butter"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000016",
+      "name": "Britannia Bread",
+      "brand": "Britannia",
+      "unit": "piece",
+      "pricePaise": 4500,
+      "aliases": ["bread", "ब्रेड", "double roti", "pav", "britannia bread", "sliced bread"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000017",
+      "name": "Eggs",
+      "unit": "piece",
+      "pricePaise": 700,
+      "aliases": ["anda", "ande", "अंडा", "eggs", "egg", "desi anda"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000018",
+      "name": "Potato",
+      "unit": "kg",
+      "pricePaise": 3000,
+      "aliases": ["aloo", "alu", "आलू", "potato", "potatoes"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000019",
+      "name": "Onion",
+      "unit": "kg",
+      "pricePaise": 3500,
+      "aliases": ["pyaaz", "pyaz", "प्याज", "onion", "onions", "kanda"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000020",
+      "name": "Tomato",
+      "unit": "kg",
+      "pricePaise": 4000,
+      "aliases": ["tamatar", "टमाटर", "tomato", "tomatoes"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000021",
+      "name": "Lux Soap",
+      "brand": "Lux",
+      "unit": "piece",
+      "pricePaise": 4000,
+      "aliases": ["sabun", "साबुन", "soap", "lux sabun", "nahane ka sabun"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000022",
+      "name": "Surf Excel Detergent",
+      "brand": "Surf Excel",
+      "unit": "kg",
+      "pricePaise": 21000,
+      "aliases": [
+        "detergent",
+        "washing powder",
+        "kapde dhone ka powder",
+        "surf",
+        "surf excel",
+        "सर्फ"
+      ]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000023",
+      "name": "Parle-G Biscuit",
+      "brand": "Parle",
+      "unit": "piece",
+      "pricePaise": 1000,
+      "aliases": ["biscuit", "biscuits", "बिस्कुट", "parle g", "parle-g", "parleji"]
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000024",
+      "name": "Maggi Noodles",
+      "brand": "Maggi",
+      "unit": "piece",
+      "pricePaise": 1400,
+      "aliases": ["maggi", "मैगी", "noodles", "maggi packet", "instant noodles"]
+    }
+  ],
+  "customers": [
+    {
+      "id": "00000000-0000-4000-8000-000000000101",
+      "name": "Ramesh Kumar (Sample)",
+      "notes": "Fictional sample customer"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000102",
+      "name": "Sunita Devi (Sample)",
+      "notes": "Fictional sample customer"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000103",
+      "name": "Mohammed Irfan (Sample)",
+      "notes": "Fictional sample customer"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000104",
+      "name": "Lakshmi Iyer (Sample)",
+      "notes": "Fictional sample customer"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000105",
+      "name": "Gurpreet Singh (Sample)",
+      "notes": "Fictional sample customer"
+    }
+  ]
+}

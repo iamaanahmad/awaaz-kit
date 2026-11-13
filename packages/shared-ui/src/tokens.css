@@ -1,0 +1,112 @@
+/* Design tokens shared by both apps. Each app sets data-app="order" | "bill"
+   on <html> or its root element to pick its accent and surface. */
+
+:root {
+  --ui-font-sans:
+    'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --ui-color-ink: #1b1b1f;
+  --ui-color-muted: #52525b;
+  --ui-color-border: #d4d4d8;
+  --ui-color-danger: #b42318;
+  --ui-color-warning: #92400e;
+  --ui-color-success: #166534;
+
+  /* Defaults mirror Order Awaaz until an app sets data-app. */
+  --ui-color-accent: #e8710a;
+  --ui-color-accent-contrast: #1b1b1f;
+  --ui-color-surface: #fbf8f3;
+
+  --size-touch: 44px;
+  --radius: 10px;
+  --focus-ring: 3px solid var(--ui-color-ink);
+  --focus-ring-offset: 2px;
+  --motion-fast: 150ms;
+}
+
+[data-app='order'] {
+  --ui-color-accent: #e8710a;
+  --ui-color-accent-contrast: #1b1b1f;
+  --ui-color-surface: #fbf8f3;
+}
+
+[data-app='bill'] {
+  --ui-color-accent: #0f766e;
+  --ui-color-accent-contrast: #ffffff;
+  --ui-color-surface: #f6faf9;
+}
+
+/* Tailwind v4 theme bridge so utilities such as bg-accent and text-ink work. */
+@theme inline {
+  --font-sans: var(--ui-font-sans);
+  --color-ink: var(--ui-color-ink);
+  --color-muted: var(--ui-color-muted);
+  --color-border: var(--ui-color-border);
+  --color-danger: var(--ui-color-danger);
+  --color-warning: var(--ui-color-warning);
+  --color-success: var(--ui-color-success);
+  --color-accent: var(--ui-color-accent);
+  --color-accent-contrast: var(--ui-color-accent-contrast);
+  --color-surface: var(--ui-color-surface);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  font-family: var(--ui-font-sans);
+  color: var(--ui-color-ink);
+  background: var(--ui-color-surface);
+}
+
+/* 44px minimum touch targets (Req 17.2). */
+button,
+[role='button'],
+a[href],
+input:not([type='hidden']),
+select,
+textarea,
+summary {
+  min-height: var(--size-touch);
+  min-width: var(--size-touch);
+}
+
+/* Always-visible keyboard focus (Req 17.5). */
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  box-shadow: 0 0 0 5px #ffffff;
+}
+
+/* Utility class for components that need the target size explicitly. */
+.touch-target {
+  min-height: var(--size-touch);
+  min-width: var(--size-touch);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Short transitions, disabled when the user prefers reduced motion (Req 17.8). */
+* {
+  transition-duration: var(--motion-fast);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

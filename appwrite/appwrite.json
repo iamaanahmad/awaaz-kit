@@ -1,0 +1,588 @@
+{
+  "projectId": "",
+  "tablesDB": [
+    {
+      "$id": "awaaz",
+      "name": "awaaz",
+      "enabled": true
+    }
+  ],
+  "tables": [
+    {
+      "$id": "products",
+      "$permissions": ["create(\"users\")"],
+      "databaseId": "awaaz",
+      "name": "products",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "shopId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 200
+        },
+        {
+          "key": "aliases",
+          "type": "string",
+          "required": false,
+          "array": true,
+          "size": 100
+        },
+        {
+          "key": "brand",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 100
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "pricePaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "active",
+          "type": "boolean",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "deletedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "deviceId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "clientUpdatedAt",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_shop_updated",
+          "type": "key",
+          "columns": ["shopId", "$updatedAt"],
+          "orders": ["asc", "asc"]
+        }
+      ]
+    },
+    {
+      "$id": "customers",
+      "$permissions": ["create(\"users\")"],
+      "databaseId": "awaaz",
+      "name": "customers",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "shopId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "name",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 200
+        },
+        {
+          "key": "phone",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 32
+        },
+        {
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 1000
+        },
+        {
+          "key": "isSample",
+          "type": "boolean",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "deletedAt",
+          "type": "datetime",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "deviceId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "clientUpdatedAt",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_shop_updated",
+          "type": "key",
+          "columns": ["shopId", "$updatedAt"],
+          "orders": ["asc", "asc"]
+        }
+      ]
+    },
+    {
+      "$id": "orders",
+      "$permissions": ["create(\"users\")"],
+      "databaseId": "awaaz",
+      "name": "orders",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "shopId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "localNumber",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 32
+        },
+        {
+          "key": "customerId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "walkIn",
+          "type": "boolean",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "fulfillment",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "note",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 1000
+        },
+        {
+          "key": "totalEstimatePaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "mutationId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "deviceId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "clientCreatedAt",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "rawTranscript",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 2000
+        },
+        {
+          "key": "normalizedText",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 2000
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_shop_updated",
+          "type": "key",
+          "columns": ["shopId", "$updatedAt"],
+          "orders": ["asc", "asc"]
+        },
+        {
+          "key": "uniq_mutation_id",
+          "type": "unique",
+          "columns": ["mutationId"],
+          "orders": ["asc"]
+        }
+      ]
+    },
+    {
+      "$id": "order_items",
+      "$permissions": ["create(\"users\")"],
+      "databaseId": "awaaz",
+      "name": "order_items",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "shopId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "orderRowId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "index",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "productId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "nameSnapshot",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 200
+        },
+        {
+          "key": "qtyMilli",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "unitPricePaise",
+          "type": "integer",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "lineTotalPaise",
+          "type": "integer",
+          "required": false,
+          "array": false
+        },
+        {
+          "key": "resolutionStatus",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 24
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_shop_updated",
+          "type": "key",
+          "columns": ["shopId", "$updatedAt"],
+          "orders": ["asc", "asc"]
+        },
+        {
+          "key": "idx_order_row",
+          "type": "key",
+          "columns": ["orderRowId"],
+          "orders": ["asc"]
+        }
+      ]
+    },
+    {
+      "$id": "bills",
+      "$permissions": ["create(\"users\")"],
+      "databaseId": "awaaz",
+      "name": "bills",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "shopId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "receiptNumber",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 32
+        },
+        {
+          "key": "kind",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "correctsBillRowId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "customerId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "status",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "subtotalPaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "discountPaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "taxPaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "totalPaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "mutationId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "deviceId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "finalizedAt",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "clientCreatedAt",
+          "type": "datetime",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "rawTranscript",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 2000
+        },
+        {
+          "key": "normalizedText",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 2000
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_shop_updated",
+          "type": "key",
+          "columns": ["shopId", "$updatedAt"],
+          "orders": ["asc", "asc"]
+        },
+        {
+          "key": "uniq_mutation_id",
+          "type": "unique",
+          "columns": ["mutationId"],
+          "orders": ["asc"]
+        },
+        {
+          "key": "idx_shop_receipt",
+          "type": "key",
+          "columns": ["shopId", "receiptNumber"],
+          "orders": ["asc", "asc"]
+        }
+      ]
+    },
+    {
+      "$id": "bill_items",
+      "$permissions": ["create(\"users\")"],
+      "databaseId": "awaaz",
+      "name": "bill_items",
+      "enabled": true,
+      "rowSecurity": true,
+      "columns": [
+        {
+          "key": "shopId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "billRowId",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "index",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "productId",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64
+        },
+        {
+          "key": "nameSnapshot",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 200
+        },
+        {
+          "key": "qtyMilli",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "unit",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 16
+        },
+        {
+          "key": "unitPricePaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        },
+        {
+          "key": "lineTotalPaise",
+          "type": "integer",
+          "required": true,
+          "array": false
+        }
+      ],
+      "indexes": [
+        {
+          "key": "idx_shop_updated",
+          "type": "key",
+          "columns": ["shopId", "$updatedAt"],
+          "orders": ["asc", "asc"]
+        },
+        {
+          "key": "idx_bill_row",
+          "type": "key",
+          "columns": ["billRowId"],
+          "orders": ["asc"]
+        }
+      ]
+    }
+  ]
+}

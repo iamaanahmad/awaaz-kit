@@ -1,0 +1,25 @@
+# Local, throwaway self-hosted Appwrite for integration / contract tests (Req 19.4, 19.11).
+#
+# Appwrite's own stack is ~20 containers and its compose file changes between
+# releases, so this file does NOT vendor a copy. It runs the OFFICIAL Appwrite
+# installer, which writes the real compose + .env into ./.appwrite-test/ (gitignored)
+# and starts the stack. See docs/test-backend.md for the full flow.
+#
+#   docker compose -f docker-compose.test.yml run --rm appwrite-installer   # install + start
+#   docker compose --project-directory .appwrite-test -f .appwrite-test/docker-compose.yml down -v   # tear down
+#
+# Nothing here is started automatically and no remote Appwrite project is contacted.
+# Requires Docker Desktop to be running.
+services:
+  appwrite-installer:
+    image: appwrite/appwrite:${APPWRITE_TEST_VERSION:-1.8.1}
+    container_name: awaaz-appwrite-installer
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./.appwrite-test:/usr/src/code/appwrite:rw
+    entrypoint: install
+    # Non-interactive local install on http://localhost (port 80).
+    environment:
+      _APP_ENV: development
+      _APP_DOMAIN: localhost
+      _APP_DOMAIN_TARGET: localhost

@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Targeted tests on storage and sync edits",
+      "trigger": "PostFileSave",
+      "description": "Run Vitest for the edited storage or sync package plus the offline subset",
+      "matcher": "packages/(local-data|sync-engine)/src/.*",
+      "action": {
+        "type": "command",
+        "command": "node scripts/kiro-targeted-test.mjs storage-sync",
+        "timeout": 300
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+name: Release checklist
+
+# Asserts the repository deliverables from Req 1.9 and Req 20.1:
+# an OSI-approved license, THIRD_PARTY_NOTICES.md, and a committed .kiro directory
+# with specs, steering files and hooks.
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checklist:
+    name: License, notices and .kiro evidence
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: License file is present and OSI-approved
+        run: |
+          f=$(ls LICENSE LICENSE.md LICENSE.txt 2>/dev/null | head -n 1 || true)
+          if [ -z "$f" ]; then echo "::error::No LICENSE file at repository root"; exit 1; fi
+          if grep -Eqi 'MIT License|Apache License|BSD [0-9]-Clause|Mozilla Public License|GNU (Affero |Lesser )?General Public License|ISC License' "$f"; then
+            echo "License file $f looks OSI-approved"
+          else
+            echo "::error file=$f::License text is not a recognised OSI-approved license"; exit 1
+          fi
+
+      - name: THIRD_PARTY_NOTICES.md is present and non-empty
+        run: |
+          test -s THIRD_PARTY_NOTICES.md || { echo "::error::THIRD_PARTY_NOTICES.md missing or empty"; exit 1; }
+
+      - name: .kiro is committed with specs, steering and hooks
+        run: |
+          for d in .kiro/specs .kiro/steering .kiro/hooks; do
+            n=$(git ls-files "$d" | wc -l)
+            if [ "$n" -eq 0 ]; then echo "::error::$d has no tracked files (is .kiro gitignored?)"; exit 1; fi
+            echo "$d: $n tracked files"
+          done
+          for f in product architecture safety-and-privacy testing; do
+            git ls-files --error-unmatch ".kiro/steering/$f.md" >/dev/null 2>&1 \
+              || { echo "::error::.kiro/steering/$f.md is not tracked"; exit 1; }
+          done

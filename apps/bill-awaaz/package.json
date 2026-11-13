@@ -1,0 +1,37 @@
+{
+  "name": "bill-awaaz",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -p tsconfig.json && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@awaaz-kit/catalog-matcher": "workspace:*",
+    "@awaaz-kit/confirmation-engine": "workspace:*",
+    "@awaaz-kit/domain-billing": "workspace:*",
+    "@awaaz-kit/local-data": "workspace:*",
+    "@awaaz-kit/shared-ui": "workspace:*",
+    "@awaaz-kit/speech-provider": "workspace:*",
+    "@awaaz-kit/sync-engine": "workspace:*",
+    "@awaaz-kit/voice-capture": "workspace:*",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-router": "8.5.1",
+    "tailwindcss": "4.3.5",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "4.3.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.3.0",
+    "vite": "8.3.8",
+    "vite-plugin-pwa": "2.0.0",
+    "workbox-build": "7.4.1",
+    "workbox-window": "7.4.1"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@awaaz-kit/domain-order",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@awaaz-kit/catalog-matcher": "workspace:*",
+    "@awaaz-kit/confidence-engine": "workspace:*",
+    "@awaaz-kit/confirmation-engine": "workspace:*",
+    "@awaaz-kit/intent-engine": "workspace:*",
+    "@awaaz-kit/language-normalizer": "workspace:*",
+    "@awaaz-kit/local-data": "workspace:*",
+    "zod": "3.25.76"
+  }
+}

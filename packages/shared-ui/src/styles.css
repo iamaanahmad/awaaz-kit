@@ -1,0 +1,6 @@
+/* Single stylesheet entry for apps: import "@awaaz-kit/shared-ui/styles.css".
+   Apps must also register the Tailwind Vite plugin (@tailwindcss/vite) and add
+   @source for packages/shared-ui/src if their build needs class scanning. */
+@import 'tailwindcss';
+@import './fonts.css';
+@import './tokens.css';

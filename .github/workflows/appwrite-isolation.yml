@@ -1,0 +1,75 @@
+name: Appwrite isolation
+
+# Runs the permissions isolation test (Req 19.13) against a dedicated Appwrite TEST project.
+# Only runs on main and on manual dispatch, never on pull requests, so repository secrets are
+# not exposed to forks. When the secrets are not configured the job is skipped visibly.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: appwrite-isolation-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  isolation:
+    name: Two users, two shops, no cross-reads
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      APPWRITE_TEST_ENDPOINT: ${{ secrets.APPWRITE_TEST_ENDPOINT }}
+      APPWRITE_TEST_PROJECT_ID: ${{ secrets.APPWRITE_TEST_PROJECT_ID }}
+      APPWRITE_TEST_API_KEY: ${{ secrets.APPWRITE_TEST_API_KEY }}
+      APPWRITE_TEST_USER_PASSWORD: ${{ secrets.APPWRITE_TEST_USER_PASSWORD }}
+    steps:
+      - name: Check for Appwrite test secrets
+        id: gate
+        run: |
+          missing=""
+          for v in APPWRITE_TEST_ENDPOINT APPWRITE_TEST_PROJECT_ID APPWRITE_TEST_API_KEY; do
+            if [ -z "${!v}" ]; then missing="$missing $v"; fi
+          done
+          if [ -n "$missing" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Appwrite isolation test SKIPPED::Repository secrets not set:${missing}. Add them under Settings > Secrets and variables > Actions to enable this check."
+            {
+              echo "### Appwrite isolation test: SKIPPED"
+              echo "Missing repository secrets:${missing}"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
+
+      - uses: pnpm/action-setup@v4
+        if: steps.gate.outputs.run == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install (frozen lockfile)
+        if: steps.gate.outputs.run == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Seed test project (schema and two test users)
+        if: steps.gate.outputs.run == 'true'
+        run: node scripts/seed-test-backend.mjs --allow-remote
+
+      - name: Run isolation test
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          if [ ! -f tests/integration/appwrite-isolation.test.ts ]; then
+            echo "::warning title=Isolation test file missing::tests/integration/appwrite-isolation.test.ts does not exist yet (task 22.7)."
+            echo "### Appwrite isolation test: SKIPPED (test file missing)" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          pnpm vitest run tests/integration/appwrite-isolation.test.ts

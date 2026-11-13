@@ -1,0 +1,16 @@
+{
+  "version": "v1",
+  "hooks": [
+    {
+      "name": "Targeted tests on engine edits",
+      "trigger": "PostFileSave",
+      "description": "Run Vitest for the edited engine package",
+      "matcher": "packages/(language-normalizer|intent-engine|catalog-matcher|confidence-engine|confirmation-engine)/src/.*",
+      "action": {
+        "type": "command",
+        "command": "node scripts/kiro-targeted-test.mjs engine",
+        "timeout": 300
+      }
+    }
+  ]
+}

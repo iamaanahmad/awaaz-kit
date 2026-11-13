@@ -1,5 +1,6 @@
 import { useState, type ReactElement } from 'react';
 import { parseTheme, readStoredTheme, setTheme, type Theme } from './theme';
+import { MoonIcon, SunIcon } from './Spooky';
 
 const currentTheme = (): Theme => {
   if (typeof document === 'undefined') return 'haunted';
@@ -27,7 +28,7 @@ export function ThemeToggle({ className }: { className?: string }): ReactElement
       onClick={toggle}
       data-theme-toggle={theme}
     >
-      <span aria-hidden="true">{haunted ? '🎃' : '☀'}</span>
+      {haunted ? <MoonIcon size={18} /> : <SunIcon size={18} />}
       <span className="sr-only">Theme: </span>
       <span>{haunted ? 'Haunted' : 'Classic'}</span>
     </button>

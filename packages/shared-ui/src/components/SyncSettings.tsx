@@ -24,7 +24,7 @@ export interface SyncSettingsProps {
   onClearData: () => void;
 }
 
-const buttonClass = 'min-h-[44px] min-w-[44px] px-4 rounded-md border';
+const buttonClass = 'touch-target ak-btn ak-btn-secondary';
 
 /**
  * Cloud sync settings: explicit opt-in, sign-in, plain-language data description,
@@ -71,7 +71,7 @@ export function SyncSettings({
         </p>
       </section>
 
-      <label className="flex items-center gap-2 min-h-[44px]">
+      <label className="ak-check">
         <input
           type="checkbox"
           checked={optedIn}
@@ -82,31 +82,40 @@ export function SyncSettings({
       <p>{optedIn ? 'Cloud sync: opted in' : 'Cloud sync: off'}</p>
 
       {optedIn && !signedIn && (
-        <form onSubmit={submit} aria-label="Sign in to sync">
-          <label>
-            Email
+        <form onSubmit={submit} aria-label="Sign in to sync" className="flex flex-col gap-3">
+          <label className="ak-field">
+            <span className="ak-label">Email</span>
             <input
               type="email"
               autoComplete="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="min-h-[44px]"
+              className="touch-target ak-input"
             />
           </label>
-          <label>
-            Password
+          <label className="ak-field">
+            <span className="ak-label">Password</span>
             <input
               type="password"
               autoComplete="current-password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="min-h-[44px]"
+              className="touch-target ak-input"
             />
           </label>
-          {signInError && <p role="alert">Sign-in failed: {signInError}</p>}
-          <button type="submit" className={buttonClass} disabled={signingIn}>
+          {signInError && (
+            <p role="alert" className="ak-field-error">
+              Sign-in failed: {signInError}
+            </p>
+          )}
+          <button
+            type="submit"
+            className="touch-target ak-btn ak-btn-primary"
+            disabled={signingIn}
+            aria-busy={signingIn}
+          >
             {signingIn ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
@@ -118,7 +127,7 @@ export function SyncSettings({
           <button type="button" className={buttonClass} onClick={onSignOut}>
             Sign out
           </button>
-          <label className="flex items-center gap-2 min-h-[44px]">
+          <label className="ak-check">
             <input
               type="checkbox"
               checked={syncTranscripts}

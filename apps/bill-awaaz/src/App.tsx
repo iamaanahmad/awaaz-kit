@@ -1,6 +1,6 @@
-import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router';
-import { DelayedFallback, runWhenIdle } from '@awaaz-kit/shared-ui';
+import { Suspense, lazy, useEffect, type ReactElement } from 'react';
+import { BrowserRouter, Link, NavLink, Route, Routes } from 'react-router';
+import { DelayedFallback, GhostMark, ThemeToggle, runWhenIdle } from '@awaaz-kit/shared-ui';
 import { AppProviders } from './providers/AppProviders';
 
 const loadHome = () => import('./screens/Home');
@@ -32,11 +32,36 @@ const preloadRoutes = [
   loadAbout,
 ];
 
+/** Same chrome on every Bill screen: ghost mark, main nav and the theme toggle. */
+function TopBar(): ReactElement {
+  return (
+    <header className="ak-topbar print:hidden">
+      <Link to="/" className="ak-brand touch-target">
+        <GhostMark /> Bill Awaaz
+      </Link>
+      <div className="flex flex-wrap items-center gap-2">
+        <nav aria-label="Main">
+          <ul className="ak-nav">
+            <li>
+              <NavLink to="/bills">Bills</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About</NavLink>
+            </li>
+          </ul>
+        </nav>
+        <ThemeToggle />
+      </div>
+    </header>
+  );
+}
+
 export function App() {
   useEffect(() => runWhenIdle(preloadRoutes), []);
   return (
     <AppProviders>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
+        <TopBar />
         <Suspense fallback={<DelayedFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />

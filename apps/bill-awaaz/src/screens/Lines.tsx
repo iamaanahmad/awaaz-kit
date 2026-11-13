@@ -121,7 +121,7 @@ function LineRow({
             const p = products.find((x) => x.id === e.target.value);
             if (p) onPickProduct(p);
           }}
-          className="touch-target rounded-[var(--radius)] border border-border bg-field px-2"
+          className="touch-target ak-select"
         >
           <option value="">Select product</option>
           {products.map((p) => (
@@ -202,7 +202,7 @@ export default function Lines(): ReactElement {
         <button
           type="button"
           onClick={() => setBillDraft(confirmCurrentValue(draft, clarification))}
-          className="touch-target self-start rounded-[var(--radius)] border border-border px-3 font-semibold"
+          className="touch-target ak-btn ak-btn-secondary self-start"
         >
           Confirm current value
         </button>
@@ -231,7 +231,7 @@ export default function Lines(): ReactElement {
       <button
         type="button"
         onClick={() => setBillDraft(addLine(draft, crypto.randomUUID()))}
-        className="touch-target rounded-[var(--radius)] border border-border px-3 font-semibold"
+        className="touch-target ak-btn ak-btn-secondary"
       >
         Add line
       </button>
@@ -250,7 +250,7 @@ export default function Lines(): ReactElement {
             const paise = t === '' ? 0 : parseRupees(t);
             if (paise !== null) setBillDraft(setDiscount(draft, paise));
           }}
-          className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
+          className="touch-target ak-input"
         />
         {discountInvalid ? <p role="alert">Enter a discount like 10 or 10.50</p> : null}
       </div>
@@ -290,7 +290,7 @@ export default function Lines(): ReactElement {
         type="button"
         onClick={() => void navigate('/review')}
         disabled={draft.lines.length === 0}
-        className="touch-target rounded-[var(--radius)] bg-accent px-3 font-semibold text-accent-contrast disabled:opacity-50"
+        className="touch-target ak-btn ak-btn-primary ak-btn-lg ak-btn-block"
       >
         Review bill
       </button>

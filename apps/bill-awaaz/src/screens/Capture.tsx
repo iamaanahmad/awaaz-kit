@@ -175,7 +175,7 @@ export default function Capture(): ReactElement {
           id="bill-customer"
           value={customerValue}
           onChange={(e) => setChosenCustomer(e.target.value)}
-          className="touch-target rounded-[var(--radius)] border border-border bg-field px-2"
+          className="touch-target ak-select"
         >
           <option value="">Walk-in / no customer</option>
           {(customers ?? []).map((c) => (

@@ -6,10 +6,9 @@ import {
   DelayedFallback,
   EmptyState,
   Onboarding,
+  MicIcon,
   OnlineIndicator,
-  PumpkinIcon,
   SyncBadge,
-  ThemeToggle,
 } from '@awaaz-kit/shared-ui';
 import { todayFinalizedTotalPaise } from '../data/todayTotal';
 import { usePendingSyncCount, useRecentBills, useShops } from '../data/homeHooks';
@@ -32,7 +31,7 @@ function RecentBill({ bill }: { bill: BillRecord }): ReactElement {
     <li>
       <Link
         to={`/bills/${bill.id}`}
-        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
+        className="ak-row-link"
       >
         <span className="flex flex-col">
           <span className="font-semibold">#{bill.receiptNumber}</span>
@@ -56,44 +55,24 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col gap-5 p-4">
-      <header className="flex items-start justify-between gap-2">
+      <section aria-label="Today" className="ak-card ak-card-raised">
+        <div className="flex flex-wrap items-center gap-2">
+          <h1 className="text-xl font-bold">{shop.name}</h1>
+          {shop.isDemo ? <span className="ak-pill">Fictional demo shop</span> : null}
+        </div>
         <div>
-          <h1 className="ak-brand">
-            <PumpkinIcon /> Bill Awaaz
-          </h1>
-          <p className="text-sm text-muted">
-            {shop.name}
-            {shop.isDemo ? ' · fictional demo shop' : ''}
+          <p className="text-sm text-muted">Today&apos;s finalized total</p>
+          <p
+            className="text-4xl font-extrabold tracking-tight text-accent-text tabular-nums"
+            data-testid="today-total"
+          >
+            {bills ? formatRupees(total) : '…'}
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <nav aria-label="Main">
-            <ul className="ak-nav">
-              <li>
-                <Link to="/bills">Bills</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-            </ul>
-          </nav>
-          <ThemeToggle />
-        </div>
-      </header>
-
-      <section
-        aria-label="Today"
-        className="rounded-2xl bg-accent p-5 text-accent-contrast shadow-sm"
-      >
-        <p className="text-sm opacity-90">Today&apos;s finalized total</p>
-        <p className="text-4xl font-extrabold tabular-nums" data-testid="today-total">
-          {bills ? formatRupees(total) : '…'}
-        </p>
+        <Link to="/capture" className="touch-target ak-btn ak-btn-primary ak-btn-lg ak-btn-block">
+          <MicIcon size={22} /> New Bill
+        </Link>
       </section>
-
-      <Link to="/capture" className="touch-target ak-btn ak-btn-secondary ak-btn-lg">
-        🎙 New Bill
-      </Link>
 
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <OnlineIndicator />

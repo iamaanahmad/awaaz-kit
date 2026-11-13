@@ -6,6 +6,7 @@ import {
   EmptyState,
   Onboarding,
   OnlineIndicator,
+  MicIcon,
   SyncBadge,
   useOnlineStatus,
 } from '@awaaz-kit/shared-ui';
@@ -98,23 +99,13 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
 
   return (
     <div className="flex flex-col gap-5">
-      <section
-        aria-label="Shop"
-        className="flex flex-col gap-3 rounded-2xl bg-accent p-5 text-accent-contrast"
-      >
+      <section aria-label="Shop" className="ak-card ak-card-raised">
         <div className="flex flex-wrap items-center gap-2">
           <h2 className="text-xl font-bold">{shop.name}</h2>
-          {shop.isDemo ? (
-            <span className="rounded-full border border-current px-3 py-0.5 text-sm font-semibold">
-              Demo Shop
-            </span>
-          ) : null}
+          {shop.isDemo ? <span className="ak-pill">Demo Shop</span> : null}
         </div>
-        <Link
-          to="/capture"
-          className="inline-flex min-h-[56px] items-center justify-center gap-2 rounded-xl bg-surface px-6 text-lg font-bold text-ink focus-visible:outline-2 focus-visible:outline-offset-2"
-        >
-          <span aria-hidden="true">🎙</span> New Order
+        <Link to="/capture" className="touch-target ak-btn ak-btn-primary ak-btn-lg ak-btn-block">
+          <MicIcon size={22} /> New Order
         </Link>
       </section>
 

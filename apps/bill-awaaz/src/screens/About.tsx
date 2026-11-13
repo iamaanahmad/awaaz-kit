@@ -1,6 +1,6 @@
 import { useState, type ReactElement } from 'react';
 import { Link } from 'react-router';
-import { PipelineInspector, SyncSettings, ThemeToggle } from '@awaaz-kit/shared-ui';
+import { PipelineInspector, SyncSettings } from '@awaaz-kit/shared-ui';
 import { clearLocalData, downloadExport, resetDemo } from '../about/dataActions';
 import { setInspectorEnabled, useInspectorEnabled } from '../about/inspectorPreference';
 import { getPackageManifest } from '../about/packageManifest';
@@ -9,7 +9,7 @@ import { useSync } from '../providers/SyncProvider';
 
 type Notice = { kind: 'ok' | 'error'; text: string } | null;
 
-const buttonClass = 'min-h-[44px] rounded-md border border-border px-4 font-medium';
+const buttonClass = 'touch-target ak-btn ak-btn-secondary';
 
 export default function About(): ReactElement {
   const { db } = useServices();
@@ -44,12 +44,9 @@ export default function About(): ReactElement {
     <main className="mx-auto flex min-h-screen max-w-md flex-col gap-4 p-4">
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">About Bill Awaaz</h1>
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <Link to="/" className="underline underline-offset-4">
-            Home
-          </Link>
-        </div>
+        <Link to="/" className="underline underline-offset-4">
+          Home
+        </Link>
       </header>
 
       <section
@@ -59,12 +56,11 @@ export default function About(): ReactElement {
         <h2 id="about-inspector" className="text-lg font-semibold">
           Show how it understood this
         </h2>
-        <label className="flex min-h-[44px] items-center gap-3">
+        <label className="ak-check">
           <input
             type="checkbox"
             checked={inspectorOn}
             onChange={(e) => setInspectorEnabled(e.target.checked)}
-            className="h-5 w-5"
           />
           <span>Enable the pipeline inspector</span>
         </label>

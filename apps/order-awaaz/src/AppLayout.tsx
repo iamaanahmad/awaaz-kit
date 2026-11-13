@@ -1,7 +1,6 @@
 import { Suspense, useEffect, type ReactElement } from 'react';
 import { NavLink, Outlet } from 'react-router';
 import {
-  BatIcon,
   DelayedFallback,
   PumpkinIcon,
   ThemeToggle,
@@ -23,7 +22,7 @@ export function AppLayout(): ReactElement {
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col gap-4 p-4">
       <header className="ak-app-header">
         <h1 className="ak-brand">
-          <PumpkinIcon /> Order Awaaz <BatIcon size={22} />
+          <PumpkinIcon /> Order Awaaz
         </h1>
         <ThemeToggle />
         <nav aria-label="Main" className="basis-full">

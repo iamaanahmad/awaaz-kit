@@ -59,7 +59,7 @@ export function TranscriptEditor({
       </p>
       <div className="flex flex-wrap items-center gap-3">
         {onSubmit ? (
-          <button type="submit" disabled={blank} className="touch-target ak-btn ak-btn-primary">
+          <button type="submit" disabled={blank} className="touch-target ak-btn ak-btn-secondary">
             {submitLabel}
           </button>
         ) : null}

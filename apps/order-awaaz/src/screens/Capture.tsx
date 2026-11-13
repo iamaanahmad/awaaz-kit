@@ -78,7 +78,7 @@ export default function Capture(): ReactElement {
           id={customerSelectId}
           value={customerId ?? ''}
           onChange={(e) => setCustomerId(e.target.value === '' ? null : e.target.value)}
-          className="min-h-[44px] rounded-[var(--radius)] border border-border bg-field px-2"
+          className="touch-target ak-select"
         >
           <option value="">Walk-in</option>
           {(customers ?? []).map((c) => (
@@ -146,7 +146,7 @@ export default function Capture(): ReactElement {
         type="button"
         disabled={!canContinue}
         onClick={() => void navigate('/resolve')}
-        className="touch-target rounded-[var(--radius)] bg-accent px-4 py-3 font-semibold text-accent-contrast disabled:opacity-60"
+        className="touch-target ak-btn ak-btn-primary ak-btn-lg ak-btn-block"
       >
         Continue to review items
       </button>

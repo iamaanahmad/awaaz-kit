@@ -43,13 +43,13 @@ function Saved({ result }: { result: CommitResult }): ReactElement {
       <div className="flex flex-wrap gap-3">
         <Link
           to={`/orders/${result.recordId}`}
-          className="touch-target rounded-[var(--radius)] bg-accent px-4 py-3 font-semibold text-accent-contrast"
+          className="touch-target ak-btn ak-btn-primary"
         >
           View order
         </Link>
         <Link
           to="/"
-          className="touch-target rounded-[var(--radius)] border border-border px-4 py-3 font-semibold"
+          className="touch-target ak-btn ak-btn-secondary"
         >
           Home
         </Link>
@@ -160,7 +160,7 @@ export default function Review(): ReactElement {
                 )
               }
               disabled={pending}
-              className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
+              className="touch-target ak-select"
             >
               <option value="pickup">Pickup</option>
               <option value="delivery">Delivery</option>
@@ -174,7 +174,7 @@ export default function Review(): ReactElement {
               onChange={(e) => update((d) => setNote(d, e.target.value))}
               disabled={pending}
               rows={2}
-              className="rounded-[var(--radius)] border border-border bg-field p-2"
+              className="touch-target ak-textarea"
             />
           </div>
           <p className="font-semibold">Estimated total: {formatRupees(total)}</p>

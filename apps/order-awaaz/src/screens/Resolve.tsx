@@ -162,13 +162,10 @@ export default function Resolve(): ReactElement {
                   step="any"
                   value={quantityText}
                   onChange={(e) => setQuantityText(e.target.value)}
-                  className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
+                  className="touch-target ak-input"
                 />
               </div>
-              <button
-                type="submit"
-                className="touch-target rounded-[var(--radius)] bg-accent px-4 font-semibold text-accent-contrast"
-              >
+              <button type="submit" className="touch-target ak-btn ak-btn-primary">
                 Set quantity
               </button>
             </form>
@@ -180,7 +177,7 @@ export default function Resolve(): ReactElement {
                 id={pickId}
                 value=""
                 onChange={(e) => chooseProduct(clarification.lineId, e.target.value)}
-                className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
+                className="touch-target ak-select"
               >
                 <option value="">Select a product</option>
                 {(products ?? []).map((p) => (
@@ -265,7 +262,7 @@ export default function Resolve(): ReactElement {
       <div className="flex flex-wrap gap-3">
         <Link
           to="/capture"
-          className="touch-target rounded-[var(--radius)] border border-border px-4 py-3 font-semibold"
+          className="touch-target ak-btn ak-btn-secondary"
         >
           Back to capture
         </Link>
@@ -273,7 +270,7 @@ export default function Resolve(): ReactElement {
           type="button"
           disabled={summary === null || !summary.canConfirm}
           onClick={() => void navigate('/review')}
-          className="touch-target rounded-[var(--radius)] bg-accent px-4 py-3 font-semibold text-accent-contrast disabled:opacity-60"
+          className="touch-target ak-btn ak-btn-primary"
         >
           Continue to review
         </button>

@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { MicIcon } from '../theme/Spooky';
 
 export type ModelStatusState =
   | { kind: 'checking' }
@@ -32,8 +33,10 @@ export function ModelStatusCard({
   onContinueTyping,
 }: ModelStatusCardProps): ReactElement {
   const size = formatSize(approxSizeBytes);
-  const primary = 'touch-target ak-btn ak-btn-primary';
-  const secondary = 'touch-target ak-btn ak-btn-secondary';
+  // The model card is optional context next to a screen's real primary action, so both of its
+  // actions are secondary. One filled button per screen.
+  const primary = 'touch-target ak-btn ak-btn-secondary';
+  const secondary = 'touch-target ak-btn ak-btn-link';
 
   const typingButton = (
     <button type="button" className={secondary} onClick={onContinueTyping}>
@@ -118,7 +121,7 @@ export function ModelStatusCard({
   return (
     <section aria-label="Speech model status" aria-live="polite" className="model-status-card">
       <div className="ak-model-title" aria-hidden="true">
-        <span>🎙</span> <span>On-device voice</span>
+        <MicIcon size={18} /> <span>On-device voice</span>
       </div>
       {body}
     </section>

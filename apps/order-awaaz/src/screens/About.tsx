@@ -8,7 +8,7 @@ import { useActiveShop } from '../hooks/useActiveShop';
 import { useData, useOrderCapture } from '../providers/AppProviders';
 import { useSync } from '../providers/SyncProvider';
 
-const btn = 'min-h-11 min-w-11 rounded-md border px-4 py-2';
+const btn = 'touch-target ak-btn ak-btn-secondary';
 
 type Confirming = 'reset' | 'clear' | null;
 

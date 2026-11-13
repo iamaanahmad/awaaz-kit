@@ -92,7 +92,7 @@ function CorrectionPanel({ detail }: { detail: BillWithItems }): ReactElement {
         id="correction-kind"
         value={kind}
         onChange={(e) => setKind(e.target.value as 'void' | 'correction')}
-        className="min-h-[44px] rounded-md border border-border px-3"
+        className="touch-target ak-input"
       >
         <option value="void">Void the whole bill</option>
         <option value="correction">Correct the amount</option>
@@ -107,7 +107,7 @@ function CorrectionPanel({ detail }: { detail: BillWithItems }): ReactElement {
             inputMode="decimal"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            className="min-h-[44px] rounded-md border border-border px-3"
+            className="touch-target ak-input"
           />
         </>
       ) : null}
@@ -118,7 +118,7 @@ function CorrectionPanel({ detail }: { detail: BillWithItems }): ReactElement {
         id="correction-reason"
         value={reason}
         onChange={(e) => setReason(e.target.value)}
-        className="min-h-[44px] rounded-md border border-border px-3"
+        className="touch-target ak-input"
       />
       <ConfirmButton
         canConfirm={valid}
@@ -261,7 +261,7 @@ export default function BillDetail(): ReactElement {
       <button
         type="button"
         onClick={() => window.print()}
-        className="min-h-[44px] rounded-md border border-border px-4 print:hidden"
+        className="touch-target ak-btn ak-btn-secondary print:hidden"
       >
         Print again
       </button>

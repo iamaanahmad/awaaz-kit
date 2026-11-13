@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react';
+import { MicIcon, RetryIcon, StopIcon } from '../theme/Spooky';
 
 /** Mirrors the Voice_Capture Recording_State values (Req 4.2) without importing that package. */
 export type MicRecordingState =
@@ -103,7 +104,13 @@ export function MicButton(props: MicButtonProps): ReactElement {
         aria-label={`${view.label} recording`}
         aria-busy={busy}
       >
-        <span aria-hidden="true">{state === 'recording' ? '■' : state === 'idle' ? '🎙' : '↻'}</span>
+        {state === 'recording' ? (
+          <StopIcon size={34} />
+        ) : state === 'idle' || state === 'requesting_permission' ? (
+          <MicIcon size={38} />
+        ) : (
+          <RetryIcon size={34} />
+        )}
         <span aria-hidden="true">{view.label}</span>
       </button>
       <p role="status" aria-live="polite" className="ak-mic-status">

@@ -64,16 +64,84 @@ export function PumpkinIcon({ size = 28, className }: DecorProps): ReactElement 
   );
 }
 
-/** Tiny bat for headers. Decorative. */
-export function BatIcon({ size = 28, className }: DecorProps): ReactElement {
+/**
+ * Still ghost used as the Bill Awaaz brand mark. Same drawing as the mascot, without the float,
+ * so the header stays calm. Decorative.
+ */
+export function GhostMark({ size = 28, className }: DecorProps): ReactElement {
+  return <GhostMascot size={size} className={`ak-ghost-still${className ? ` ${className}` : ''}`} />;
+}
+
+/*
+ * UI icon set. One family: 24px grid, 2px rounded stroke, currentColor, so they inherit the
+ * control's text colour in every theme and state. Always aria-hidden next to a visible label.
+ */
+interface IconProps {
+  size?: number;
+  className?: string;
+}
+
+function Icon({
+  size = 20,
+  className,
+  children,
+}: IconProps & { children: ReactElement | ReactElement[] }): ReactElement {
   return (
-    <svg {...hidden} className={className} width={size} height={size} viewBox="0 0 32 32">
-      <path
-        d="M16 10l1.8-3 1.2 3.2c2.2-1 4.6-2.8 7-2.2-1 1.4-1.4 3.2-1 5 .4 1.8 1.6 3.4 2.8 4.6-2.2-.6-4.2-.2-5.6 1.2-1-1.2-2.4-1.8-4-1.4L16 25l-2.2-4.4c-1.6-.4-3 .2-4 1.4-1.4-1.4-3.4-1.8-5.6-1.2 1.2-1.2 2.4-2.8 2.8-4.6.4-1.8 0-3.6-1-5 2.4-.6 4.8 1.2 7 2.2L14.2 7z"
-        fill="var(--ui-color-border)"
-      />
-      <circle cx="14" cy="13" r="0.9" fill="var(--ui-color-surface)" />
-      <circle cx="18" cy="13" r="0.9" fill="var(--ui-color-surface)" />
+    <svg
+      {...hidden}
+      className={`ak-icon${className ? ` ${className}` : ''}`}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {children}
     </svg>
+  );
+}
+
+export function MicIcon(props: IconProps): ReactElement {
+  return (
+    <Icon {...props}>
+      <rect x="9" y="3" width="6" height="11" rx="3" />
+      <path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7" />
+    </Icon>
+  );
+}
+
+export function StopIcon(props: IconProps): ReactElement {
+  return (
+    <Icon {...props}>
+      <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+    </Icon>
+  );
+}
+
+export function RetryIcon(props: IconProps): ReactElement {
+  return (
+    <Icon {...props}>
+      <path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5" />
+    </Icon>
+  );
+}
+
+export function SunIcon(props: IconProps): ReactElement {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4" />
+    </Icon>
+  );
+}
+
+export function MoonIcon(props: IconProps): ReactElement {
+  return (
+    <Icon {...props}>
+      <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+    </Icon>
   );
 }

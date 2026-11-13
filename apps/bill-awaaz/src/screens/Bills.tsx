@@ -40,7 +40,7 @@ function BillRow({ bill, voided }: { bill: BillRecord; voided: boolean }): React
     <li>
       <Link
         to={`/bills/${bill.id}`}
-        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
+        className="ak-row-link"
       >
         <span className="flex flex-col gap-1">
           <span className="font-semibold">
@@ -88,7 +88,7 @@ export default function Bills(): ReactElement {
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="min-h-[44px] rounded-md border border-border px-3"
+          className="touch-target ak-input"
         />
         <label htmlFor="bill-filter" className="text-sm font-medium">
           Show
@@ -97,7 +97,7 @@ export default function Bills(): ReactElement {
           id="bill-filter"
           value={filter}
           onChange={(e) => setFilter(e.target.value as BillFilter)}
-          className="min-h-[44px] rounded-md border border-border px-3"
+          className="touch-target ak-select"
         >
           {FILTERS.map((f) => (
             <option key={f.value} value={f.value}>

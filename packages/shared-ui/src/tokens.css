@@ -9,11 +9,45 @@
   --ui-font-sans:
     'Noto Sans', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --size-touch: 44px;
+  /* Spacing scale (4px base). Components use these, not raw rem values. */
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-5: 1.5rem; /* 24 */
+  --space-6: 2rem; /* 32 */
+  --space-7: 3rem; /* 48 */
+  --page-pad: var(--space-4);
+  --section-gap: var(--space-5);
+  --stack-gap: var(--space-3);
+
+  /* Shape. One radius per role. */
+  --radius-sm: 8px;
   --radius: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Controls. Every button and field shares one height, padding and border convention. */
+  --size-touch: 44px;
+  --control-h: var(--size-touch);
+  --control-h-lg: 56px;
+  --control-px: var(--space-4);
+  --control-border: 1px;
+  --control-font-weight: 650;
+
+  /* One focus system for both themes: ink ring with a surface-coloured gap. */
   --focus-ring: 3px solid var(--ui-color-ink);
   --focus-ring-offset: 2px;
-  --motion-fast: 150ms;
+
+  /* Motion by role. Exits are faster than entrances. */
+  --motion-instant: 100ms;
+  --motion-fast: 180ms;
+  --motion-base: 280ms;
+  --motion-slow: 480ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.3, 0, 1, 1);
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Haunted palette (default). */
   color-scheme: dark;
@@ -30,14 +64,10 @@
   --ui-color-warning: #ffc46b;
   --ui-color-success: #7ee2a0;
   --ui-color-focus-halo: #0f0b14;
-  --ui-glow: 0 0 24px color-mix(in srgb, var(--ui-color-accent) 28%, transparent);
   --ui-ghost-body: #f3eee4;
   --ui-ghost-eye: #1e1430;
-  --ui-page-glow: radial-gradient(
-    60rem 28rem at 50% -8rem,
-    color-mix(in srgb, var(--ui-color-accent) 16%, transparent),
-    transparent 70%
-  );
+  /* Elevation only for things that float above the page (menus, the review panel). */
+  --ui-shadow-raised: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 24px rgb(0 0 0 / 0.35);
 
   /* Defaults mirror Order Awaaz until an app sets data-app. */
   --ui-color-accent: #ff7a1a;
@@ -77,10 +107,9 @@
   --ui-color-warning: #92400e;
   --ui-color-success: #166534;
   --ui-color-focus-halo: #ffffff;
-  --ui-glow: none;
   --ui-ghost-body: #ffffff;
   --ui-ghost-eye: #1b1b1f;
-  --ui-page-glow: none;
+  --ui-shadow-raised: 0 1px 2px rgb(27 27 31 / 0.06), 0 8px 24px rgb(27 27 31 / 0.08);
 }
 
 [data-theme='classic'][data-app='order'] {
@@ -128,9 +157,27 @@
     --ui-color-muted: #333333;
     --ui-color-border: #666666;
     --ui-color-border-soft: #999999;
-    --ui-page-glow: none;
-    --ui-glow: none;
+    --ui-shadow-raised: none;
   }
+}
+
+/* Checkbox / radio marks, drawn in the accent-contrast colour of each theme and app. */
+:root,
+[data-app='order'] {
+  --ui-check-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%231a0b00' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ui-dash-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8h8' stroke='%231a0b00' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+[data-app='bill'] {
+  --ui-check-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%2304201a' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ui-dash-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8h8' stroke='%2304201a' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+[data-theme='classic'][data-app='order'] {
+  --ui-check-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%231b1b1f' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ui-dash-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8h8' stroke='%231b1b1f' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+[data-theme='classic'][data-app='bill'] {
+  --ui-check-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23ffffff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --ui-dash-mark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8h8' stroke='%23ffffff' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 body {
@@ -139,9 +186,8 @@ body {
   font-family: var(--ui-font-sans);
   color: var(--ui-color-ink);
   background-color: var(--ui-color-surface);
-  background-image: var(--ui-page-glow);
-  background-repeat: no-repeat;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* 44px minimum touch targets (Req 17.2). */
@@ -156,11 +202,18 @@ summary {
   min-width: var(--size-touch);
 }
 
-/* Always-visible keyboard focus (Req 17.5). */
+/* Checkboxes and radios sit inside a 44px label row (.ak-check), so the box itself is smaller. */
+input[type='checkbox'],
+input[type='radio'] {
+  min-height: 0;
+  min-width: 0;
+}
+
+/* Always-visible keyboard focus (Req 17.5). One system: an ink ring outside a gap in the
+   surface colour, so it reads on accent fills, dark Haunted cards and light Classic pages. */
 :focus-visible {
   outline: var(--focus-ring);
   outline-offset: var(--focus-ring-offset);
-  box-shadow: 0 0 0 5px var(--ui-color-focus-halo);
 }
 
 /* Utility class for components that need the target size explicitly. */
@@ -181,12 +234,14 @@ summary {
   border: 0;
 }
 
-/* Short transitions, disabled when the user prefers reduced motion (Req 17.8). */
-* {
-  transition-duration: var(--motion-fast);
-}
-
+/* Reduced motion (Req 17.8): every motion token collapses, and stray animations stop. */
 @media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-instant: 0.01ms;
+    --motion-fast: 0.01ms;
+    --motion-base: 0.01ms;
+    --motion-slow: 0.01ms;
+  }
   *,
   *::before,
   *::after {

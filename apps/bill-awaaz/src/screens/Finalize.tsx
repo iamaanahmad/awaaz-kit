@@ -118,7 +118,7 @@ export default function Finalize(): ReactElement {
         <button
           type="button"
           onClick={retry}
-          className="min-h-[44px] rounded-md border border-border px-4"
+          className="touch-target ak-btn ak-btn-secondary"
         >
           Try saving again
         </button>
@@ -234,7 +234,7 @@ export default function Finalize(): ReactElement {
           type="button"
           disabled={!detail}
           onClick={() => window.print()}
-          className="min-h-[44px] rounded-md border border-border px-4"
+          className="touch-target ak-btn ak-btn-secondary"
         >
           Print
         </button>
@@ -243,7 +243,7 @@ export default function Finalize(): ReactElement {
             type="button"
             disabled={!detail}
             onClick={() => void share()}
-            className="min-h-[44px] rounded-md border border-border px-4"
+            className="touch-target ak-btn ak-btn-secondary"
           >
             Share
           </button>
@@ -252,7 +252,7 @@ export default function Finalize(): ReactElement {
           type="button"
           disabled={!detail}
           onClick={() => void copy()}
-          className="min-h-[44px] rounded-md border border-border px-4"
+          className="touch-target ak-btn ak-btn-secondary"
         >
           Copy summary
         </button>

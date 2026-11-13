@@ -1,5 +1,13 @@
-import { Suspense, type ReactElement } from 'react';
+import { Suspense, useEffect, type ReactElement } from 'react';
 import { NavLink, Outlet } from 'react-router';
+import {
+  BatIcon,
+  DelayedFallback,
+  PumpkinIcon,
+  ThemeToggle,
+  runWhenIdle,
+} from '@awaaz-kit/shared-ui';
+import { preloadRoutes } from './screenLoaders';
 
 const links: ReadonlyArray<readonly [string, string]> = [
   ['/', 'Home'],
@@ -9,19 +17,20 @@ const links: ReadonlyArray<readonly [string, string]> = [
 ];
 
 export function AppLayout(): ReactElement {
+  // Warm every route chunk after the first screen is up; navigation then never waits.
+  useEffect(() => runWhenIdle(preloadRoutes), []);
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col gap-4 p-4">
-      <header className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-xl font-bold">Order Awaaz</h1>
-        <nav aria-label="Main">
-          <ul className="flex flex-wrap gap-2">
+      <header className="ak-app-header">
+        <h1 className="ak-brand">
+          <PumpkinIcon /> Order Awaaz <BatIcon size={22} />
+        </h1>
+        <ThemeToggle />
+        <nav aria-label="Main" className="basis-full">
+          <ul className="ak-nav">
             {links.map(([to, label]) => (
               <li key={to}>
-                <NavLink
-                  to={to}
-                  end={to === '/'}
-                  className="inline-flex items-center rounded-md px-3 underline-offset-4 aria-[current=page]:bg-accent aria-[current=page]:text-accent-contrast"
-                >
+                <NavLink to={to} end={to === '/'}>
                   {label}
                 </NavLink>
               </li>
@@ -30,7 +39,7 @@ export function AppLayout(): ReactElement {
         </nav>
       </header>
       <main className="flex-1">
-        <Suspense fallback={<p role="status">Loading…</p>}>
+        <Suspense fallback={<DelayedFallback />}>
           <Outlet />
         </Suspense>
       </main>

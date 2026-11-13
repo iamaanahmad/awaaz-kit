@@ -1,7 +1,14 @@
 import { useState, type ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
 import type { OrderRecord, ShopRecord } from '@awaaz-kit/local-data';
-import { Onboarding, OnlineIndicator, SyncBadge, useOnlineStatus } from '@awaaz-kit/shared-ui';
+import {
+  DelayedFallback,
+  EmptyState,
+  Onboarding,
+  OnlineIndicator,
+  SyncBadge,
+  useOnlineStatus,
+} from '@awaaz-kit/shared-ui';
 import { useActiveShop, useSyncSummary } from '../hooks/useActiveShop';
 import { useRecentOrders } from '../hooks/useLiveQuery';
 import { useSync } from '../providers/SyncProvider';
@@ -36,10 +43,7 @@ const orderSyncLabel: Record<OrderRecord['syncState'], string> = {
 function OrderRow({ order }: { order: OrderRecord }): ReactElement {
   return (
     <li>
-      <Link
-        to={`/orders/${order.id}`}
-        className="flex min-h-[56px] items-center justify-between gap-3 rounded-xl border border-border bg-surface px-4 py-3"
-      >
+      <Link to={`/orders/${order.id}`} className="ak-row-link">
         <span className="flex flex-col">
           <span className="font-semibold">{order.localNumber}</span>
           <span className="text-sm text-muted">
@@ -63,7 +67,7 @@ function RecentOrders({ shopId }: { shopId: string }): ReactElement {
         <h2 id="recent-heading" className="text-lg font-semibold">
           Recent orders
         </h2>
-        <Link to="/orders" className="inline-flex min-h-[44px] items-center px-2 underline">
+        <Link to="/orders" className="touch-target ak-btn ak-btn-link">
           View all
         </Link>
       </div>
@@ -72,9 +76,9 @@ function RecentOrders({ shopId }: { shopId: string }): ReactElement {
           Loading orders…
         </p>
       ) : orders.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-border p-4 text-muted">
-          No orders yet. Tap New Order and say or type what the customer wants.
-        </p>
+        <EmptyState>
+          <p>No orders yet. Tap New Order and say or type what the customer wants.</p>
+        </EmptyState>
       ) : (
         <ul className="flex flex-col gap-2">
           {orders.map((o) => (
@@ -177,11 +181,7 @@ function FirstRun({
 export default function Home(): ReactElement {
   const { state, chooseDemoShop, createShop } = useActiveShop();
   if (state.status === 'loading') {
-    return (
-      <p role="status" className="text-muted">
-        Loading…
-      </p>
-    );
+    return <DelayedFallback />;
   }
   if (state.status === 'none') {
     return <FirstRun chooseDemoShop={chooseDemoShop} createShop={createShop} />;

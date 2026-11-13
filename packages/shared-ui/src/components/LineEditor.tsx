@@ -34,8 +34,7 @@ function paiseToRupees(paise: number | null): string {
   return frac === 0 ? String(whole) : `${whole}.${String(frac).padStart(2, '0')}`;
 }
 
-const inputClass =
-  'touch-target w-full rounded-[var(--radius)] border border-border bg-white p-2 text-base';
+const inputClass = 'touch-target ak-input';
 
 /** One editable draft line with labelled fields (Req 10.11, 13.6, 17.4). */
 export function LineEditor({ value, index, units, onChange, onRemove, disabled }: LineEditorProps) {
@@ -46,12 +45,9 @@ export function LineEditor({ value, index, units, onChange, onRemove, disabled }
     units.includes(value.unit) || value.unit === '' ? units : [...units, value.unit];
 
   return (
-    <fieldset
-      disabled={disabled}
-      className="flex flex-col gap-2 rounded-[var(--radius)] border border-border p-3"
-    >
-      <legend className="px-1 font-semibold">Line {index}</legend>
-      <div className="flex flex-col gap-1">
+    <fieldset disabled={disabled} className="ak-line">
+      <legend>Line {index}</legend>
+      <div>
         <label htmlFor={`${base}-product`}>Product</label>
         <input
           id={`${base}-product`}
@@ -61,8 +57,8 @@ export function LineEditor({ value, index, units, onChange, onRemove, disabled }
           className={inputClass}
         />
       </div>
-      <div className="flex flex-wrap gap-2">
-        <div className="flex min-w-24 flex-1 flex-col gap-1">
+      <div className="ak-line-fields">
+        <div>
           <label htmlFor={`${base}-qty`}>Quantity</label>
           <input
             id={`${base}-qty`}
@@ -82,7 +78,7 @@ export function LineEditor({ value, index, units, onChange, onRemove, disabled }
             className={inputClass}
           />
         </div>
-        <div className="flex min-w-24 flex-1 flex-col gap-1">
+        <div>
           <label htmlFor={`${base}-unit`}>Unit</label>
           <select
             id={`${base}-unit`}
@@ -98,7 +94,7 @@ export function LineEditor({ value, index, units, onChange, onRemove, disabled }
             ))}
           </select>
         </div>
-        <div className="flex min-w-28 flex-1 flex-col gap-1">
+        <div>
           <label htmlFor={`${base}-price`}>Price (₹)</label>
           <input
             id={`${base}-price`}
@@ -114,7 +110,7 @@ export function LineEditor({ value, index, units, onChange, onRemove, disabled }
             className={inputClass}
           />
           {priceInvalid ? (
-            <p id={`${base}-price-err`} role="alert" className="text-sm">
+            <p id={`${base}-price-err`} role="alert" className="ak-field-error">
               Enter a price like 45 or 45.50
             </p>
           ) : null}
@@ -124,7 +120,7 @@ export function LineEditor({ value, index, units, onChange, onRemove, disabled }
         type="button"
         onClick={onRemove}
         aria-label={`Remove line ${index}`}
-        className="touch-target self-start rounded-[var(--radius)] border border-border px-3 font-semibold"
+        className="touch-target ak-btn ak-btn-secondary ak-btn-sm"
       >
         Remove line
       </button>

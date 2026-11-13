@@ -64,7 +64,9 @@ describe('Order_App screens', () => {
     const chip = await screen.findByRole('button', { name: /two kg sugar and one litre milk/ });
     expect(within(chip.closest('[role="group"]') as HTMLElement).getByText('Sample')).toBeVisible();
     // Wait for the catalog-aware parser to register before using the chip.
-    await waitFor(() => expect(screen.getByRole('button', { name: /^Check order$/ })).toBeDefined());
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: /^Check order$/ })).toBeDefined(),
+    );
     await user.click(chip);
     expect(await screen.findByLabelText('Order text')).toHaveValue(SAMPLE);
     expect(await screen.findByTestId('parse-summary')).toHaveTextContent(/items? found/);
@@ -91,7 +93,9 @@ describe('Order_App screens', () => {
     const user = userEvent.setup();
     renderAt('/capture');
     await screen.findByLabelText('Order text');
-    await user.click(await screen.findByRole('button', { name: /two kg sugar and one litre milk/ }));
+    await user.click(
+      await screen.findByRole('button', { name: /two kg sugar and one litre milk/ }),
+    );
     await user.click(await screen.findByRole('button', { name: 'Continue to review items' }));
     await screen.findByRole('heading', { name: 'Resolve items' });
     await user.click(screen.getByRole('button', { name: 'Continue to review' }));
@@ -104,7 +108,10 @@ describe('Order_App screens', () => {
 
   it('Orders: a confirmed order saved to the local database appears in the list', async () => {
     const db = await openDb();
-    const repos = createRepositories(db, { now: () => new Date(), newId: () => crypto.randomUUID() });
+    const repos = createRepositories(db, {
+      now: () => new Date(),
+      newId: () => crypto.randomUUID(),
+    });
     const products = await repos.products.listAll(DEMO_SHOP_ID);
     const customers = await repos.customers.listAll(DEMO_SHOP_ID);
     const draft = createOrderParser({
@@ -114,7 +121,11 @@ describe('Order_App screens', () => {
       selectedCustomerId: null,
     })(SAMPLE);
     const adapter = new OrderWorkflowAdapter();
-    const action = confirm(adapter, draft, createUserConfirmationEvidence({ isTrusted: true, type: 'click' }, draft.revision));
+    const action = confirm(
+      adapter,
+      draft,
+      createUserConfirmationEvidence({ isTrusted: true, type: 'click' }, draft.revision),
+    );
     const saved = await commitConfirmed(db, action);
     db.close();
 
@@ -148,7 +159,11 @@ describe('Order_App screens', () => {
       exact: false,
     });
     expect(items.length).toBe(24);
-    expect(screen.queryByRole('button')).toBeNull();
+    // The catalog is read-only: the only button on screen is the header theme toggle.
+    const buttons = screen
+      .queryAllByRole('button')
+      .filter((b) => !b.hasAttribute('data-theme-toggle'));
+    expect(buttons).toHaveLength(0);
     expect(screen.queryByRole('textbox')).toBeNull();
   });
 

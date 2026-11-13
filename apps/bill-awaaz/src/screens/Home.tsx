@@ -2,7 +2,15 @@ import { useMemo, useState, type ReactElement } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { formatRupees } from '@awaaz-kit/domain-billing';
 import { resetDemoShop, type BillRecord, type ShopRecord } from '@awaaz-kit/local-data';
-import { Onboarding, OnlineIndicator, SyncBadge } from '@awaaz-kit/shared-ui';
+import {
+  DelayedFallback,
+  EmptyState,
+  Onboarding,
+  OnlineIndicator,
+  PumpkinIcon,
+  SyncBadge,
+  ThemeToggle,
+} from '@awaaz-kit/shared-ui';
 import { todayFinalizedTotalPaise } from '../data/todayTotal';
 import { usePendingSyncCount, useRecentBills, useShops } from '../data/homeHooks';
 import { useServices } from '../providers/AppProviders';
@@ -24,7 +32,7 @@ function RecentBill({ bill }: { bill: BillRecord }): ReactElement {
     <li>
       <Link
         to={`/bills/${bill.id}`}
-        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-4 py-3"
+        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
       >
         <span className="flex flex-col">
           <span className="font-semibold">#{bill.receiptNumber}</span>
@@ -50,26 +58,27 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
     <div className="mx-auto flex min-h-screen max-w-md flex-col gap-5 p-4">
       <header className="flex items-start justify-between gap-2">
         <div>
-          <h1 className="text-2xl font-bold">Bill Awaaz</h1>
+          <h1 className="ak-brand">
+            <PumpkinIcon /> Bill Awaaz
+          </h1>
           <p className="text-sm text-muted">
             {shop.name}
             {shop.isDemo ? ' · fictional demo shop' : ''}
           </p>
         </div>
-        <nav aria-label="Main" className="flex gap-1">
-          <Link
-            to="/bills"
-            className="inline-flex items-center rounded-md px-3 underline underline-offset-4"
-          >
-            Bills
-          </Link>
-          <Link
-            to="/about"
-            className="inline-flex items-center rounded-md px-3 underline underline-offset-4"
-          >
-            About
-          </Link>
-        </nav>
+        <div className="flex flex-wrap items-center gap-2">
+          <nav aria-label="Main">
+            <ul className="ak-nav">
+              <li>
+                <Link to="/bills">Bills</Link>
+              </li>
+              <li>
+                <Link to="/about">About</Link>
+              </li>
+            </ul>
+          </nav>
+          <ThemeToggle />
+        </div>
       </header>
 
       <section
@@ -82,10 +91,7 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
         </p>
       </section>
 
-      <Link
-        to="/capture"
-        className="inline-flex min-h-[56px] items-center justify-center rounded-2xl bg-ink px-6 text-lg font-bold text-white"
-      >
+      <Link to="/capture" className="touch-target ak-btn ak-btn-secondary ak-btn-lg">
         🎙 New Bill
       </Link>
 
@@ -118,9 +124,9 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
         {bills === undefined ? (
           <p role="status">Loading…</p>
         ) : recent.length === 0 ? (
-          <p className="rounded-xl border border-dashed border-border p-4 text-muted">
-            No bills yet. Tap New Bill and say the items out loud.
-          </p>
+          <EmptyState>
+            <p>No bills yet. Tap New Bill and say or type the items.</p>
+          </EmptyState>
         ) : (
           <ul className="flex flex-col gap-2">
             {recent.map((b) => (
@@ -139,7 +145,7 @@ export default function Home(): ReactElement {
   const shops = useShops();
   const [error, setError] = useState<string | null>(null);
 
-  if (shops === undefined) return <p role="status">Loading…</p>;
+  if (shops === undefined) return <DelayedFallback />;
 
   if (shops.length === 0) {
     const run = async (task: () => Promise<void>): Promise<void> => {

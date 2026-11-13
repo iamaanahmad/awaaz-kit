@@ -14,7 +14,12 @@ import {
   type SpeechToTextProvider,
 } from '@awaaz-kit/speech-provider';
 
-import { StorageBanner, type StorageIssue } from '@awaaz-kit/shared-ui';
+import {
+  DelayedFallback,
+  StorageBanner,
+  usePersistNoteDismissal,
+  type StorageIssue,
+} from '@awaaz-kit/shared-ui';
 
 import { SyncProvider } from './SyncProvider';
 
@@ -39,6 +44,9 @@ export function AppProviders({ children }: { children: ReactNode }) {
   const [db, setDb] = useState<AwaazDb | null>(null);
   const [issue, setIssue] = useState<StorageIssue | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const persistNote = usePersistNoteDismissal();
+  // The persist-denied note is shown until dismissed once; other issues need action.
+  const visibleIssue = issue?.kind === 'persist-denied' && persistNote.dismissed ? null : issue;
 
   useEffect(() => {
     let cancelled = false;
@@ -88,7 +96,8 @@ export function AppProviders({ children }: { children: ReactNode }) {
   return (
     <>
       <StorageBanner
-        issue={issue}
+        issue={visibleIssue}
+        onDismiss={persistNote.dismiss}
         onRetry={() => setAttempt((n) => n + 1)}
         onReload={() => window.location.reload()}
       />
@@ -99,7 +108,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
           </SyncProvider>
         </ServicesContext.Provider>
       ) : issue ? null : (
-        <p role="status">Loading...</p>
+        <DelayedFallback />
       )}
     </>
   );

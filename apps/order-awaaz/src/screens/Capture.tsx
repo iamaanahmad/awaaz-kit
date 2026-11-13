@@ -78,7 +78,7 @@ export default function Capture(): ReactElement {
           id={customerSelectId}
           value={customerId ?? ''}
           onChange={(e) => setCustomerId(e.target.value === '' ? null : e.target.value)}
-          className="min-h-[44px] rounded-[var(--radius)] border border-border bg-white px-2"
+          className="min-h-[44px] rounded-[var(--radius)] border border-border bg-field px-2"
         >
           <option value="">Walk-in</option>
           {(customers ?? []).map((c) => (

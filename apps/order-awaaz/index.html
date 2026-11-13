@@ -1,12 +1,25 @@
 <!doctype html>
-<html lang="en" data-app="order">
+<html lang="en" data-app="order" data-theme="haunted">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#e8710a" />
+    <meta name="theme-color" content="#0f0b14" />
     <link rel="icon" href="/order/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/order/apple-touch-icon.png" />
     <title>Order Awaaz</title>
+    <script>
+      // Apply the saved theme before first paint so there is no flash. Keep in sync with
+      // packages/shared-ui/src/theme/theme.ts (key, default, meta colours).
+      (function () {
+        try {
+          var t = localStorage.getItem('awaaz-theme') === 'classic' ? 'classic' : 'haunted';
+          var root = document.documentElement;
+          root.setAttribute('data-theme', t);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', t === 'classic' ? '#e8710a' : '#0f0b14');
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

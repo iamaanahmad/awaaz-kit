@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { ModelStatusCard, type ModelStatusState } from './ModelStatusCard';
+import { GhostMascot } from '../theme/Spooky';
 
 export interface OnboardingProps {
   /** Called when the user picks the fictional Demo_Shop. */
@@ -23,7 +24,6 @@ export function Onboarding({
 }: OnboardingProps): ReactElement {
   const [name, setName] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const buttonClass = 'min-h-[44px] min-w-[44px] px-4 rounded-md border';
 
   const submit = (event: FormEvent): void => {
     event.preventDefault();
@@ -38,44 +38,56 @@ export function Onboarding({
 
   return (
     <section aria-label="Welcome" className="onboarding">
-      <h1>Welcome</h1>
-      <p>
-        Your data is stored locally on this device. No account or sign-in is needed to use the app.
-      </p>
-
-      <div>
+      <div className="ak-hero">
+        <GhostMascot size={88} />
+        <p className="ak-eyebrow">Speak to the spirits of your shop</p>
+        <h1>Welcome</h1>
+        <p className="ak-lede">
+          Your data is stored locally on this device. No account or sign-in is needed to use the
+          app.
+        </p>
+      </div>
+      <div className="ak-card">
         <h2>Try the Demo Shop</h2>
-        <p>A fictional shop with sample products and sample customers. All names are fictional.</p>
-        <button type="button" className={buttonClass} onClick={() => void onSelectDemoShop()}>
+        <p className="ak-help">
+          A fictional shop with sample products and sample customers. All names are fictional.
+        </p>
+        <button
+          type="button"
+          className="touch-target ak-btn ak-btn-primary ak-btn-lg"
+          onClick={() => void onSelectDemoShop()}
+        >
           Use Demo Shop
         </button>
       </div>
-
-      <form onSubmit={submit} noValidate>
+      <form onSubmit={submit} noValidate className="ak-card">
         <h2>Or create your own shop</h2>
-        <label htmlFor="onboarding-shop-name">Shop name</label>
-        <input
-          id="onboarding-shop-name"
-          type="text"
-          value={name}
-          aria-invalid={error ? true : undefined}
-          aria-describedby={error ? 'onboarding-shop-name-error' : undefined}
-          onChange={(e) => {
-            setName(e.target.value);
-            if (error) setError(null);
-          }}
-          className="min-h-[44px] px-2 rounded-md border"
-        />
-        {error ? (
-          <p id="onboarding-shop-name-error" role="alert">
-            {error}
-          </p>
-        ) : null}
-        <button type="submit" className={buttonClass}>
+        <div>
+          <label htmlFor="onboarding-shop-name" className="ak-label">
+            Shop name
+          </label>
+          <input
+            id="onboarding-shop-name"
+            type="text"
+            value={name}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? 'onboarding-shop-name-error' : undefined}
+            onChange={(e) => {
+              setName(e.target.value);
+              if (error) setError(null);
+            }}
+            className="touch-target ak-input"
+          />
+          {error ? (
+            <p id="onboarding-shop-name-error" role="alert" className="ak-field-error">
+              {error}
+            </p>
+          ) : null}
+        </div>
+        <button type="submit" className="touch-target ak-btn ak-btn-secondary">
           Create shop
         </button>
       </form>
-
       <ModelStatusCard
         status={modelStatus}
         approxSizeBytes={modelApproxSizeBytes}

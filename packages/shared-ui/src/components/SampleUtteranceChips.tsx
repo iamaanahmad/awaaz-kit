@@ -9,16 +9,12 @@ export interface SampleUtteranceChipsProps {
 export function SampleUtteranceChips({ samples, onSelect }: SampleUtteranceChipsProps) {
   if (samples.length === 0) return null;
   return (
-    <div role="group" aria-label="Sample utterances" className="flex flex-col gap-2">
-      <span className="text-sm font-semibold text-muted">Sample</span>
-      <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+    <div role="group" aria-label="Sample utterances" className="ak-chip-group">
+      <span className="ak-chip-label">Sample</span>
+      <ul className="ak-chip-list">
         {samples.map((sample) => (
           <li key={sample}>
-            <button
-              type="button"
-              onClick={() => onSelect(sample)}
-              className="touch-target rounded-full border border-border bg-white px-3 text-left text-sm"
-            >
+            <button type="button" onClick={() => onSelect(sample)} className="touch-target ak-chip">
               <span className="sr-only">Sample: </span>
               {sample}
             </button>

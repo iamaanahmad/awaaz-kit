@@ -26,10 +26,7 @@ const ICONS: Record<UncertaintyFieldStatus, ReactElement> = {
 export function UncertaintyBadge({ status, confidence }: UncertaintyBadgeProps): ReactElement {
   const showConfidence = typeof confidence === 'number' && Number.isFinite(confidence);
   return (
-    <span
-      className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-sm"
-      data-status={status}
-    >
+    <span className="ak-badge" data-status={status}>
       <svg
         aria-hidden="true"
         focusable="false"

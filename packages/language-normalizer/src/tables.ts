@@ -268,7 +268,24 @@ export const DEVANAGARI_DIGITS: ReadonlyMap<string, string> = new Map<string, st
 ]);
 
 const UNIT_SPELLINGS: Readonly<Record<CanonicalUnit, readonly string[]>> = {
-  piece: ['piece', 'pieces', 'pc', 'pcs', 'nag', 'nang', 'पीस', 'नग', 'टुकड़ा', 'टुकड़े'],
+  piece: [
+    'piece',
+    'pieces',
+    'pc',
+    'pcs',
+    'packet',
+    'packets',
+    'pkt',
+    'pkts',
+    'पैकेट',
+    'पैकेट्स',
+    'nag',
+    'nang',
+    'पीस',
+    'नग',
+    'टुकड़ा',
+    'टुकड़े',
+  ],
   kg: [
     'kg',
     'kgs',

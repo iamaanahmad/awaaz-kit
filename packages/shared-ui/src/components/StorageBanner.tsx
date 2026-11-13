@@ -10,15 +10,18 @@ export interface StorageBannerProps {
   issue: StorageIssue | null;
   onRetry?: () => void;
   onReload?: () => void;
+  /** Only the persist-denied note is dismissible; other issues need action and ignore this. */
+  onDismiss?: () => void;
 }
 
-const buttonClass = 'min-h-[44px] min-w-[44px] px-3 rounded-md border';
+const buttonClass = 'touch-target ak-btn ak-btn-secondary ak-btn-sm';
 
 /** Storage problems and "Reload to update" banner (Req 2.4, 2.5, 2.6). */
 export function StorageBanner({
   issue,
   onRetry,
   onReload,
+  onDismiss,
 }: StorageBannerProps): ReactElement | null {
   if (!issue) return null;
 
@@ -28,6 +31,11 @@ export function StorageBanner({
     case 'persist-denied':
       message =
         'Browser storage can be cleared by you or your operating system. The app keeps working.';
+      action = onDismiss ? (
+        <button type="button" className={buttonClass} onClick={onDismiss}>
+          Dismiss
+        </button>
+      ) : null;
       break;
     case 'quota-exceeded':
       message = 'Device storage is full, so changes cannot be saved.';
@@ -58,7 +66,10 @@ export function StorageBanner({
   const urgent = issue.kind !== 'persist-denied';
   return (
     <div className="storage-banner" data-issue={issue.kind} role={urgent ? 'alert' : 'status'}>
-      <span aria-hidden="true">⚠</span> <span>{message}</span>
+      <span aria-hidden="true" className="ak-banner-icon">
+        {urgent ? '⚠' : 'ⓘ'}
+      </span>{' '}
+      <span className="ak-banner-text">{message}</span>
       {action}
     </div>
   );

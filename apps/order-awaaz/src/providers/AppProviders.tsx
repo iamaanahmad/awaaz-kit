@@ -25,8 +25,10 @@ import {
   type SpeechToTextProvider,
 } from '@awaaz-kit/speech-provider';
 import {
+  DelayedFallback,
   StorageBanner,
   useCaptureSession,
+  usePersistNoteDismissal,
   type StorageIssue,
   type UseCaptureSession,
 } from '@awaaz-kit/shared-ui';
@@ -74,6 +76,9 @@ export function AppProviders({ children }: { children: ReactNode }): ReactElemen
   const [data, setData] = useState<DataContextValue | null>(null);
   const [issue, setIssue] = useState<StorageIssue | null>(null);
   const [attempt, setAttempt] = useState(0);
+  const persistNote = usePersistNoteDismissal();
+  // The persist-denied note is shown until dismissed once; other issues need action.
+  const visibleIssue = issue?.kind === 'persist-denied' && persistNote.dismissed ? null : issue;
 
   const speech = useMemo(
     () => createProvider(resolveProviderId(import.meta.env.VITE_SPEECH_PROVIDER)),
@@ -122,7 +127,8 @@ export function AppProviders({ children }: { children: ReactNode }): ReactElemen
   return (
     <>
       <StorageBanner
-        issue={issue}
+        issue={visibleIssue}
+        onDismiss={persistNote.dismiss}
         onRetry={() => setAttempt((n) => n + 1)}
         onReload={() => window.location.reload()}
       />
@@ -135,9 +141,7 @@ export function AppProviders({ children }: { children: ReactNode }): ReactElemen
           </SpeechContext.Provider>
         </DataContext.Provider>
       ) : issue ? null : (
-        <p role="status" className="p-4">
-          Opening local storage…
-        </p>
+        <DelayedFallback>Opening local storage…</DelayedFallback>
       )}
     </>
   );

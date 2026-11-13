@@ -1,21 +1,43 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router';
+import { DelayedFallback, runWhenIdle } from '@awaaz-kit/shared-ui';
 import { AppProviders } from './providers/AppProviders';
 
-const Home = lazy(() => import('./screens/Home'));
-const Capture = lazy(() => import('./screens/Capture'));
-const Lines = lazy(() => import('./screens/Lines'));
-const Review = lazy(() => import('./screens/Review'));
-const Finalize = lazy(() => import('./screens/Finalize'));
-const Bills = lazy(() => import('./screens/Bills'));
-const BillDetail = lazy(() => import('./screens/BillDetail'));
-const About = lazy(() => import('./screens/About'));
+const loadHome = () => import('./screens/Home');
+const Home = lazy(loadHome);
+const loadCapture = () => import('./screens/Capture');
+const Capture = lazy(loadCapture);
+const loadLines = () => import('./screens/Lines');
+const Lines = lazy(loadLines);
+const loadReview = () => import('./screens/Review');
+const Review = lazy(loadReview);
+const loadFinalize = () => import('./screens/Finalize');
+const Finalize = lazy(loadFinalize);
+const loadBills = () => import('./screens/Bills');
+const Bills = lazy(loadBills);
+const loadBillDetail = () => import('./screens/BillDetail');
+const BillDetail = lazy(loadBillDetail);
+const loadAbout = () => import('./screens/About');
+const About = lazy(loadAbout);
+
+/** Fetch every route chunk once the first screen is up, so navigation never waits on the network. */
+const preloadRoutes = [
+  loadHome,
+  loadCapture,
+  loadLines,
+  loadReview,
+  loadFinalize,
+  loadBills,
+  loadBillDetail,
+  loadAbout,
+];
 
 export function App() {
+  useEffect(() => runWhenIdle(preloadRoutes), []);
   return (
     <AppProviders>
       <BrowserRouter basename={import.meta.env.BASE_URL}>
-        <Suspense fallback={<p role="status">Loading...</p>}>
+        <Suspense fallback={<DelayedFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/capture" element={<Capture />} />

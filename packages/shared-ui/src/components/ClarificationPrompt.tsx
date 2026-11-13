@@ -28,17 +28,17 @@ export function ClarificationPrompt({
   if (clarification === null) return null;
   const candidates = clarification.candidates.slice(0, MAX_CANDIDATES);
   return (
-    <section aria-label="Clarification" role="group">
+    <section aria-label="Clarification" role="group" className="ak-clarify">
       <p role="status" aria-live="polite">
         {clarification.prompt}
       </p>
       {candidates.length > 0 ? (
-        <ul className="flex flex-wrap gap-2">
+        <ul>
           {candidates.map((candidate) => (
             <li key={candidate.id}>
               <button
                 type="button"
-                className="min-h-[44px] min-w-[44px] px-4 rounded-md border"
+                className="touch-target ak-btn ak-btn-secondary"
                 onClick={() => onSelectCandidate(candidate)}
               >
                 {candidate.name}

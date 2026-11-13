@@ -23,7 +23,7 @@ const formatTime = (iso: string | undefined): string => {
   return ` ${d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 };
 
-const buttonClass = 'min-h-[44px] min-w-[44px] px-3 rounded-md border';
+const buttonClass = 'touch-target ak-btn ak-btn-secondary ak-btn-sm';
 
 /** Sync_State badge: always text plus icon (Req 16.9, 16.10, 17.9). */
 export function SyncBadge({ state, onSyncNow, onRetry }: SyncBadgeProps): ReactElement {

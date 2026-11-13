@@ -42,38 +42,37 @@ interface Presentation {
 }
 
 function present(state: MicRecordingState, elapsed: string): Presentation {
-  const base =
-    'touch-target inline-flex items-center justify-center gap-2 rounded-[var(--radius)] px-6 py-3 text-lg font-semibold disabled:cursor-not-allowed disabled:opacity-60';
+  const base = 'touch-target ak-mic';
   switch (state) {
     case 'requesting_permission':
       return {
         label: 'Waiting for microphone',
         status: 'Waiting for microphone permission',
-        className: `${base} bg-surface text-ink border-2 border-border`,
+        className: `${base} ak-mic-neutral`,
       };
     case 'recording':
       return {
         label: 'Stop',
         status: `Recording, ${elapsed} elapsed`,
-        className: `${base} bg-danger text-white`,
+        className: `${base} ak-mic-recording`,
       };
     case 'stopped':
       return {
         label: 'Retry',
         status: 'Recording stopped',
-        className: `${base} bg-surface text-ink border-2 border-ink`,
+        className: `${base} ak-mic-neutral`,
       };
     case 'error':
       return {
         label: 'Retry',
         status: 'Recording error',
-        className: `${base} bg-surface text-ink border-2 border-danger`,
+        className: `${base} ak-mic-neutral`,
       };
     default:
       return {
         label: 'Start',
         status: 'Ready to record',
-        className: `${base} bg-accent text-accent-contrast`,
+        className: base,
       };
   }
 }
@@ -95,7 +94,7 @@ export function MicButton(props: MicButtonProps): ReactElement {
   };
 
   return (
-    <div className="flex flex-col items-center gap-3" data-state={state}>
+    <div className="ak-mic-wrap" data-state={state}>
       <button
         type="button"
         className={view.className}
@@ -104,28 +103,24 @@ export function MicButton(props: MicButtonProps): ReactElement {
         aria-label={`${view.label} recording`}
         aria-busy={busy}
       >
-        <span aria-hidden="true">{state === 'recording' ? '■' : state === 'idle' ? '●' : '↻'}</span>
+        <span aria-hidden="true">{state === 'recording' ? '■' : state === 'idle' ? '🎙' : '↻'}</span>
         <span aria-hidden="true">{view.label}</span>
       </button>
-      <p role="status" aria-live="polite" className="text-base text-muted">
+      <p role="status" aria-live="polite" className="ak-mic-status">
         {view.status}
       </p>
       {state === 'recording' || state === 'stopped' ? (
-        <p
-          className="text-2xl font-semibold tabular-nums"
-          aria-hidden="true"
-          data-testid="mic-elapsed"
-        >
+        <p className="ak-mic-timer" aria-hidden="true" data-testid="mic-elapsed">
           {elapsed}
         </p>
       ) : null}
       {state === 'error' ? (
-        <div role="alert" className="flex flex-col items-center gap-2 text-center text-danger">
+        <div role="alert" className="ak-mic-error">
           <p>{ERROR_MESSAGES[errorKind]}</p>
           {onUseTyping ? (
             <button
               type="button"
-              className="touch-target rounded-[var(--radius)] border-2 border-ink px-4 py-2 font-semibold text-ink"
+              className="touch-target ak-btn ak-btn-secondary"
               onClick={onUseTyping}
             >
               Type instead

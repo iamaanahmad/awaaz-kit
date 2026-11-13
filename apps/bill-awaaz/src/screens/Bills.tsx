@@ -1,7 +1,7 @@
 import { useMemo, useState, type ReactElement } from 'react';
 import { Link } from 'react-router';
 import type { BillRecord } from '@awaaz-kit/local-data';
-import { SyncBadge } from '@awaaz-kit/shared-ui';
+import { EmptyState, SyncBadge } from '@awaaz-kit/shared-ui';
 import { useRecentBills, useShops } from '../data/homeHooks';
 import {
   filterBills,
@@ -40,7 +40,7 @@ function BillRow({ bill, voided }: { bill: BillRecord; voided: boolean }): React
     <li>
       <Link
         to={`/bills/${bill.id}`}
-        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-white px-4 py-3"
+        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-card px-4 py-3"
       >
         <span className="flex flex-col gap-1">
           <span className="font-semibold">
@@ -110,9 +110,9 @@ export default function Bills(): ReactElement {
       {bills === undefined ? (
         <p role="status">Loading…</p>
       ) : visible.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-border p-4 text-muted">
-          {bills.length === 0 ? 'No saved bills yet.' : 'No bills match.'}
-        </p>
+        <EmptyState lead={bills.length === 0 ? 'Boo!' : 'Hmm.'}>
+          <p role="status">{bills.length === 0 ? 'No saved bills yet.' : 'No bills match.'}</p>
+        </EmptyState>
       ) : (
         <ul className="flex flex-col gap-2" aria-label="Saved bills">
           {visible.map((b) => (

@@ -32,8 +32,8 @@ export const orderPwa = () =>
       scope: SCOPE,
       display: 'standalone',
       orientation: 'portrait',
-      theme_color: '#e8710a',
-      background_color: '#ffffff',
+      theme_color: '#0f0b14',
+      background_color: '#0f0b14',
       icons: [
         { src: 'pwa-192x192.png', sizes: '192x192', type: 'image/png' },
         { src: 'pwa-512x512.png', sizes: '512x512', type: 'image/png' },

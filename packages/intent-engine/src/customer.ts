@@ -232,12 +232,52 @@ export function extractCustomer(n: Normalized, ctx?: ExtractionContext): Custome
   };
 }
 
+const wordOf = (t: NormalizedToken | undefined): string | null =>
+  t !== undefined && t.kind === 'word' ? lc(t.text) : null;
+
+/**
+ * Mark workflow framing words ("bill", "order", "hisaab", "ka bill banao", "ke liye bill:")
+ * as consumed so they never form an item segment. Only the lead (before the first item
+ * token) and the tail (after the last) are scanned, so a product phrase in the middle of
+ * the utterance is never touched. Punctuation such as the ':' after the lead is ignored.
+ */
+function markWorkflowWords(n: Normalized, consumed: Set<number>): void {
+  const toks = n.tokens;
+  const isFrame = (i: number): boolean => {
+    const w = wordOf(toks[i]);
+    return w !== null && (DOC_NOUNS.has(w) || VERBS.has(w));
+  };
+  // A possessive is framing only when a document noun follows ("ka bill").
+  const isPossessiveFrame = (i: number): boolean => {
+    const w = wordOf(toks[i]);
+    return w !== null && POSSESSIVE.has(w) && DOC_NOUNS.has(wordOf(toks[i + 1]) ?? '');
+  };
+  const frames = (i: number): boolean =>
+    consumed.has(i) || toks[i]!.kind === 'punct' || isFrame(i) || isPossessiveFrame(i);
+  const mark = (i: number): void => {
+    if (!consumed.has(i) && toks[i]!.kind !== 'punct') consumed.add(i);
+  };
+  let head = 0;
+  while (head < toks.length && frames(head)) {
+    mark(head);
+    head += 1;
+  }
+  // Drop the framing tail only for tokens not already claimed by the head scan.
+  let tail = toks.length - 1;
+  while (tail >= head && frames(tail)) {
+    mark(tail);
+    tail -= 1;
+  }
+}
+
 /**
  * Full extraction: customer fields plus item lines. Tokens used by the
  * customer lead phrase or phone are excluded from item segmentation.
  */
 export function extract(n: Normalized, ctx?: ExtractionContext): ExtractionResult {
-  const { consumed, ...customer } = extractCustomer(n, ctx);
+  const { consumed: customerTokens, ...customer } = extractCustomer(n, ctx);
+  const consumed = new Set(customerTokens);
+  markWorkflowWords(n, consumed);
   const remaining = n.tokens.filter((_, i) => !consumed.has(i));
   return { lines: extractLines({ ...n, tokens: remaining }), ...customer };
 }

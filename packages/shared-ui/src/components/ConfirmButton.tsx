@@ -48,10 +48,10 @@ export function ConfirmButton(props: ConfirmButtonProps): ReactElement {
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="ak-confirm">
       <button
         type="button"
-        className="touch-target inline-flex items-center justify-center rounded-[var(--radius)] bg-accent px-6 py-3 text-lg font-semibold text-accent-contrast disabled:cursor-not-allowed disabled:opacity-60"
+        className="touch-target ak-btn ak-btn-primary ak-btn-lg"
         onClick={handleClick}
         disabled={disabled}
         aria-busy={pending}
@@ -60,7 +60,7 @@ export function ConfirmButton(props: ConfirmButtonProps): ReactElement {
         {pending ? 'Confirming…' : label}
       </button>
       {reason !== null ? (
-        <p id={reasonId} className="text-base text-muted">
+        <p id={reasonId} className="ak-help">
           {reason}
         </p>
       ) : null}

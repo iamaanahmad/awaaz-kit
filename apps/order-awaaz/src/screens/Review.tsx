@@ -160,7 +160,7 @@ export default function Review(): ReactElement {
                 )
               }
               disabled={pending}
-              className="touch-target rounded-[var(--radius)] border border-border bg-white p-2"
+              className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
             >
               <option value="pickup">Pickup</option>
               <option value="delivery">Delivery</option>
@@ -174,7 +174,7 @@ export default function Review(): ReactElement {
               onChange={(e) => update((d) => setNote(d, e.target.value))}
               disabled={pending}
               rows={2}
-              className="rounded-[var(--radius)] border border-border bg-white p-2"
+              className="rounded-[var(--radius)] border border-border bg-field p-2"
             />
           </div>
           <p className="font-semibold">Estimated total: {formatRupees(total)}</p>

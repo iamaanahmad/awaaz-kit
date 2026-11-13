@@ -76,8 +76,8 @@ export function buildHighlightParts(
 
 function Stage({ title, children }: { title: string; children: ReactNode }): ReactElement {
   return (
-    <section className="rounded-md border p-3">
-      <h4 className="mb-2 text-base font-semibold">{title}</h4>
+    <section className="ak-stage">
+      <h4>{title}</h4>
       {children}
     </section>
   );
@@ -100,7 +100,7 @@ export function PipelineInspector({
     <div className="pipeline-inspector">
       <button
         type="button"
-        className="min-h-11 rounded-md border px-3 py-2 text-base"
+        className="touch-target ak-btn ak-btn-secondary"
         aria-expanded={open}
         aria-controls={panelId}
         onClick={() => setOpen((v) => !v)}

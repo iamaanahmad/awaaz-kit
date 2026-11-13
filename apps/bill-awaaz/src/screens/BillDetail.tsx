@@ -174,7 +174,7 @@ export default function BillDetail(): ReactElement {
 
       <article
         aria-labelledby="receipt-title"
-        className="receipt flex flex-col gap-3 rounded-xl border border-border bg-white p-4"
+        className="receipt flex flex-col gap-3 rounded-xl border border-border bg-card p-4"
       >
         <header>
           <h1 id="receipt-title" className="text-xl font-bold">

@@ -40,15 +40,11 @@ export function ReviewCard(props: ReviewCardProps): ReactElement {
       : 'This draft cannot be confirmed yet.';
 
   return (
-    <section
-      className="flex flex-col gap-4 rounded-[var(--radius)] border-2 border-border bg-surface p-4"
-      aria-label={title}
-      data-revision={revision}
-    >
-      <h2 className="text-xl font-semibold">{title}</h2>
+    <section className="ak-review" aria-label={title} data-revision={revision}>
+      <h2>{title}</h2>
       <div data-testid="review-draft">{children}</div>
       {issues.length > 0 ? (
-        <ul className="flex flex-col gap-1 text-danger" aria-label="Issues">
+        <ul className="ak-issues" aria-label="Issues">
           {issues.map((issue, i) => (
             <li key={`${issue.code}-${issue.lineId ?? ''}-${issue.field ?? ''}-${i}`}>
               <span aria-hidden="true">⚠ </span>
@@ -70,7 +66,7 @@ export function ReviewCard(props: ReviewCardProps): ReactElement {
         {onDiscard ? (
           <button
             type="button"
-            className="touch-target rounded-[var(--radius)] border-2 border-ink px-4 py-3 font-semibold text-ink disabled:opacity-60"
+            className="touch-target ak-btn ak-btn-secondary ak-btn-lg"
             onClick={onDiscard}
             disabled={pending === true}
           >

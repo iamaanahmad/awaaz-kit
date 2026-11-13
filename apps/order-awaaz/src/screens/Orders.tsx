@@ -1,6 +1,6 @@
 import { useMemo, useState, type ReactElement } from 'react';
 import { Link } from 'react-router';
-import { SyncBadge } from '@awaaz-kit/shared-ui';
+import { EmptyState, SyncBadge } from '@awaaz-kit/shared-ui';
 import { useRecentOrders } from '../hooks/useLiveQuery';
 import {
   STATUS_OPTIONS,
@@ -13,7 +13,7 @@ import {
 } from '../orders/orderView';
 import { useCustomerNames } from '../orders/useCustomerNames';
 
-const fieldClass = 'min-h-[44px] w-full rounded-md border px-3';
+const fieldClass = 'touch-target ak-input';
 
 export default function Orders(): ReactElement {
   const orders = useRecentOrders(500);
@@ -29,12 +29,12 @@ export default function Orders(): ReactElement {
 
   return (
     <section className="space-y-3" aria-labelledby="orders-heading">
-      <h2 id="orders-heading" className="text-lg font-semibold">
+      <h2 id="orders-heading" className="text-xl font-bold">
         Orders
       </h2>
       <div className="space-y-2">
         <label className="block">
-          <span className="text-sm">Search by order number or customer</span>
+          <span className="ak-label">Search by order number or customer</span>
           <input
             type="search"
             className={fieldClass}
@@ -43,7 +43,7 @@ export default function Orders(): ReactElement {
           />
         </label>
         <label className="block">
-          <span className="text-sm">Status</span>
+          <span className="ak-label">Status</span>
           <select
             className={fieldClass}
             value={status}
@@ -57,7 +57,7 @@ export default function Orders(): ReactElement {
           </select>
         </label>
         <label className="block">
-          <span className="text-sm">Sync state</span>
+          <span className="ak-label">Sync state</span>
           <select
             className={fieldClass}
             value={syncState}
@@ -75,14 +75,21 @@ export default function Orders(): ReactElement {
       {orders === undefined ? (
         <p role="status">Loading orders…</p>
       ) : visible.length === 0 ? (
-        <p role="status">
-          {orders.length === 0 ? 'No saved orders yet.' : 'No orders match these filters.'}
-        </p>
+        <EmptyState lead={orders.length === 0 ? 'Boo!' : 'Hmm.'}>
+          <p role="status">
+            {orders.length === 0 ? 'No saved orders yet.' : 'No orders match these filters.'}
+          </p>
+          {orders.length === 0 ? (
+            <p className="ak-help">
+              Tap New Order on Home and say or type what the customer wants.
+            </p>
+          ) : null}
+        </EmptyState>
       ) : (
         <ul className="space-y-2">
           {visible.map((o) => (
-            <li key={o.id} className="rounded-md border">
-              <Link to={`/orders/${o.id}`} className="block min-h-[44px] p-3">
+            <li key={o.id}>
+              <Link to={`/orders/${o.id}`} className="ak-row-link touch-target flex-wrap">
                 <span className="font-medium">{o.localNumber}</span>
                 <span className="block text-sm">
                   {o.walkIn ? 'Walk-in' : (names.get(o.customerId ?? '') ?? 'Customer')} ·{' '}

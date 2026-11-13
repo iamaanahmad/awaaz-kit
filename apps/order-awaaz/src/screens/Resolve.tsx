@@ -162,7 +162,7 @@ export default function Resolve(): ReactElement {
                   step="any"
                   value={quantityText}
                   onChange={(e) => setQuantityText(e.target.value)}
-                  className="touch-target rounded-[var(--radius)] border border-border bg-white p-2"
+                  className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
                 />
               </div>
               <button
@@ -180,7 +180,7 @@ export default function Resolve(): ReactElement {
                 id={pickId}
                 value=""
                 onChange={(e) => chooseProduct(clarification.lineId, e.target.value)}
-                className="touch-target rounded-[var(--radius)] border border-border bg-white p-2"
+                className="touch-target rounded-[var(--radius)] border border-border bg-field p-2"
               >
                 <option value="">Select a product</option>
                 {(products ?? []).map((p) => (

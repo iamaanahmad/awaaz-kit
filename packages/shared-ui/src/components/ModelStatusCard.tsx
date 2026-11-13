@@ -32,15 +32,16 @@ export function ModelStatusCard({
   onContinueTyping,
 }: ModelStatusCardProps): ReactElement {
   const size = formatSize(approxSizeBytes);
-  const buttonClass = 'min-h-[44px] min-w-[44px] px-4 rounded-md border';
+  const primary = 'touch-target ak-btn ak-btn-primary';
+  const secondary = 'touch-target ak-btn ak-btn-secondary';
 
   const typingButton = (
-    <button type="button" className={buttonClass} onClick={onContinueTyping}>
+    <button type="button" className={secondary} onClick={onContinueTyping}>
       Continue with typing
     </button>
   );
   const downloadButton = (label: string): ReactElement => (
-    <button type="button" className={buttonClass} onClick={onDownload}>
+    <button type="button" className={primary} onClick={onDownload}>
       {label}
     </button>
   );
@@ -51,11 +52,20 @@ export function ModelStatusCard({
       body = <p>Checking speech model…</p>;
       break;
     case 'ready':
-      body = (
-        <p>
-          Speech model ready{status.version ? ` (version ${status.version})` : ''}. Works offline.
-        </p>
-      );
+      // The `scripted` provider is not a real speech model: it only replays labelled
+      // sample clips. Say so plainly instead of claiming on-device recognition.
+      body =
+        status.version === 'scripted' ? (
+          <p>
+            Demo mode: no speech model is installed in this build. Type your request or tap a
+            Sample. Works offline.
+          </p>
+        ) : (
+          <p>
+            Speech model ready{status.version ? ` (version ${status.version})` : ''}. Works
+            offline.
+          </p>
+        );
       break;
     case 'missing':
     case 'evicted':
@@ -67,7 +77,7 @@ export function ModelStatusCard({
               : 'Speech model not installed.'}{' '}
             Download size is about {size}.
           </p>
-          <div className="flex gap-2">
+          <div className="ak-actions">
             {downloadButton('Download model')}
             {typingButton}
           </div>
@@ -79,10 +89,12 @@ export function ModelStatusCard({
       body = (
         <>
           <p>Downloading speech model ({size})…</p>
-          <progress value={percent} max={100} aria-label="Model download progress">
-            {percent}%
-          </progress>
-          <span>{percent}%</span>
+          <div className="ak-progress">
+            <progress value={percent} max={100} aria-label="Model download progress">
+              {percent}%
+            </progress>
+            <span>{percent}%</span>
+          </div>
           <div>{typingButton}</div>
         </>
       );
@@ -91,8 +103,10 @@ export function ModelStatusCard({
     case 'failed':
       body = (
         <>
-          <p role="alert">Model download failed: {status.reason}</p>
-          <div className="flex gap-2">
+          <p role="alert" className="ak-field-error">
+            Model download failed: {status.reason}
+          </p>
+          <div className="ak-actions">
             {downloadButton('Retry')}
             {typingButton}
           </div>
@@ -103,6 +117,9 @@ export function ModelStatusCard({
 
   return (
     <section aria-label="Speech model status" aria-live="polite" className="model-status-card">
+      <div className="ak-model-title" aria-hidden="true">
+        <span>🎙</span> <span>On-device voice</span>
+      </div>
       {body}
     </section>
   );

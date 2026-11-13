@@ -39,8 +39,8 @@ export function TranscriptEditor({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-2" aria-label="Transcript editor">
-      <label htmlFor={inputId} className="font-semibold">
+    <form onSubmit={handleSubmit} className="ak-transcript" aria-label="Transcript editor">
+      <label htmlFor={inputId} className="ak-label">
         {label}
       </label>
       <textarea
@@ -50,20 +50,16 @@ export function TranscriptEditor({
         lang="hi-Latn"
         aria-describedby={hintId}
         onChange={(e) => onChange(e.target.value)}
-        className="touch-target w-full rounded-[var(--radius)] border border-border bg-white p-2 text-base"
+        className="touch-target ak-textarea"
       />
-      <p id={hintId} className="text-sm text-muted">
+      <p id={hintId} className="ak-help">
         {blank
           ? 'Nothing heard yet. Type your order here or record again.'
           : 'Type or correct the text. Results update as you edit.'}
       </p>
       <div className="flex flex-wrap items-center gap-3">
         {onSubmit ? (
-          <button
-            type="submit"
-            disabled={blank}
-            className="touch-target rounded-[var(--radius)] bg-accent px-4 font-semibold text-accent-contrast disabled:opacity-60"
-          >
+          <button type="submit" disabled={blank} className="touch-target ak-btn ak-btn-primary">
             {submitLabel}
           </button>
         ) : null}
@@ -73,14 +69,14 @@ export function TranscriptEditor({
             aria-expanded={showDiff}
             aria-controls={diffId}
             onClick={() => setShowDiff((s) => !s)}
-            className="touch-target text-sm underline"
+            className="touch-target ak-btn ak-btn-link ak-btn-sm"
           >
             {showDiff ? 'Hide original transcript' : 'View original transcript'}
           </button>
         ) : null}
       </div>
       {edited && showDiff ? (
-        <dl id={diffId} className="rounded-[var(--radius)] border border-border p-2 text-sm">
+        <dl id={diffId} className="ak-diff">
           <dt className="font-semibold">Original (Raw transcript)</dt>
           <dd className="mb-2 whitespace-pre-wrap" data-testid="raw-transcript">
             {rawTranscript}

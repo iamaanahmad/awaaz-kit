@@ -1,6 +1,6 @@
 import { useState, type ReactElement } from 'react';
 import { Link } from 'react-router';
-import { PipelineInspector, SyncSettings } from '@awaaz-kit/shared-ui';
+import { PipelineInspector, SyncSettings, ThemeToggle } from '@awaaz-kit/shared-ui';
 import { clearLocalData, downloadExport, resetDemo } from '../about/dataActions';
 import { setInspectorEnabled, useInspectorEnabled } from '../about/inspectorPreference';
 import { getPackageManifest } from '../about/packageManifest';
@@ -44,14 +44,17 @@ export default function About(): ReactElement {
     <main className="mx-auto flex min-h-screen max-w-md flex-col gap-4 p-4">
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">About Bill Awaaz</h1>
-        <Link to="/" className="underline underline-offset-4">
-          Home
-        </Link>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <Link to="/" className="underline underline-offset-4">
+            Home
+          </Link>
+        </div>
       </header>
 
       <section
         aria-labelledby="about-inspector"
-        className="flex flex-col gap-2 rounded-xl border border-border bg-white p-4"
+        className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4"
       >
         <h2 id="about-inspector" className="text-lg font-semibold">
           Show how it understood this
@@ -70,7 +73,7 @@ export default function About(): ReactElement {
 
       <section
         aria-labelledby="about-data"
-        className="flex flex-col gap-3 rounded-xl border border-border bg-white p-4"
+        className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4"
       >
         <h2 id="about-data" className="text-lg font-semibold">
           Your data
@@ -165,7 +168,7 @@ export default function About(): ReactElement {
       ) : (
         <section
           aria-labelledby="about-sync-off"
-          className="flex flex-col gap-2 rounded-xl border border-border bg-white p-4"
+          className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4"
         >
           <h2 id="about-sync-off" className="text-lg font-semibold">
             Cloud sync
@@ -179,7 +182,7 @@ export default function About(): ReactElement {
 
       <section
         aria-labelledby="about-powered"
-        className="flex flex-col gap-2 rounded-xl border border-border bg-white p-4"
+        className="flex flex-col gap-2 rounded-xl border border-border bg-card p-4"
       >
         <h2 id="about-powered" className="text-lg font-semibold">
           Powered by Awaaz Kit

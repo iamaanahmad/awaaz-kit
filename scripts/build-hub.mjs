@@ -41,6 +41,7 @@ const hubHtml = `<!doctype html>
     --order: #ff7a1a; --order-text: #ff7a1a; --order-ink: #1a0b00;
     --bill: #54e0c2; --bill-text: #54e0c2; --bill-ink: #04201a;
     --ghost: #f3eee4; --ghost-eye: #1e1430;
+    --bat: #3b2a5e; --web: #2e2148; --fog: rgba(143,123,191,.1);
     font-family: "Noto Sans", "Noto Sans Devanagari", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
   [data-theme="classic"] {
@@ -77,6 +78,26 @@ const hubHtml = `<!doctype html>
   .order .go { background: var(--order); color: var(--order-ink); }
   .bill .go { background: var(--bill); color: var(--bill-ink); }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+  .haunt { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .haunt > * { position: absolute; }
+  .moon { top: 1.5rem; right: max(1rem, calc(50vw - 30rem)); width: clamp(72px, 12vw, 120px); height: auto; opacity: .55; }
+  .web { top: 0; left: 0; width: clamp(96px, 14vw, 140px); height: auto; }
+  .spider { animation: dangle 6s cubic-bezier(0.2,0,0,1) infinite; }
+  .bat { left: -40px; }
+  .b1 { top: 18vh; animation: batfly 38s linear infinite; }
+  .b2 { top: 34vh; --s: .7; animation: batfly 52s linear -18s infinite; }
+  .b3 { top: 9vh; --s: .55; animation: batfly 64s linear -40s infinite; }
+  .fog { left: -25%; bottom: -6vh; width: 150%; height: 26vh; background: radial-gradient(closest-side, var(--fog), transparent); animation: fog 40s ease-in-out infinite alternate; }
+  .f2 { bottom: -10vh; animation-duration: 56s; animation-direction: alternate-reverse; }
+  .flicker { animation: flicker 4.2s steps(1, end) infinite; }
+  [data-theme="classic"] .haunt { display: none; }
+  [data-theme="classic"] .flicker { animation: none; }
+  @keyframes batfly { 0% { transform: translate(0,0) scale(var(--s,1)); } 25% { transform: translate(30vw,-3vh) scale(var(--s,1)); } 50% { transform: translate(60vw,2vh) scale(var(--s,1)); } 75% { transform: translate(90vw,-2vh) scale(var(--s,1)); } 100% { transform: translate(calc(100vw + 80px),1vh) scale(var(--s,1)); } }
+  @keyframes fog { from { transform: translateX(-6%); } to { transform: translateX(6%); } }
+  @keyframes dangle { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+  @keyframes flicker { 0%,100% { opacity: 1; } 31% { opacity: .82; } 34% { opacity: 1; } 62% { opacity: .9; } 64% { opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .haunt *, .flicker { animation: none !important; } .b1 { transform: translate(62vw,0); } .b2 { transform: translate(24vw,0) scale(.7); } .b3 { transform: translate(78vw,0) scale(.55); } }
+  @media print { .haunt { display: none; } }
   footer { margin-top: 2rem; font-size: .9rem; color: var(--muted); text-align: center; }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
   @media (prefers-reduced-motion: reduce) { .ghost { animation: none; } * { transition-duration: .01ms !important; } }
@@ -84,6 +105,7 @@ const hubHtml = `<!doctype html>
 </style>
 </head>
 <body>
+<div class="haunt" aria-hidden="true"><svg class="moon" width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="44" fill="#e9e1cf"/><circle cx="46" cy="50" r="7" fill="#cfc4ad"/><circle cx="72" cy="70" r="10" fill="#cfc4ad"/><circle cx="70" cy="40" r="4.5" fill="#cfc4ad"/></svg><svg class="web" width="140" height="140" viewBox="0 0 140 140"><g fill="none" stroke="var(--web)" stroke-width="1.2" stroke-linecap="round"><path d="M0 0L140 140M0 0L70 140M0 0L140 70M0 0L0 140M0 0L140 0"/><path d="M0 28q14 6 20 0t20-8q-2-12 8-20M0 56q24 8 38-2t38-14q-4-24 14-40M0 86q34 10 56-4t56-22q-6-36 20-60M0 116q42 12 72-6t70-28"/></g><line x1="100" y1="0" x2="100" y2="58" stroke="var(--web)"/><circle class="spider" cx="100" cy="62" r="5" fill="var(--bat)"/></svg><svg class="bat b1" width="34" height="20" viewBox="0 0 34 20"><path d="M17 6l1.6-3 1 3.2c2.6-1.4 5.6-3.6 9.4-2.8-1.4 1.6-2 3.6-1.4 5.8-2.6-.8-5 0-6.4 1.8-1.2-1.2-2.4-1.6-3.2-1.4L17 13l-1-3.4c-.8-.2-2 .2-3.2 1.4C11.4 9.2 9 8.4 6.4 9.2 7 7 6.4 5 5 3.4c3.8-.8 6.8 1.4 9.4 2.8l1-3.2z" fill="var(--bat)"/></svg><svg class="bat b2" width="34" height="20" viewBox="0 0 34 20"><path d="M17 6l1.6-3 1 3.2c2.6-1.4 5.6-3.6 9.4-2.8-1.4 1.6-2 3.6-1.4 5.8-2.6-.8-5 0-6.4 1.8-1.2-1.2-2.4-1.6-3.2-1.4L17 13l-1-3.4c-.8-.2-2 .2-3.2 1.4C11.4 9.2 9 8.4 6.4 9.2 7 7 6.4 5 5 3.4c3.8-.8 6.8 1.4 9.4 2.8l1-3.2z" fill="var(--bat)"/></svg><svg class="bat b3" width="34" height="20" viewBox="0 0 34 20"><path d="M17 6l1.6-3 1 3.2c2.6-1.4 5.6-3.6 9.4-2.8-1.4 1.6-2 3.6-1.4 5.8-2.6-.8-5 0-6.4 1.8-1.2-1.2-2.4-1.6-3.2-1.4L17 13l-1-3.4c-.8-.2-2 .2-3.2 1.4C11.4 9.2 9 8.4 6.4 9.2 7 7 6.4 5 5 3.4c3.8-.8 6.8 1.4 9.4 2.8l1-3.2z" fill="var(--bat)"/></svg><div class="fog f1"></div><div class="fog f2"></div></div>
 <main>
   <div class="top">
     <button type="button" class="toggle" id="theme-toggle" aria-pressed="true">
@@ -108,7 +130,7 @@ const hubHtml = `<!doctype html>
     <ul class="cards" style="list-style:none">
       <li>
         <a class="card order" href="/order/">
-          <h2><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 32 32"><path d="M16 7c0-2.4 1-4 3-5" fill="none" stroke="#7ee2a0" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="9.5" cy="19" rx="6.5" ry="9" fill="#ff7a1a"/><ellipse cx="22.5" cy="19" rx="6.5" ry="9" fill="#ff7a1a"/><ellipse cx="16" cy="19" rx="6" ry="10" fill="#ff9a45"/><path d="M10.5 15l2.8 3.4h-5.6zM21.5 15l2.8 3.4h-5.6z" fill="#1a0b00"/><path d="M10 23.5l2.2 1.6 1.8-1.4 2 1.4 2-1.4 1.8 1.4 2.2-1.6" fill="none" stroke="#1a0b00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg> Order Awaaz</h2>
+          <h2><svg aria-hidden="true" focusable="false" width="26" height="26" viewBox="0 0 32 32"><path d="M16 7c0-2.4 1-4 3-5" fill="none" stroke="#7ee2a0" stroke-width="2.2" stroke-linecap="round"/><ellipse cx="9.5" cy="19" rx="6.5" ry="9" fill="#ff7a1a"/><ellipse cx="22.5" cy="19" rx="6.5" ry="9" fill="#ff7a1a"/><ellipse class="flicker" cx="16" cy="19" rx="6" ry="10" fill="#ff9a45"/><path d="M10.5 15l2.8 3.4h-5.6zM21.5 15l2.8 3.4h-5.6z" fill="#1a0b00"/><path d="M10 23.5l2.2 1.6 1.8-1.4 2 1.4 2-1.4 1.8 1.4 2.2-1.6" fill="none" stroke="#1a0b00" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg> Order Awaaz</h2>
           <p>Speak a customer's order, check it, and save it.</p>
           <span class="go">Open Order Awaaz &rarr;</span>
         </a>

@@ -7,7 +7,7 @@ import {
 } from '@awaaz-kit/confirmation-engine';
 import { OrderWorkflowAdapter, setFulfillment, setNote } from '@awaaz-kit/domain-order';
 import { commitConfirmed, type CommitResult, type OrderWithItems } from '@awaaz-kit/local-data';
-import { ReviewCard, SyncBadge } from '@awaaz-kit/shared-ui';
+import { GhostCelebrate, ReviewCard, SyncBadge } from '@awaaz-kit/shared-ui';
 import { useResolvedDraft } from '../capture/resolveDraft';
 import { useLiveQuery } from '../hooks/useLiveQuery';
 import { formatQty, formatRupees, toSyncBadgeState } from '../orders/orderView';
@@ -33,6 +33,7 @@ function Saved({ result }: { result: CommitResult }): ReactElement {
     <section className="flex flex-col gap-3" aria-labelledby="saved-heading">
       <h2 id="saved-heading" className="text-lg font-semibold">
         Saved on this device
+        {result.status === 'created' ? <GhostCelebrate /> : null}
       </h2>
       <p role="status" aria-live="polite">
         {result.status === 'already_exists'

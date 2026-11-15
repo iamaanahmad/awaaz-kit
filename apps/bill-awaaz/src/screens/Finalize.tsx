@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactElement } from 'react';
 import { Link, useParams } from 'react-router';
 import { commitConfirmed, type BillWithItems, type CommitResult } from '@awaaz-kit/local-data';
 import { formatRupees } from '@awaaz-kit/domain-billing';
+import { GhostCelebrate } from '@awaaz-kit/shared-ui';
 import { clearPendingConfirmed, peekPendingConfirmed } from '../capture/confirmedActionStore';
 import { setBillDraft } from '../capture/billDraftStore';
 import { useLive, useShops } from '../data/homeHooks';
@@ -154,10 +155,13 @@ export default function Finalize(): ReactElement {
 
   return (
     <main className="mx-auto flex min-h-screen max-w-md flex-col gap-4 p-4">
-      <div role="status" className="print:hidden">
-        {phase.result.status === 'already_exists'
-          ? `This bill was already saved earlier as #${phase.result.number}. Nothing new was added.`
-          : `Bill saved. Receipt #${phase.result.number}.`}
+      <div className="flex items-center print:hidden">
+        <div role="status">
+          {phase.result.status === 'already_exists'
+            ? `This bill was already saved earlier as #${phase.result.number}. Nothing new was added.`
+            : `Bill saved. Receipt #${phase.result.number}.`}
+        </div>
+        {phase.result.status === 'created' ? <GhostCelebrate /> : null}
       </div>
       {detail ? (
         <article

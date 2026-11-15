@@ -1,6 +1,12 @@
 import { Suspense, lazy, useEffect, type ReactElement } from 'react';
 import { BrowserRouter, Link, NavLink, Route, Routes } from 'react-router';
-import { DelayedFallback, GhostMark, ThemeToggle, runWhenIdle } from '@awaaz-kit/shared-ui';
+import {
+  DelayedFallback,
+  GhostMark,
+  HauntedBackdrop,
+  ThemeToggle,
+  runWhenIdle,
+} from '@awaaz-kit/shared-ui';
 import { AppProviders } from './providers/AppProviders';
 
 const loadHome = () => import('./screens/Home');
@@ -60,6 +66,7 @@ export function App() {
   useEffect(() => runWhenIdle(preloadRoutes), []);
   return (
     <AppProviders>
+      <HauntedBackdrop />
       <BrowserRouter basename={import.meta.env.BASE_URL}>
         <TopBar />
         <Suspense fallback={<DelayedFallback />}>

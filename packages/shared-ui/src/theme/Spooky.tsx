@@ -50,7 +50,7 @@ export function PumpkinIcon({ size = 28, className }: DecorProps): ReactElement 
       />
       <ellipse cx="9.5" cy="19" rx="6.5" ry="9" fill="#ff7a1a" />
       <ellipse cx="22.5" cy="19" rx="6.5" ry="9" fill="#ff7a1a" />
-      <ellipse cx="16" cy="19" rx="6" ry="10" fill="#ff9a45" />
+      <ellipse className="ak-pumpkin-flicker" cx="16" cy="19" rx="6" ry="10" fill="#ff9a45" />
       <path d="M10.5 15l2.8 3.4h-5.6zM21.5 15l2.8 3.4h-5.6z" fill="#1a0b00" />
       <path
         d="M10 23.5l2.2 1.6 1.8-1.4 2 1.4 2-1.4 1.8 1.4 2.2-1.6"
@@ -61,6 +61,61 @@ export function PumpkinIcon({ size = 28, className }: DecorProps): ReactElement 
         strokeLinecap="round"
       />
     </svg>
+  );
+}
+
+/** Bat silhouette for the backdrop. */
+function Bat({ className }: { className: string }): ReactElement {
+  return (
+    <svg className={className} width="34" height="20" viewBox="0 0 34 20">
+      <path
+        d="M17 6l1.6-3 1 3.2c2.6-1.4 5.6-3.6 9.4-2.8-1.4 1.6-2 3.6-1.4 5.8-2.6-.8-5 0-6.4 1.8-1.2-1.2-2.4-1.6-3.2-1.4L17 13l-1-3.4c-.8-.2-2 .2-3.2 1.4C11.4 9.2 9 8.4 6.4 9.2 7 7 6.4 5 5 3.4c3.8-.8 6.8 1.4 9.4 2.8l1-3.2z"
+        fill="var(--ui-haunt-bat)"
+      />
+    </svg>
+  );
+}
+
+/**
+ * Haunted-theme scenery: moon, a cobweb, a few slow bats and low fog. Fixed behind all
+ * content (z-index -1, no pointer events), hidden from assistive tech, hidden in Classic and
+ * print, and frozen in place under prefers-reduced-motion. It never sits on top of text.
+ */
+export function HauntedBackdrop(): ReactElement {
+  return (
+    <div className="ak-haunt" aria-hidden="true">
+      <svg className="ak-haunt-moon" width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="44" fill="var(--ui-haunt-moon)" />
+        <circle cx="46" cy="50" r="7" fill="var(--ui-haunt-crater)" />
+        <circle cx="72" cy="70" r="10" fill="var(--ui-haunt-crater)" />
+        <circle cx="70" cy="40" r="4.5" fill="var(--ui-haunt-crater)" />
+      </svg>
+      <svg className="ak-haunt-web" width="140" height="140" viewBox="0 0 140 140">
+        <g fill="none" stroke="var(--ui-haunt-web)" strokeWidth="1.2" strokeLinecap="round">
+          <path d="M0 0L140 140M0 0L70 140M0 0L140 70M0 0L0 140M0 0L140 0" />
+          <path d="M0 28q14 6 20 0t20-8q-2-12 8-20M0 56q24 8 38-2t38-14q-4-24 14-40M0 86q34 10 56-4t56-22q-6-36 20-60M0 116q42 12 72-6t70-28" />
+        </g>
+        <line x1="100" y1="0" x2="100" y2="58" stroke="var(--ui-haunt-web)" strokeWidth="1" />
+        <circle className="ak-haunt-spider" cx="100" cy="62" r="5" fill="var(--ui-haunt-bat)" />
+      </svg>
+      <Bat className="ak-haunt-bat ak-haunt-bat-1" />
+      <Bat className="ak-haunt-bat ak-haunt-bat-2" />
+      <Bat className="ak-haunt-bat ak-haunt-bat-3" />
+      <div className="ak-haunt-fog ak-haunt-fog-1" />
+      <div className="ak-haunt-fog ak-haunt-fog-2" />
+    </div>
+  );
+}
+
+/**
+ * Success flourish: a small ghost rises and fades once, next to a "saved" message. Decorative;
+ * the message itself carries the meaning. Shown only in Haunted, skipped under reduced motion.
+ */
+export function GhostCelebrate(): ReactElement {
+  return (
+    <span className="ak-celebrate" aria-hidden="true">
+      <GhostMascot size={40} className="ak-ghost-still" />
+    </span>
   );
 }
 

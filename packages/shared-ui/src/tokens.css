@@ -66,6 +66,13 @@
   --ui-color-focus-halo: #0f0b14;
   --ui-ghost-body: #f3eee4;
   --ui-ghost-eye: #1e1430;
+  /* Haunted scenery. Deliberately low contrast against the surface so it never competes with
+     text; it sits behind content and carries no meaning. Not used in Classic. */
+  --ui-haunt-moon: #e9e1cf;
+  --ui-haunt-crater: #cfc4ad;
+  --ui-haunt-bat: #3b2a5e;
+  --ui-haunt-web: #2e2148;
+  --ui-haunt-fog: rgb(143 123 191 / 0.1);
   /* Elevation only for things that float above the page (menus, the review panel). */
   --ui-shadow-raised: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 8px 24px rgb(0 0 0 / 0.35);
 

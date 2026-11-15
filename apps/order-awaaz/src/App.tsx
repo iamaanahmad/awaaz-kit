@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react';
 import { RouterProvider } from 'react-router/dom';
 import { createBrowserRouter } from 'react-router';
+import { HauntedBackdrop } from '@awaaz-kit/shared-ui';
 import { AppProviders } from './providers/AppProviders';
 import { routes } from './routes';
 
@@ -10,6 +11,7 @@ const router = createBrowserRouter(routes, { basename: import.meta.env.BASE_URL 
 export function App(): ReactElement {
   return (
     <AppProviders>
+      <HauntedBackdrop />
       <RouterProvider router={router} />
     </AppProviders>
   );

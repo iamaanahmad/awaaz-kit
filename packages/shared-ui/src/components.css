@@ -863,6 +863,181 @@
   font-size: 0.9rem;
 }
 
+/* ---------- Haunted scenery (backdrop, flicker, peek, celebrate) ---------- */
+.ak-haunt {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ak-haunt > * {
+  position: absolute;
+}
+.ak-haunt-moon {
+  top: 1.5rem;
+  right: max(1rem, calc(50vw - 34rem));
+  width: clamp(72px, 12vw, 120px);
+  height: auto;
+  opacity: 0.55;
+}
+.ak-haunt-web {
+  top: 0;
+  left: 0;
+  width: clamp(96px, 14vw, 140px);
+  height: auto;
+}
+.ak-haunt-spider {
+  animation: ak-dangle 6s var(--ease-standard) infinite;
+  transform-origin: 100px 0;
+}
+.ak-haunt-bat {
+  opacity: 0.9;
+  will-change: transform;
+}
+.ak-haunt-bat-1 {
+  top: 18vh;
+  left: -40px;
+  animation: ak-bat-fly 38s linear infinite;
+}
+.ak-haunt-bat-2 {
+  top: 34vh;
+  left: -40px;
+  transform: scale(0.7);
+  animation: ak-bat-fly 52s linear -18s infinite;
+}
+.ak-haunt-bat-3 {
+  top: 9vh;
+  left: -40px;
+  transform: scale(0.55);
+  animation: ak-bat-fly 64s linear -40s infinite;
+}
+.ak-haunt-fog {
+  left: -25%;
+  bottom: -6vh;
+  width: 150%;
+  height: 26vh;
+  background: radial-gradient(closest-side, var(--ui-haunt-fog), transparent);
+  animation: ak-fog-drift 40s ease-in-out infinite alternate;
+}
+.ak-haunt-fog-2 {
+  bottom: -10vh;
+  animation-duration: 56s;
+  animation-direction: alternate-reverse;
+}
+
+/* The Order pumpkin flickers like a candle inside. */
+.ak-pumpkin-flicker {
+  animation: ak-flicker 4.2s steps(1, end) infinite;
+}
+
+/* Empty-state ghost peeks in once, then floats (the float lives on .ak-ghost). */
+.ak-empty-peek {
+  display: inline-flex;
+  flex: none;
+  animation: ak-peek var(--motion-slow) var(--ease-emphasized) both;
+}
+
+/* Saved/finalized flourish: a ghost rises and fades once. */
+.ak-celebrate {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: var(--space-2);
+  animation: ak-rise 1.6s var(--ease-enter) forwards;
+}
+
+/* Scenery belongs to Haunted only. */
+:root[data-theme='classic'] .ak-haunt,
+:root[data-theme='classic'] .ak-celebrate {
+  display: none;
+}
+:root[data-theme='classic'] .ak-pumpkin-flicker,
+:root[data-theme='classic'] .ak-empty-peek {
+  animation: none;
+}
+
+@keyframes ak-bat-fly {
+  0% {
+    transform: translate(0, 0) scale(var(--bat-scale, 1));
+  }
+  25% {
+    transform: translate(30vw, -3vh) scale(var(--bat-scale, 1));
+  }
+  50% {
+    transform: translate(60vw, 2vh) scale(var(--bat-scale, 1));
+  }
+  75% {
+    transform: translate(90vw, -2vh) scale(var(--bat-scale, 1));
+  }
+  100% {
+    transform: translate(calc(100vw + 80px), 1vh) scale(var(--bat-scale, 1));
+  }
+}
+.ak-haunt-bat-2 {
+  --bat-scale: 0.7;
+}
+.ak-haunt-bat-3 {
+  --bat-scale: 0.55;
+}
+@keyframes ak-fog-drift {
+  from {
+    transform: translateX(-6%);
+  }
+  to {
+    transform: translateX(6%);
+  }
+}
+@keyframes ak-dangle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+@keyframes ak-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  31% {
+    opacity: 0.82;
+  }
+  34% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 0.9;
+  }
+  64% {
+    opacity: 1;
+  }
+}
+@keyframes ak-peek {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ak-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-36px);
+  }
+}
+
 /* ---------- Theme toggle ---------- */
 .ak-theme-toggle[aria-pressed='true'] {
   border-color: var(--ui-color-accent-text);
@@ -909,15 +1084,34 @@
   .ak-ghost,
   .ak-mic-recording,
   .ak-loading-dot,
-  .ak-btn[aria-busy='true']::after {
+  .ak-btn[aria-busy='true']::after,
+  .ak-haunt *,
+  .ak-pumpkin-flicker,
+  .ak-empty-peek {
     animation: none !important;
+  }
+  /* Bats would freeze off-screen at their start point; park them in view instead. */
+  .ak-haunt-bat-1 {
+    transform: translate(62vw, 0);
+  }
+  .ak-haunt-bat-2 {
+    transform: translate(24vw, 0) scale(0.7);
+  }
+  .ak-haunt-bat-3 {
+    transform: translate(78vw, 0) scale(0.55);
+  }
+  /* A rising ghost is pure motion: skip it. The "saved" text still says it all. */
+  .ak-celebrate {
+    display: none;
   }
 }
 
 @media print {
   .ak-ghost,
   .ak-theme-toggle,
-  .ak-topbar {
+  .ak-topbar,
+  .ak-haunt,
+  .ak-celebrate {
     display: none;
   }
 }

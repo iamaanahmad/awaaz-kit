@@ -12,7 +12,9 @@ export interface EmptyStateProps {
 export function EmptyState({ lead = 'Boo!', children }: EmptyStateProps): ReactElement {
   return (
     <div className="ak-empty">
-      <GhostMascot size={64} />
+      <span className="ak-empty-peek">
+        <GhostMascot size={64} />
+      </span>
       <div className="ak-empty-text">
         <strong className="ak-empty-lead">{lead}</strong>
         {children}

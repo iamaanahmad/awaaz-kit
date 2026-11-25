@@ -9,8 +9,9 @@ import {
   type Repositories,
 } from '@awaaz-kit/local-data';
 import {
-  createProvider,
+  createOnDeviceVoice,
   resolveProviderId,
+  type OnDeviceVoice,
   type SpeechToTextProvider,
 } from '@awaaz-kit/speech-provider';
 
@@ -27,6 +28,8 @@ export interface AppServices {
   db: AwaazDb;
   repos: Repositories;
   speech: SpeechToTextProvider;
+  /** The speech provider plus the manager that downloads its model (null for scripted). */
+  voice: OnDeviceVoice;
 }
 
 const ServicesContext = createContext<AppServices | null>(null);
@@ -87,10 +90,10 @@ export function AppProviders({ children }: { children: ReactNode }) {
       now: () => new Date(),
       newId: () => crypto.randomUUID(),
     });
-    const speech = createProvider(
+    const voice = createOnDeviceVoice(
       resolveProviderId(import.meta.env.VITE_SPEECH_PROVIDER as string | undefined),
     );
-    return { db, repos, speech };
+    return { db, repos, speech: voice.provider, voice };
   }, [db]);
 
   return (

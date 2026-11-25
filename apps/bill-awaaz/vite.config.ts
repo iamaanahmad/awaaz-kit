@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 import { VitePWA } from 'vite-plugin-pwa';
 import { packageManifestDefine } from '../../tools/packageManifest';
+import { SPEECH_BUILD_EXTERNALS, SPEECH_RUNTIME_CACHE } from '../../tools/speechRuntimeCache';
 
 // Served under /bill/ on the shared origin (design: Hosting).
 export default defineConfig({
@@ -38,9 +39,9 @@ export default defineConfig({
         ],
       },
       workbox: {
-        // App shell, routes, fonts and icons only. The onnxruntime wasm (~29 MB)
-        // and Speech_Model files are excluded; they are cached at runtime by the
-        // speech provider's own model cache (Req 3.x), not by the PWA precache.
+        // App shell, routes, fonts and icons only. The onnxruntime wasm and Speech_Model
+        // files are excluded from precache: the model lives in awaaz-speech-model-v1 and the
+        // runtime is cached on first use (SPEECH_RUNTIME_CACHE) so voice works offline.
         globPatterns: ['**/*.{js,css,html,woff,woff2,png,svg,ico,webmanifest}'],
         globIgnores: [
           '**/*.wasm',
@@ -49,10 +50,9 @@ export default defineConfig({
           '**/*.gguf',
           '**/*.safetensors',
           '**/models/**',
-          '**/ort-*',
-          '**/ort.*',
         ],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+        runtimeCaching: [SPEECH_RUNTIME_CACHE],
         navigateFallback: '/bill/index.html',
         navigateFallbackAllowlist: [/^\/bill\//],
         cleanupOutdatedCaches: true,
@@ -65,5 +65,7 @@ export default defineConfig({
   ],
   server: { port: 5174 },
   preview: { port: 4174 },
-  build: { target: 'es2022' },
+  build: { target: 'es2022', rollupOptions: { external: SPEECH_BUILD_EXTERNALS } },
+  // The speech model runs in a module worker (it uses dynamic imports).
+  worker: { format: 'es', rollupOptions: { external: SPEECH_BUILD_EXTERNALS } },
 });

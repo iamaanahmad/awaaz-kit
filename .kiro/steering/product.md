@@ -23,7 +23,7 @@ Both apps share one IndexedDB database (`awaaz-kit`), one catalog and one Speech
 
 ## Speech provider status
 
-The shipping default provider id is `scripted` (typed input plus chips labelled "Sample"). Shruti (browser ONNX) is built behind `SpeechToTextProvider` and becomes the default only after the manual spike results are recorded in `docs/model-benchmark.md`. Fallback chain: `shruti`, then `whisper-wasm`, then typed input and scripted clips. Never claim on-device voice accuracy that the benchmark does not support.
+The shipping default provider id is `shruti`: Shruti Hindi (int8 ONNX, Apache-2.0) through `shruti-onnx` and `onnxruntime-web`, running in a Web Worker. The model is downloaded only when the user taps Download (about 53 MB, SHA-256 checked) and is read only from Cache Storage afterwards. Until then typed input and chips labelled "Sample" are the path. `scripted` remains for tests. Measured results live in `docs/model-benchmark.md`; never claim accuracy, speed or device support beyond what it records (no phone run yet).
 
 ## Non-goals (do not build)
 

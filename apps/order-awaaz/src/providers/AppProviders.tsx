@@ -20,8 +20,9 @@ import {
 } from '@awaaz-kit/local-data';
 import type { OrderDraft } from '@awaaz-kit/domain-order';
 import {
-  createProvider,
+  createOnDeviceVoice,
   resolveProviderId,
+  type OnDeviceVoice,
   type SpeechToTextProvider,
 } from '@awaaz-kit/speech-provider';
 import {
@@ -48,7 +49,7 @@ export interface CaptureContextValue extends UseCaptureSession<OrderDraft> {
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
-const SpeechContext = createContext<SpeechToTextProvider | null>(null);
+const SpeechContext = createContext<OnDeviceVoice | null>(null);
 const CaptureContext = createContext<CaptureContextValue | null>(null);
 
 function toIssue(err: unknown): StorageIssue {
@@ -81,7 +82,7 @@ export function AppProviders({ children }: { children: ReactNode }): ReactElemen
   const visibleIssue = issue?.kind === 'persist-denied' && persistNote.dismissed ? null : issue;
 
   const speech = useMemo(
-    () => createProvider(resolveProviderId(import.meta.env.VITE_SPEECH_PROVIDER)),
+    () => createOnDeviceVoice(resolveProviderId(import.meta.env.VITE_SPEECH_PROVIDER)),
     [],
   );
 
@@ -154,6 +155,9 @@ function need<T>(value: T | null, name: string): T {
 
 export const useData = (): DataContextValue => need(useContext(DataContext), 'useData');
 export const useSpeechProvider = (): SpeechToTextProvider =>
-  need(useContext(SpeechContext), 'useSpeechProvider');
+  need(useContext(SpeechContext), 'useSpeechProvider').provider;
+/** The speech provider plus the manager that downloads its model (null for scripted). */
+export const useOnDeviceVoice = (): OnDeviceVoice =>
+  need(useContext(SpeechContext), 'useOnDeviceVoice');
 export const useOrderCapture = (): CaptureContextValue =>
   need(useContext(CaptureContext), 'useOrderCapture');

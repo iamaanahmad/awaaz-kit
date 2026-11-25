@@ -65,8 +65,8 @@ export function ModelStatusCard({
           </p>
         ) : (
           <p>
-            Speech model ready{status.version ? ` (version ${status.version})` : ''}. Works
-            offline.
+            Voice is ready on this device{status.version ? ` (${status.version})` : ''}. It works
+            offline, and your audio never leaves this phone.
           </p>
         );
       break;
@@ -78,7 +78,8 @@ export function ModelStatusCard({
             {status.kind === 'evicted'
               ? 'The speech model was removed from browser storage.'
               : 'Speech model not installed.'}{' '}
-            Download size is about {size}.
+            One-time download of about {size}. After that, voice works offline and your audio never
+            leaves this phone.
           </p>
           <div className="ak-actions">
             {downloadButton('Download model')}

@@ -371,6 +371,9 @@ importers:
       onnxruntime-web:
         specifier: 1.31.1
         version: 1.31.1
+      shruti-onnx:
+        specifier: 0.2.0
+        version: 0.2.0(onnxruntime-web@1.31.1)
       zod:
         specifier: 3.25.76
         version: 3.25.76
@@ -2921,6 +2924,12 @@ packages:
   shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
+
+  shruti-onnx@0.2.0:
+    resolution: {integrity: sha512-QW7PdsJCIBYyWkuNNF4cAyGAnXdkCrOY5Ryz0cQ3LGu1d57Ap3v8nxC6lHXwQus2axPKH+QbcUbomb/BHN7Jjg==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      onnxruntime-web: '>=1.17'
 
   side-channel-list@1.0.1:
     resolution: {integrity: sha512-mjn/0bi/oUURjc5Xl7IaWi/OJJJumuoJFQJfDDyO46+hBWsfaVM65TBHq2eoZBhzl9EchxOijpkbRC8SVBQU0w==}
@@ -6119,6 +6128,10 @@ snapshots:
       shebang-regex: 3.0.0
 
   shebang-regex@3.0.0: {}
+
+  shruti-onnx@0.2.0(onnxruntime-web@1.31.1):
+    dependencies:
+      onnxruntime-web: 1.31.1
 
   side-channel-list@1.0.1:
     dependencies:

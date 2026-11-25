@@ -1,0 +1,12 @@
+[
+  {
+    "file": "order-en-sugar-rice.wav",
+    "reference": "two kilo sugar and five kilo rice",
+    "source": "synthetic speech: Windows SAPI voice Microsoft Zira (en-US), generated for this repo; no human speaker"
+  },
+  {
+    "file": "order-en-sugar-milk.wav",
+    "reference": "two kilo sugar and one litre milk",
+    "source": "synthetic speech: Windows SAPI voice Microsoft Zira (en-US), generated for this repo; no human speaker"
+  }
+]

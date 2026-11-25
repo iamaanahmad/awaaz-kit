@@ -1,0 +1,236 @@
+{
+  "summary": {
+    "model": "udgamlabs/Shruti-ONNX hi, int8 build (onnx-int8), shruti-onnx 0.2.0, onnxruntime-web WASM, 1 thread, 5-beam, loops cut",
+    "machine": "13th Gen Intel(R) Core(TM) i7-13700H, win32 x64, Node v24.9.0",
+    "date": "2026-11-25",
+    "clips": 20,
+    "audioSeconds": 125.7,
+    "modelLoadMs": 9521,
+    "meanLatencyMs": 1557,
+    "realTimeFactor": 0.248,
+    "corpusWer": 0.254,
+    "caveat": "MUCS 2021 Hindi-English lecture speech, not shop orders; desktop CPU, not a phone. Word error rate uses a simple shared normaliser (NFC, lowercase, punctuation removed)."
+  },
+  "rows": [
+    {
+      "file": "mucs-000.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #0",
+      "seconds": 8.28,
+      "ms": 2558,
+      "rtf": 0.309,
+      "wer": 0.105,
+      "language": "hi",
+      "reference": "लिबर ऑफिस impress में एक प्रस्तुति document बनाना और बुनियादी formatting के इस spoken tutorial में आपका स्वागत है",
+      "hypothesis": "libreoffice impress में एक प्रस्तुति document बनाना और बुनियादी formatting के इस spoken tutorial में आपका स्वागत है"
+    },
+    {
+      "file": "mucs-001.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #1",
+      "seconds": 13.55,
+      "ms": 3007,
+      "rtf": 0.222,
+      "wer": 0.222,
+      "language": "hi",
+      "reference": "इस tutorial में हम impress window के भागों के बारे में सीखेंगे और कैसे स्लाइड इन्सर्ट करें और कॉपी करें फॉन्ट तथा फॉन्ट को फॉर्मेट करना सीखेंगे",
+      "hypothesis": "इस tutorial में हम impress window के भागों के बारे में सीखेंगे और कैसे slide insert करें और copy करें फोन तथा फोन को format करना सीखेंगे"
+    },
+    {
+      "file": "mucs-002.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #2",
+      "seconds": 8.55,
+      "ms": 2122,
+      "rtf": 0.248,
+      "wer": 0.263,
+      "language": "hi",
+      "reference": "यहाँ हम अपने ऑपरेटिंग सिस्टम के रूप में gnu/linux और लिबरऑफिस वर्जन 334 का उपयोग कर रहे हैं",
+      "hypothesis": "यहाँ हम अपने operating system के रूप में genu linux और libreoffice version 334 का उपयोग कर रहे हैं"
+    },
+    {
+      "file": "mucs-003.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #3",
+      "seconds": 6.55,
+      "ms": 1766,
+      "rtf": 0.27,
+      "wer": 0.267,
+      "language": "hi",
+      "reference": "चलिए अपनी प्रस्तुति प्रेजैटेशन sample impress open करते हैं जिसे पिछले tutorial में बनाया था",
+      "hypothesis": "चलिए अपनी प्रस्तुति sample impress open करते हैं जिसे पिछले ट्यूटोरियल में बनाएँ"
+    },
+    {
+      "file": "mucs-004.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #4",
+      "seconds": 4.55,
+      "ms": 832,
+      "rtf": 0.183,
+      "wer": 0,
+      "language": "hi",
+      "reference": "चलिए देखते हैं कि screen पर क्या क्या है",
+      "hypothesis": "चलिए देखते हैं कि screen पर क्या क्या है"
+    },
+    {
+      "file": "mucs-005.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #5",
+      "seconds": 5.55,
+      "ms": 1498,
+      "rtf": 0.27,
+      "wer": 0.286,
+      "language": "hi",
+      "reference": "मध्य में हम खाली जगह देखते है जोकि workspace है जहाँ हम काम करेंगे",
+      "hypothesis": "मध्य में हम खाली जगह देखते हैं जो कि workspace है जहाँ हम काम करें"
+    },
+    {
+      "file": "mucs-006.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #6",
+      "seconds": 5.55,
+      "ms": 1070,
+      "rtf": 0.193,
+      "wer": 0.375,
+      "language": "hi",
+      "reference": "जैसे कि आप देख सकते हैं workspace में 5 tabs हैं जिन्हें view buttons कहते हैं",
+      "hypothesis": "जैसे कि आप देख सकते हैं workspace में पाँच tabs हैं"
+    },
+    {
+      "file": "mucs-007.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #7",
+      "seconds": 3.55,
+      "ms": 800,
+      "rtf": 0.225,
+      "wer": 0.2,
+      "language": "hi",
+      "reference": "फिलहाल normal टैब चुनित हैं",
+      "hypothesis": "फिलहाल normal टैब चुनित है"
+    },
+    {
+      "file": "mucs-008.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #8",
+      "seconds": 3.55,
+      "ms": 833,
+      "rtf": 0.235,
+      "wer": 0.333,
+      "language": "hi",
+      "reference": "यह मुख्य view है अलगअलग slides बनाने के लिए",
+      "hypothesis": "यह मुख्य view है अलग अलग slide बनाने के लिए"
+    },
+    {
+      "file": "mucs-009.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #9",
+      "seconds": 8.55,
+      "ms": 2351,
+      "rtf": 0.275,
+      "wer": 0,
+      "language": "hi",
+      "reference": "outline view प्रत्येक slide के outline format में विषय शीर्षक bulleted और क्रमांकित सूचियाँ बताता है",
+      "hypothesis": "outline view प्रत्येक slide के outline format में विषय शीर्षक bulleted और क्रमांकित सूचियाँ बताता है"
+    },
+    {
+      "file": "mucs-010.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #10",
+      "seconds": 7.55,
+      "ms": 2296,
+      "rtf": 0.304,
+      "wer": 0.389,
+      "language": "hi",
+      "reference": "notes view प्रत्येक slide में notes जोड़ने की सुविधा देता है जोकि प्रस्तुतिकरण के वक्त नज़र नहीं the",
+      "hypothesis": "note s view प्रत्येक slide में note जोड़ने की सुविधा देता है जो कि प्रस्तुतिकरण के वक्त नजर नहीं आते"
+    },
+    {
+      "file": "mucs-011.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #11",
+      "seconds": 4.55,
+      "ms": 917,
+      "rtf": 0.202,
+      "wer": 0.5,
+      "language": "hi",
+      "reference": "handout view slides को हैन्डाउट के रूप में print करने की सुविधा देता है",
+      "hypothesis": "handout view slides को handout के रूप में"
+    },
+    {
+      "file": "mucs-012.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #12",
+      "seconds": 5.55,
+      "ms": 1470,
+      "rtf": 0.265,
+      "wer": 0.133,
+      "language": "hi",
+      "reference": "यहाँ हमें एक पेज पर कितने slides print करने हैं इसका चुनाव कर सकते हैं",
+      "hypothesis": "यहाँ हमें एक पेज पर कितने slide printed करने हैं इसका चुनाव कर सकते हैं"
+    },
+    {
+      "file": "mucs-013.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #13",
+      "seconds": 4.55,
+      "ms": 836,
+      "rtf": 0.184,
+      "wer": 0.625,
+      "language": "hi",
+      "reference": "slide sorter view slides की थम्बनेल बताता है",
+      "hypothesis": "slides order view slides की thumbnail बताते हैं"
+    },
+    {
+      "file": "mucs-014.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #14",
+      "seconds": 3.55,
+      "ms": 997,
+      "rtf": 0.281,
+      "wer": 0.2,
+      "language": "hi",
+      "reference": "अब फिर से normal view button पर click करते हैं",
+      "hypothesis": "अब फिर से normal view button पर click करें"
+    },
+    {
+      "file": "mucs-015.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #15",
+      "seconds": 8.55,
+      "ms": 2026,
+      "rtf": 0.237,
+      "wer": 0.111,
+      "language": "hi",
+      "reference": "screen की बाईं ओर आप slides pane देखते हैं यह प्रस्तुति में slides के थम्बनेल सम्मिलित करता है",
+      "hypothesis": "screen की बाईं ओर आप slides पहन देखते हैं यह प्रस्तुति में slides के थमनेल सम्मिलित करता है"
+    },
+    {
+      "file": "mucs-016.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #16",
+      "seconds": 6.55,
+      "ms": 1011,
+      "rtf": 0.154,
+      "wer": 0.5,
+      "language": "hi",
+      "reference": "दाएँ तरफ tasks pane हैं जिसमें अनुभाग है",
+      "hypothesis": "दायें तरफ task pen है जिसमें अनुभाग है"
+    },
+    {
+      "file": "mucs-017.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #17",
+      "seconds": 3.55,
+      "ms": 1052,
+      "rtf": 0.296,
+      "wer": 0.455,
+      "language": "hi",
+      "reference": "लेआउट्स section में पहले से ही कुछ सैम्पल लेआउट्स मौजूद हैं",
+      "hypothesis": "लेआउट सक्षन में पहले से ही कुछ सेव कर सकते हैं"
+    },
+    {
+      "file": "mucs-018.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #18",
+      "seconds": 5.55,
+      "ms": 1644,
+      "rtf": 0.296,
+      "wer": 0.222,
+      "language": "hi",
+      "reference": "हम उनका उपयोग ऐसे ही कर सकते हैं या आवश्यकता अनुसार कुछ बदलाव करके उपयोग कर सकते हैं",
+      "hypothesis": "हम उनका उपयोग ऐसे ही कर सकते हैं या आवश्यकतानुसार कुछ बदलाव कर सकते हैं"
+    },
+    {
+      "file": "mucs-019.wav",
+      "source": "dianavdavidson/MUCS-Hinglish test #19",
+      "seconds": 7.55,
+      "ms": 2050,
+      "rtf": 0.271,
+      "wer": 0.214,
+      "language": "hi",
+      "reference": "जैसे जैसे हम इन tutorial में आगे बढ़ेंगे इन sections को विस्तार में देखेंगे",
+      "hypothesis": "जैसे जैसे हम इन ट्यूटोरियल्स में आगे बढ़ेंगे इन सेक्शन्स को विस्तार में देखें"
+    }
+  ]
+}

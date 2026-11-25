@@ -7,11 +7,11 @@ import {
   ModelStatusCard,
   SampleUtteranceChips,
   TranscriptEditor,
+  useSpeechModel,
 } from '@awaaz-kit/shared-ui';
 import { useLiveQuery } from '../hooks/useLiveQuery';
-import { useData, useOrderCapture, useSpeechProvider } from '../providers/AppProviders';
+import { useData, useOnDeviceVoice, useOrderCapture } from '../providers/AppProviders';
 import { createOrderParser } from '../capture/orderParser';
-import { useModelStatus } from '../capture/useModelStatus';
 import { useVoiceRecorder } from '../capture/useVoiceRecorder';
 
 const ORDER_SAMPLES = SAMPLE_UTTERANCES.filter((s) => s.app === 'order').map((s) => s.text);
@@ -19,7 +19,8 @@ const ORDER_SAMPLES = SAMPLE_UTTERANCES.filter((s) => s.app === 'order').map((s)
 export default function Capture(): ReactElement {
   const navigate = useNavigate();
   const { repos } = useData();
-  const provider = useSpeechProvider();
+  const voice = useOnDeviceVoice();
+  const provider = voice.provider;
   const capture = useOrderCapture();
   const { session, editTranscript, submitTyped, setParser } = capture;
   const customerSelectId = useId();
@@ -30,7 +31,7 @@ export default function Capture(): ReactElement {
   const [customerId, setCustomerId] = useState<string | null>(null);
 
   const recorder = useVoiceRecorder(provider, capture);
-  const model = useModelStatus(null);
+  const model = useSpeechModel(voice.manager, provider, voice.approxBytes);
 
   const parser = useMemo(
     () =>
@@ -98,6 +99,11 @@ export default function Capture(): ReactElement {
         onRetry={recorder.retry}
         onUseTyping={focusTyping}
       />
+      {!model.voiceReady ? (
+        <p className="ak-help text-center" data-testid="voice-hint">
+          Voice works after a one-time download below. Until then, type the order or tap a Sample.
+        </p>
+      ) : null}
 
       {session.processing ? (
         <p role="status" aria-live="polite">

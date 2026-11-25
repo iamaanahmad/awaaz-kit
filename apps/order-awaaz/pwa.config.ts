@@ -1,8 +1,9 @@
 import { VitePWA } from 'vite-plugin-pwa';
+import { SPEECH_RUNTIME_CACHE } from '../../tools/speechRuntimeCache';
 
 // PWA configuration for the Order_App (scope /order/).
 // The PWA_Shell (app shell, routes, fonts, icons) is precached. Speech_Model files and the
-// ~29MB onnxruntime wasm are deliberately excluded: they are cached separately, on demand.
+// onnxruntime wasm are deliberately excluded: they are cached separately, on demand.
 const SCOPE = '/order/';
 
 export const MODEL_EXCLUDE_GLOBS = [
@@ -51,8 +52,11 @@ export const orderPwa = () =>
       globIgnores: MODEL_EXCLUDE_GLOBS,
       navigateFallback: `${SCOPE}index.html`,
       navigateFallbackAllowlist: [new RegExp(`^${SCOPE}`)],
-      // Anything model-like is never matched by runtime caching either.
       maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
+      // The speech runtime (~14 MB WASM + its JS glue) is not precached: it is fetched the first
+      // time voice loads, which is right after the user-started model download, and then kept
+      // so voice works offline. Model files themselves live in awaaz-speech-model-v1.
+      runtimeCaching: [SPEECH_RUNTIME_CACHE],
       cleanupOutdatedCaches: true,
       clientsClaim: true,
       // Background Sync handler (tag awaaz-sync), loaded relative to /order/sw.js.

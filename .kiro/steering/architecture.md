@@ -23,7 +23,7 @@ Enforced by `.dependency-cruiser.cjs` through `pnpm lint`. Violations fail CI. U
 | Package | Role | May import | Must not import |
 |---|---|---|---|
 | `voice-capture` | Mic capture, Recording_State | browser APIs only | any workspace package |
-| `speech-provider` | STT interface, ModelManager, providers (`scripted`, `shruti`, `whisper-wasm`) | browser APIs, onnxruntime-web | domain packages, intent/catalog engines |
+| `speech-provider` | STT interface, ModelManager, providers (`shruti` default, `scripted`; `whisper-wasm` slot unimplemented), Shruti worker | browser APIs, onnxruntime-web, shruti-onnx (only in `shruti-runtime.ts`) | domain packages, intent/catalog engines |
 | `language-normalizer` | Numbers, units, folding | nothing in workspace | everything else |
 | `intent-engine` | Item and slot extraction | normalizer types | domain, `local-data`, network |
 | `catalog-matcher` | Exact and fuzzy product match (Fuse.js) | normalizer, Fuse.js | domain, `local-data` (catalog passed in as data) |

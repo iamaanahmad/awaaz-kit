@@ -16,6 +16,10 @@ async function swReady(page: Page): Promise<void> {
 // Feature: awaaz-kit (example journey)
 // **Validates: Requirements 2.2, 19.10, 19.5**
 test.describe('Offline journey', () => {
+  // Longest journey (two service-worker installs, six reloads, an order and a bill). About 8 s
+  // alone, but it can pass 30 s while the voice journeys run the speech model in parallel.
+  test.setTimeout(90_000);
+
   test('@offline order and bill are created, confirmed and kept with no network', async ({
     demoPage: page,
     network,

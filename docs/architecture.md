@@ -66,20 +66,20 @@ Notes on how the repo differs from a naive reading of the layers:
 
 `.dependency-cruiser.cjs` enforces these rules and `pnpm lint` fails on a violation. Update the rules and this table together.
 
-| Package               | Role                                                                            | May import                                 | Must not import                                     |
-| --------------------- | ------------------------------------------------------------------------------- | ------------------------------------------ | --------------------------------------------------- |
-| `voice-capture`       | Mic capture, `Recording_State`                                                  | Browser APIs only                          | Any workspace package                               |
-| `speech-provider`     | STT interface, `ModelManager`, providers (`scripted`, `shruti`, `whisper-wasm`) | Browser APIs, onnxruntime-web              | Domain packages, intent and catalog engines         |
-| `language-normalizer` | Numbers, units, folding                                                         | Nothing in the workspace                   | Everything else                                     |
-| `intent-engine`       | Item and slot extraction                                                        | Normalizer types                           | Domain, `local-data`, network                       |
-| `catalog-matcher`     | Exact and fuzzy product match                                                   | Normalizer, Fuse.js                        | Domain, `local-data` (catalog is passed in as data) |
-| `confidence-engine`   | `Field_Status`, clarification                                                   | Intent and matcher types                   | Domain, `local-data`                                |
-| `confirmation-engine` | `WorkflowAdapter`, `ConfirmedAction`, `confirm`                                 | Confidence types                           | Domain, `local-data`                                |
-| `local-data`          | Dexie schema, repositories, `commitConfirmed`, logger, seed                     | Dexie, confirmation-engine types           | Domain, React, `sync-engine`                        |
-| `sync-engine`         | Outbox push and pull, `SyncRemote`, `AppwriteRemote`                            | `appwrite` SDK in one adapter file         | Domain, React                                       |
-| `shared-ui`           | Shared React components, tokens                                                 | React, engine types                        | `local-data`                                        |
-| `domain-order`        | `OrderWorkflowAdapter`, order drafts                                            | Engine packages, `local-data` record types | `domain-billing`, apps                              |
-| `domain-billing`      | `BillingWorkflowAdapter`, money math                                            | Engine packages, `local-data` record types | `domain-order`, apps                                |
+| Package               | Role                                                                                   | May import                                 | Must not import                                     |
+| --------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------ | --------------------------------------------------- |
+| `voice-capture`       | Mic capture, `Recording_State`                                                         | Browser APIs only                          | Any workspace package                               |
+| `speech-provider`     | STT interface, `ModelManager`, providers (`shruti` default, `scripted`), Shruti worker | Browser APIs, onnxruntime-web, shruti-onnx | Domain packages, intent and catalog engines         |
+| `language-normalizer` | Numbers, units, folding                                                                | Nothing in the workspace                   | Everything else                                     |
+| `intent-engine`       | Item and slot extraction                                                               | Normalizer types                           | Domain, `local-data`, network                       |
+| `catalog-matcher`     | Exact and fuzzy product match                                                          | Normalizer, Fuse.js                        | Domain, `local-data` (catalog is passed in as data) |
+| `confidence-engine`   | `Field_Status`, clarification                                                          | Intent and matcher types                   | Domain, `local-data`                                |
+| `confirmation-engine` | `WorkflowAdapter`, `ConfirmedAction`, `confirm`                                        | Confidence types                           | Domain, `local-data`                                |
+| `local-data`          | Dexie schema, repositories, `commitConfirmed`, logger, seed                            | Dexie, confirmation-engine types           | Domain, React, `sync-engine`                        |
+| `sync-engine`         | Outbox push and pull, `SyncRemote`, `AppwriteRemote`                                   | `appwrite` SDK in one adapter file         | Domain, React                                       |
+| `shared-ui`           | Shared React components, tokens                                                        | React, engine types                        | `local-data`                                        |
+| `domain-order`        | `OrderWorkflowAdapter`, order drafts                                                   | Engine packages, `local-data` record types | `domain-billing`, apps                              |
+| `domain-billing`      | `BillingWorkflowAdapter`, money math                                                   | Engine packages, `local-data` record types | `domain-order`, apps                                |
 
 The cruiser rules by name:
 

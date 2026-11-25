@@ -1,0 +1,38 @@
+{
+  "summary": {
+    "model": "udgamlabs/Shruti-ONNX hi, int8 build (onnx-int8), shruti-onnx 0.2.0, onnxruntime-web WASM, 1 thread, 5-beam, loops cut",
+    "machine": "13th Gen Intel(R) Core(TM) i7-13700H, win32 x64, Node v24.9.0",
+    "date": "2026-11-25",
+    "clips": 2,
+    "audioSeconds": 6.6,
+    "modelLoadMs": 9344,
+    "meanLatencyMs": 806,
+    "realTimeFactor": 0.244,
+    "corpusWer": 0.071,
+    "caveat": "MUCS 2021 Hindi-English lecture speech, not shop orders; desktop CPU, not a phone. Word error rate uses a simple shared normaliser (NFC, lowercase, punctuation removed)."
+  },
+  "rows": [
+    {
+      "file": "order-en-sugar-rice.wav",
+      "source": "synthetic speech: Windows SAPI voice Microsoft Zira (en-US), generated for this repo; no human speaker",
+      "seconds": 3.46,
+      "ms": 936,
+      "rtf": 0.27,
+      "wer": 0,
+      "language": "en",
+      "reference": "two kilo sugar and five kilo rice",
+      "hypothesis": "two kilo sugar and five kilo rice"
+    },
+    {
+      "file": "order-en-sugar-milk.wav",
+      "source": "synthetic speech: Windows SAPI voice Microsoft Zira (en-US), generated for this repo; no human speaker",
+      "seconds": 3.15,
+      "ms": 676,
+      "rtf": 0.215,
+      "wer": 0.143,
+      "language": "en",
+      "reference": "two kilo sugar and one litre milk",
+      "hypothesis": "two kilo sugar and one leader milk"
+    }
+  ]
+}

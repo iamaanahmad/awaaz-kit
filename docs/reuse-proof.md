@@ -9,7 +9,7 @@ through that package. The shortest route is shown.
 | Package | Capability | order-awaaz | bill-awaaz |
 | --- | --- | --- | --- |
 | `voice-capture` | voice capture | direct (1 files) | direct (1 files) |
-| `speech-provider` | speech provider | direct (4 files) | direct (2 files) |
+| `speech-provider` | speech provider | direct (3 files) | direct (2 files) |
 | `language-normalizer` | normalization | direct (2 files) | via domain-billing |
 | `intent-engine` | intent extraction | via domain-order | via domain-billing |
 | `catalog-matcher` | catalog matching | direct (1 files) | direct (3 files) |
@@ -17,7 +17,7 @@ through that package. The shortest route is shown.
 | `confirmation-engine` | confirmation | direct (1 files) | direct (4 files) |
 | `local-data` | local data | direct (14 files) | direct (11 files) |
 | `sync-engine` | sync | direct (1 files) | direct (1 files) |
-| `shared-ui` | shared UI | direct (13 files) | direct (11 files) |
+| `shared-ui` | shared UI | direct (14 files) | direct (13 files) |
 
 ## Domain packages (app specific by design)
 

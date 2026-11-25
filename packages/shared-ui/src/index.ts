@@ -14,6 +14,7 @@ export * from './components/PipelineInspector';
 export * from './components/Onboarding';
 export * from './components/SyncSettings';
 export * from './hooks/useCaptureSession';
+export * from './hooks/useSpeechModel';
 export * from './sync/syncState';
 export * from './components/EmptyState';
 export * from './components/DelayedFallback';

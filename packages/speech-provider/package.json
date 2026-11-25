@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "onnxruntime-web": "1.31.1",
+    "shruti-onnx": "0.2.0",
     "zod": "3.25.76"
   },
   "devDependencies": {

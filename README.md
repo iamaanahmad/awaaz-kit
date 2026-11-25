@@ -110,8 +110,9 @@ What works offline, and what does not:
 
 - **Works offline after the first online load:** the app shell, the catalog, drafts, saved orders and bills, and typed input. All data lives in IndexedDB on the device.
 - **Voice works offline only after the speech model is downloaded.** The first model download needs a connection and is started by you from the app. Until the model is cached, use typed input.
-- **The shipping default speech provider is `scripted`.** That means typed input plus sample utterance chips that are labelled "Sample". It does not transcribe your voice.
-- **The real on-device provider (Shruti, ONNX in the browser) is built behind the `SpeechToTextProvider` interface but is not the default.** It becomes the default only after the manual device benchmark is recorded. That benchmark has not been run yet; see [`docs/model-benchmark.md`](docs/model-benchmark.md), where every result is marked "pending manual run". No accuracy or latency claim is made for voice.
+- **Voice runs on the device.** The default provider is [Shruti Hindi](https://huggingface.co/udgamlabs/Shruti) (Apache-2.0) for Hindi, English and Hinglish, running in the browser through `onnxruntime-web` in a Web Worker. You start a one-time download of about 53 MB from the capture screen; every file is checked against the publisher's SHA-256 before it is cached. Audio never leaves the device.
+- **Measured, not claimed.** On 20 real Hinglish clips from the MUCS 2021 test set the word error rate was 25.4%, at 4x faster than real time on a laptop CPU. Phone speed and real shop recordings are not measured yet. Details and how to reproduce: [`docs/model-benchmark.md`](docs/model-benchmark.md).
+- **Until the model is downloaded** the mic says so, and typed input plus chips labelled "Sample" work as before. Every transcript stays editable, and anything the catalog cannot match is flagged, not guessed.
 - Cloud sync is off until you opt in and sign in. Pending changes wait in a local outbox while you are offline or signed out.
 
 ## Quick start

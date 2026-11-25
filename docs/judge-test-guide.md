@@ -43,7 +43,9 @@ Sync is off by default and nothing leaves the device until you opt in and sign i
 
 ## Voice
 
-The shipping default provider is `scripted` (typed input plus Sample chips). The on-device model is used only after a user-initiated download, and works offline only after it is cached. See `docs/model-benchmark.md` for what has and has not been measured.
+Voice runs on the device with the Shruti Hindi model. On the capture screen, tap **Download model** (about 53 MB, one time, needs a connection). When the card says "Voice is ready on this device", tap the mic, speak a short order such as "do kilo aata aur ek litre tel", and tap stop. The transcript appears and stays editable. After the download, voice also works in airplane mode.
+
+The first recording after opening the app may take a few seconds while the model loads in the background. Without the download, typed input and the Sample chips work. See `docs/model-benchmark.md` for what has and has not been measured.
 
 ## Automated checks
 

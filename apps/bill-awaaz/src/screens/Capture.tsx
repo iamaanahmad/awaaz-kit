@@ -10,14 +10,13 @@ import {
   SampleUtteranceChips,
   TranscriptEditor,
   useCaptureSession,
+  useSpeechModel,
   type MicErrorKind,
-  type ModelStatusState,
 } from '@awaaz-kit/shared-ui';
 import { setBillDraft } from '../capture/billDraftStore';
 import { useLive, useShops } from '../data/homeHooks';
 import { useServices } from '../providers/AppProviders';
 
-const MODEL_APPROX_BYTES = 150 * 1024 * 1024;
 const BILL_SAMPLES = SAMPLE_UTTERANCES.filter((s) => s.app === 'bill').map((s) => s.text);
 
 function micErrorKind(snapshot: VoiceCaptureSnapshot): MicErrorKind {
@@ -26,7 +25,7 @@ function micErrorKind(snapshot: VoiceCaptureSnapshot): MicErrorKind {
 }
 
 export default function Capture(): ReactElement {
-  const { repos, speech } = useServices();
+  const { repos, speech, voice: onDevice } = useServices();
   const navigate = useNavigate();
   const shops = useShops();
   const shop = shops ? (shops.find((s) => s.isDemo) ?? shops[0]) : undefined;
@@ -99,31 +98,9 @@ export default function Capture(): ReactElement {
     }
   }, [voice, speech, startTranscription, transcriptionSucceeded, transcriptionFailed]);
 
-  // Speech model status; typed input stays available in every state (Req 5.4).
-  const [modelStatus, setModelStatus] = useState<ModelStatusState>({ kind: 'checking' });
-  const checkModel = useCallback(() => {
-    setModelStatus({ kind: 'checking' });
-    speech
-      .initialize()
-      .then((r) =>
-        setModelStatus(
-          r.ready
-            ? r.modelVersion
-              ? { kind: 'ready', version: r.modelVersion }
-              : { kind: 'ready' }
-            : { kind: 'missing' },
-        ),
-      )
-      .catch((e: unknown) =>
-        setModelStatus({
-          kind: 'failed',
-          reason: e instanceof Error ? e.message : 'Could not load the speech model.',
-        }),
-      );
-  }, [speech]);
-  useEffect(() => {
-    checkModel();
-  }, [checkModel]);
+  // Speech model status; typed input stays available in every state (Req 5.4). Shared with the
+  // Order app: same hook, same model, same cache.
+  const model = useSpeechModel(onDevice.manager, speech, onDevice.approxBytes);
 
   const typedRef = useRef<HTMLDivElement>(null);
   const focusTyping = useCallback(() => {
@@ -187,9 +164,9 @@ export default function Capture(): ReactElement {
       </div>
 
       <ModelStatusCard
-        status={modelStatus}
-        approxSizeBytes={MODEL_APPROX_BYTES}
-        onDownload={checkModel}
+        status={model.status}
+        approxSizeBytes={model.approxBytes}
+        onDownload={model.download}
         onContinueTyping={focusTyping}
       />
 
@@ -202,6 +179,11 @@ export default function Capture(): ReactElement {
         onRetry={() => voice.retry()}
         onUseTyping={focusTyping}
       />
+      {!model.voiceReady ? (
+        <p className="ak-help text-center" data-testid="voice-hint">
+          Voice works after a one-time download above. Until then, type the bill or tap a Sample.
+        </p>
+      ) : null}
 
       {session.processing ? (
         <p role="status" aria-live="polite">

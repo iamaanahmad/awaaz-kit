@@ -2,7 +2,18 @@ import type { Normalized, NormalizedToken } from '@awaaz-kit/language-normalizer
 import type { CandidateLine, ExtractedField } from './types.js';
 import type { CanonicalUnit } from '@awaaz-kit/language-normalizer';
 
-const SEPARATOR_WORDS: ReadonlySet<string> = new Set(['aur', 'and', 'plus', '\u0914\u0930']);
+/**
+ * Item separators. "or" and "ओर" are how speech-to-text and casual typing often render the
+ * spoken "aur" (and); in a shopping list they always join items, never offer a choice.
+ */
+const SEPARATOR_WORDS: ReadonlySet<string> = new Set([
+  'aur',
+  'and',
+  'or',
+  'plus',
+  '\u0914\u0930',
+  '\u0913\u0930',
+]);
 
 /**
  * Conversational address and politeness words. They never belong to a product phrase
@@ -45,20 +56,57 @@ function isSeparator(token: NormalizedToken): boolean {
   return token.kind === 'word' && SEPARATOR_WORDS.has(token.text.normalize('NFC').toLowerCase());
 }
 
+/** A word that can belong to a product phrase (not filler, request frame or the "de do" verb). */
+function isPhraseWord(word: string | null): boolean {
+  return word !== null && !FILLER_WORDS.has(word) && !CARRIER_WORDS.has(word) && !GIVE_VERBS.has(word);
+}
+
 /**
- * Split tokens into item segments on `aur`, `and`, `,`, `।`, `plus` (Req 8.1).
- * Other punctuation is dropped. Empty segments are omitted.
+ * Split tokens into item segments (Req 8.1).
+ *
+ * Explicit separators: `aur`, `and`, `,`, `।`, `plus`. Other punctuation is dropped.
+ *
+ * Speech has no commas, and people often list items with no "aur" between them ("do kilo aata
+ * ek litre tel"), so a segment also ends where the next item clearly begins:
+ * - "quantity unit product" order: a new quantity after a product word starts the next item.
+ * - "product quantity unit" order: a new product word after the quantity starts the next item.
+ * A number right after the "de" of "de do" is the verb, not a quantity, and never splits.
+ * Empty segments are omitted.
  */
 export function segmentTokens(tokens: readonly NormalizedToken[]): NormalizedToken[][] {
   const segments: NormalizedToken[][] = [];
   let current: NormalizedToken[] = [];
+  let hasNumber = false;
+  let hasPhrase = false;
+  let phraseFirst = false;
+  let prevWord: string | null = null;
   const flush = (): void => {
     if (current.length > 0) segments.push(current);
     current = [];
+    hasNumber = false;
+    hasPhrase = false;
+    phraseFirst = false;
   };
   for (const token of tokens) {
-    if (isSeparator(token)) flush();
-    else if (token.kind !== 'punct') current.push(token);
+    if (isSeparator(token)) {
+      flush();
+      prevWord = null;
+      continue;
+    }
+    if (token.kind === 'punct') continue;
+    const word = token.kind === 'word' ? token.text.normalize('NFC').toLowerCase() : null;
+    const quantity = token.kind === 'number' && !(prevWord !== null && GIVE_VERBS.has(prevWord));
+
+    if (quantity && hasNumber && hasPhrase && !phraseFirst) flush();
+    else if (isPhraseWord(word) && hasNumber && phraseFirst) flush();
+
+    current.push(token);
+    if (quantity) hasNumber = true;
+    if (isPhraseWord(word)) {
+      if (!hasNumber && !hasPhrase) phraseFirst = true;
+      hasPhrase = true;
+    }
+    prevWord = word;
   }
   flush();
   return segments;

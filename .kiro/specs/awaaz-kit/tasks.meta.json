@@ -37,9 +37,8 @@
       "lastRunTimestamp": 1794509945261
     },
     "11.12 Write property test for finalized bill immutability": {
-      "status": "failed",
-      "failingExample": "seed -1863756540, path \"0:0:0:0:0:0:0:0:0:0:0:1:1\": {\"billId\":\"b0000000-0000-1000-8000-000000000000\",\"itemCount\":1,\"unitPricePaise\":1,\"qtyMilli\":1,\"correctionKind\":\"void\",\"attempt\":\"bulk_delete\",...} — db.billItems.bulkDelete([...]) of a finalized bill's item was NOT rejected (expected rejection)",
-      "lastRunTimestamp": 1794509972799
+      "status": "passed",
+      "lastRunTimestamp": 1795698299038
     },
     "17.7 Write property test for row IDs": {
       "status": "passed",

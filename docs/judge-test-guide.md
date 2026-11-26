@@ -34,9 +34,9 @@ Use a phone-width window (about 360 px). Use `Reset demo` on the About screen an
 
 ## Optional: cloud sync
 
-Sync is off by default and nothing leaves the device until you opt in and sign in. A demo account, if provided, is in the private Devpost field and not in this repo. Alternatively run the self-hosted test backend (`docs/test-backend.md`).
+Sync is off by default and nothing leaves the device until you opt in and sign in. You can create your own account from the sync form (email and a password of at least 8 characters). Each account gets its own private Appwrite team, so your demo-shop data is never shared with another judge's copy of the same demo shop. Alternatively run the self-hosted test backend (`docs/test-backend.md`).
 
-1. About, turn on sync and sign in.
+1. About, turn on sync, then sign in or choose **Create an account**.
 2. Save a bill while offline. Badge shows **Pending**.
 3. Go online. Badge becomes **Synced**.
 4. Transcripts are not uploaded unless "Sync transcripts" is turned on (off by default).

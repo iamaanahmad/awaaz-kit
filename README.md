@@ -176,7 +176,7 @@ Appwrite Cloud and self-hosted both work. The backend is a TablesDB database `aw
 
 The Appwrite API key must never reach `apps/`, `packages/` or a built bundle. `.env.local` is gitignored.
 
-In the app, open About and enable cloud sync, then sign in with email and password. Without that opt-in the app sends no business data to the backend.
+In the app, open About and enable cloud sync, then sign in, or create an account, with email and password. Without that opt-in the app sends no business data to the backend.
 
 ## Privacy and what syncs
 

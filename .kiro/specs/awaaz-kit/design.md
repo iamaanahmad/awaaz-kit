@@ -714,7 +714,7 @@ Frontend configuration is exactly two Vite variables: `VITE_APPWRITE_ENDPOINT` a
 #### Identity and tenancy
 
 - Auth: Appwrite Email/Password account created by the user on opt-in (a pre-created demo account for judges is listed in the Devpost private field, not in the repo).
-- Tenancy: one Appwrite Team per shop. On opt-in, `ensureShopTeam` creates a team named after the local shop and stores its id as `shops.remoteShopId`. Team membership is the access unit, so a future helper device joins the team without schema changes.
+- Tenancy: one Appwrite Team per shop per owner account. On opt-in, `ensureShopTeam` creates a team named after the local shop with id UUIDv5(`${userId}:shop-team:${shopId}`), so one account reuses the same team on every device, and two accounts that share a local shop id (every copy of the Demo_Shop has the same fixed id) never collide on one team. Team membership is the access unit, so a future helper device joins the team without schema changes.
 - A user who is not a member of a shop's team has no role that appears in any of that shop's row permissions (Req 16.15).
 
 #### Tables (database `awaaz`)

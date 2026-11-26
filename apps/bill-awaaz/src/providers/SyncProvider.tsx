@@ -47,6 +47,8 @@ export interface SyncContextValue {
   setOptIn: (enabled: boolean) => Promise<void>;
   setSyncTranscripts: (enabled: boolean) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
+  /** Creates an email/password account, then signs in and syncs. */
+  signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   syncNow: () => Promise<void>;
 }
@@ -202,6 +204,30 @@ export function SyncProvider({
     [remote, runSync],
   );
 
+  const signUp = useCallback(
+    async (email: string, password: string): Promise<void> => {
+      if (!remote) return;
+      setSigningIn(true);
+      setSignInError(undefined);
+      try {
+        await remote.signUp(email, password);
+        setSignedIn(true);
+        setAccountEmail(email);
+        await runSync();
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Could not create the account.';
+        setSignInError(
+          message.includes('(HTTP 409)')
+            ? 'an account with this email already exists. Sign in instead.'
+            : message,
+        );
+      } finally {
+        setSigningIn(false);
+      }
+    },
+    [remote, runSync],
+  );
+
   const signOut = useCallback(async (): Promise<void> => {
     if (!remote) return;
     try {
@@ -233,6 +259,7 @@ export function SyncProvider({
       setOptIn,
       setSyncTranscripts,
       signIn,
+      signUp,
       signOut,
       syncNow: runSync,
     }),
@@ -250,6 +277,7 @@ export function SyncProvider({
       setOptIn,
       setSyncTranscripts,
       signIn,
+      signUp,
       signOut,
       runSync,
     ],

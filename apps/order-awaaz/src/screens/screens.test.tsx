@@ -63,10 +63,8 @@ describe('Order_App screens', () => {
     renderAt('/capture');
     const chip = await screen.findByRole('button', { name: /two kg sugar and one litre milk/ });
     expect(within(chip.closest('[role="group"]') as HTMLElement).getByText('Sample')).toBeVisible();
-    // Wait for the catalog-aware parser to register before using the chip.
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: /^Check order$/ })).toBeDefined(),
-    );
+    // Wait for the seeded data to load (the parser re-parses the text once it registers).
+    await screen.findByRole('option', { name: 'Sunita Devi (Sample)' });
     await user.click(chip);
     expect(await screen.findByLabelText('Order text')).toHaveValue(SAMPLE);
     expect(await screen.findByTestId('parse-summary')).toHaveTextContent(/items? found/);
@@ -101,7 +99,6 @@ describe('Order_App screens', () => {
     renderAt('/capture');
     const box = await screen.findByLabelText('Order text');
     await user.type(box, 'two kg qqzzxx');
-    await user.click(screen.getByRole('button', { name: 'Check order' }));
     await user.click(await screen.findByRole('button', { name: 'Continue to review items' }));
     expect(await screen.findByRole('heading', { name: 'Resolve items' })).toBeVisible();
     expect(screen.getByRole('button', { name: 'Continue to review' })).toBeDisabled();
@@ -157,7 +154,6 @@ describe('Order_App screens', () => {
     const router = renderAt('/capture');
     const box = await screen.findByLabelText('Order text');
     await user.type(box, 'two kg qqzzxx');
-    await user.click(screen.getByRole('button', { name: 'Check order' }));
     await user.click(await screen.findByRole('button', { name: 'Continue to review items' }));
     await screen.findByRole('heading', { name: 'Resolve items' });
     await act(() => router.navigate('/review'));

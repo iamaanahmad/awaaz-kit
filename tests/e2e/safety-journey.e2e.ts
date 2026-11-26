@@ -1,4 +1,4 @@
-﻿import type { Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 import {
   test,
   expect,
@@ -64,7 +64,6 @@ test.describe('Safety journey: Order Awaaz', () => {
   }) => {
     await openOrderCapture(page);
     await page.getByLabel('Order text').fill('do kilo zzqxv');
-    await page.getByRole('button', { name: 'Check order' }).click();
     await expect(page.getByTestId('parse-summary')).toContainText('found');
     await page.getByRole('button', { name: 'Continue to review items' }).click();
     await expect(page.getByRole('heading', { name: 'Resolve items' })).toBeVisible();
@@ -86,7 +85,6 @@ test.describe('Safety journey: Order Awaaz', () => {
     await openOrderCapture(page);
     await page.getByLabel('Order text').fill('aata chahiye');
 
-    await page.getByRole('button', { name: 'Check order' }).click();
     await expect(page.getByTestId('parse-summary')).toContainText('found');
     await page.getByRole('button', { name: 'Continue to review items' }).click();
     await expect(page.getByRole('heading', { name: 'Resolve items' })).toBeVisible();
@@ -111,10 +109,8 @@ test.describe('Safety journey: Order Awaaz', () => {
     await openOrderCapture(page);
     const text = page.getByLabel('Order text');
     await text.fill('   ');
-    await expect(page.getByRole('button', { name: 'Check order' })).toBeDisabled();
     await expect(page.getByRole('button', { name: 'Continue to review items' })).toBeDisabled();
     await text.fill('');
-    await expect(page.getByRole('button', { name: 'Check order' })).toBeDisabled();
     expect(await countRows(page, 'orders')).toBe(0);
     expect(await countRows(page, 'orderItems')).toBe(0);
   });
@@ -141,7 +137,6 @@ test.describe('Safety journey: Order Awaaz', () => {
     page.on('pageerror', (e) => messages.push(String(e.message)));
     await openOrderCapture(page);
     await page.getByLabel('Order text').fill(`${PHONE} ke liye do kilo aata`);
-    await page.getByRole('button', { name: 'Check order' }).click();
     await page.getByRole('button', { name: 'Continue to review items' }).click();
     await expect(page.getByRole('heading', { name: 'Resolve items' })).toBeVisible();
     // Phone digits may legitimately need review; the pipeline ran either way.
@@ -169,7 +164,6 @@ test.describe('Safety journey: Order Awaaz microphone', () => {
     await expect(page.getByRole('alert').filter({ hasText: /denied/i })).toBeVisible();
     await page.getByRole('button', { name: 'Type instead' }).click();
     await page.getByLabel('Order text').fill('do kilo aata');
-    await page.getByRole('button', { name: 'Check order' }).click();
     await expect(page.getByTestId('parse-summary')).toHaveText('1 item found.');
     expect(await countRows(page, 'orders')).toBe(0);
   });
@@ -261,5 +255,3 @@ test.describe('Safety journey: Bill Awaaz', () => {
     expect(await countRows(page, 'bills')).toBe(0);
   });
 });
-
-

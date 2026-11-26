@@ -73,6 +73,24 @@ describe('Order_App screens', () => {
     expect(screen.getByRole('button', { name: 'Continue to review items' })).toBeEnabled();
   });
 
+  it('Capture: an empty catalog is explained and "Load demo shop" fixes matching', async () => {
+    // A fresh origin (for example a preview URL) where the demo shop was never seeded.
+    await new Promise<void>((resolve, reject) => {
+      const req = indexedDB.deleteDatabase(DB_NAME);
+      req.onsuccess = () => resolve();
+      req.onerror = () => reject(req.error);
+      req.onblocked = () => resolve();
+    });
+    const user = userEvent.setup();
+    renderAt('/capture');
+    const notice = await screen.findByTestId('empty-catalog');
+    expect(notice).toHaveAttribute('role', 'status');
+    expect(notice).toHaveTextContent(/catalog on this device is empty/);
+    await user.click(within(notice).getByRole('button', { name: 'Load demo shop' }));
+    await waitFor(() => expect(screen.queryByTestId('empty-catalog')).toBeNull());
+    expect(await screen.findByRole('option', { name: 'Sunita Devi (Sample)' })).toBeDefined();
+  });
+
   it('Capture: Continue stays disabled until items are found', async () => {
     renderAt('/capture');
     expect(await screen.findByRole('button', { name: 'Continue to review items' })).toBeDisabled();

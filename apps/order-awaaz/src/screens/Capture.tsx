@@ -9,6 +9,7 @@ import {
   TranscriptEditor,
   useSpeechModel,
 } from '@awaaz-kit/shared-ui';
+import { useActiveShop } from '../hooks/useActiveShop';
 import { useLiveQuery } from '../hooks/useLiveQuery';
 import { useData, useOnDeviceVoice, useOrderCapture } from '../providers/AppProviders';
 import { createOrderParser } from '../capture/orderParser';
@@ -29,6 +30,17 @@ export default function Capture(): ReactElement {
   const products = useLiveQuery(() => repos.products.watchActive(DEMO_SHOP_ID), [repos]);
   const customers = useLiveQuery(() => repos.customers.watch(DEMO_SHOP_ID), [repos]);
   const [customerId, setCustomerId] = useState<string | null>(null);
+  const { chooseDemoShop } = useActiveShop();
+  const [loadingDemo, setLoadingDemo] = useState(false);
+  const [demoError, setDemoError] = useState(false);
+  const catalogEmpty = products !== undefined && products.length === 0;
+  const loadDemoShop = (): void => {
+    setLoadingDemo(true);
+    setDemoError(false);
+    chooseDemoShop()
+      .catch(() => setDemoError(true))
+      .finally(() => setLoadingDemo(false));
+  };
 
   const recorder = useVoiceRecorder(provider, capture);
   const model = useSpeechModel(voice.manager, provider, voice.approxBytes);
@@ -70,6 +82,28 @@ export default function Capture(): ReactElement {
       <h2 id="capture-heading" className="text-lg font-semibold">
         Capture an order
       </h2>
+
+      {catalogEmpty ? (
+        <div role="status" className="flex flex-col gap-3" data-testid="empty-catalog">
+          <p>
+            <strong>The catalog on this device is empty.</strong> Every item will show “Not in
+            catalog” until products are loaded. Load the fictional demo shop to try it out.
+          </p>
+          <button
+            type="button"
+            onClick={loadDemoShop}
+            disabled={loadingDemo}
+            className="touch-target ak-btn ak-btn-primary"
+          >
+            {loadingDemo ? 'Loading demo shop…' : 'Load demo shop'}
+          </button>
+          {demoError ? (
+            <p role="alert" className="text-danger">
+              Could not load the demo shop. Try again, or reset it from About.
+            </p>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="flex flex-col gap-1">
         <label htmlFor={customerSelectId} className="font-semibold">

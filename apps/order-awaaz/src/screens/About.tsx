@@ -109,6 +109,7 @@ export default function About(): ReactElement {
           signingIn={sync.signingIn}
           onOptInChange={(v) => void sync.setOptIn(v)}
           onSignIn={(c) => void sync.signIn(c.email, c.password)}
+          onCreateAccount={(c) => void sync.signUp(c.email, c.password)}
           onSignOut={() => void sync.signOut()}
           onSyncTranscriptsChange={(v) => void sync.setSyncTranscripts(v)}
           onExportData={() => void onExport()}

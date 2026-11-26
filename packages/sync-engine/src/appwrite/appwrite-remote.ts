@@ -28,6 +28,7 @@ import {
   type RowPermissions,
   type SyncRemote,
 } from '../contracts';
+import { uuidV5 } from '../row-ids';
 
 export interface AppwriteRemoteConfig {
   /** Public API endpoint, e.g. `https://cloud.appwrite.io/v1` or a self-hosted URL. */
@@ -89,7 +90,9 @@ export function createAppwritePort(config: AppwriteRemoteConfig): AppwritePort {
   } as unknown as AppwritePort;
 }
 
-const VALID_ID = /^[A-Za-z0-9][A-Za-z0-9._-]{0,35}$/;
+/** Appwrite team id for a shop owned by one account (36-char UUID, always a valid Appwrite id). */
+export const shopTeamId = (userId: string, shopId: string): string =>
+  uuidV5(`${userId}:shop-team:${shopId}`);
 
 function httpCode(error: unknown): number | undefined {
   if (error instanceof AppwriteException) return error.code;
@@ -188,12 +191,15 @@ export class AppwriteRemote implements SyncRemote {
   // ---------- Tenancy ----------
 
   /**
-   * One team per shop. The local shop id is used as the team id when it is a valid
-   * Appwrite id, which makes the call idempotent (409 -> fetch the existing team).
+   * One team per shop per owner account. The team id is UUIDv5 of `${userId}:${shopId}`, so
+   * the call is idempotent for one account on any device (409 -> fetch the existing team),
+   * while two accounts that share a local shop id (every copy of the Demo_Shop has the same
+   * fixed id) get separate teams instead of colliding on one team neither can share.
    */
   async ensureShopTeam(local: { shopId: string; name: string }): Promise<{ remoteShopId: string }> {
-    await this.requireSession();
-    const teamId = VALID_ID.test(local.shopId) ? local.shopId : ID.unique();
+    const user = await this.signedIn();
+    if (user === null) throw new SyncError('auth', 'Not signed in');
+    const teamId = shopTeamId(user.userId, local.shopId);
     try {
       const team = await this.port.teams.create({ teamId, name: local.name });
       return { remoteShopId: team.$id };

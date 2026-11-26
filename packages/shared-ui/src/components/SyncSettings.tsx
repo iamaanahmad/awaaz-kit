@@ -18,6 +18,8 @@ export interface SyncSettingsProps {
   signingIn?: boolean;
   onOptInChange: (optedIn: boolean) => void;
   onSignIn: (credentials: SyncCredentials) => void;
+  /** Creates an account and signs in. When omitted, only sign-in is offered. */
+  onCreateAccount?: (credentials: SyncCredentials) => void;
   onSignOut: () => void;
   onSyncTranscriptsChange: (enabled: boolean) => void;
   onExportData: () => void;
@@ -40,6 +42,7 @@ export function SyncSettings({
   signingIn = false,
   onOptInChange,
   onSignIn,
+  onCreateAccount,
   onSignOut,
   onSyncTranscriptsChange,
   onExportData,
@@ -47,12 +50,25 @@ export function SyncSettings({
 }: SyncSettingsProps): ReactElement {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mode, setMode] = useState<'signIn' | 'create'>('signIn');
   const [confirmingClear, setConfirmingClear] = useState(false);
+  const creating = mode === 'create' && onCreateAccount !== undefined;
 
   const submit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    onSignIn({ email: email.trim(), password });
+    const credentials = { email: email.trim(), password };
+    if (creating) onCreateAccount(credentials);
+    else onSignIn(credentials);
   };
+
+  const formLabel = creating ? 'Create an account to sync' : 'Sign in to sync';
+  const submitLabel = creating
+    ? signingIn
+      ? 'Creating account…'
+      : 'Create account'
+    : signingIn
+      ? 'Signing in…'
+      : 'Sign in';
 
   return (
     <section aria-label="Cloud sync settings" className="sync-settings">
@@ -82,7 +98,8 @@ export function SyncSettings({
       <p>{optedIn ? 'Cloud sync: opted in' : 'Cloud sync: off'}</p>
 
       {optedIn && !signedIn && (
-        <form onSubmit={submit} aria-label="Sign in to sync" className="flex flex-col gap-3">
+        <form onSubmit={submit} aria-label={formLabel} className="flex flex-col gap-3">
+          <h3>{formLabel}</h3>
           <label className="ak-field">
             <span className="ak-label">Email</span>
             <input
@@ -98,16 +115,23 @@ export function SyncSettings({
             <span className="ak-label">Password</span>
             <input
               type="password"
-              autoComplete="current-password"
+              autoComplete={creating ? 'new-password' : 'current-password'}
               required
+              minLength={creating ? 8 : undefined}
+              aria-describedby={creating ? 'sync-password-help' : undefined}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="touch-target ak-input"
             />
           </label>
+          {creating && (
+            <p id="sync-password-help" className="ak-help">
+              At least 8 characters.
+            </p>
+          )}
           {signInError && (
             <p role="alert" className="ak-field-error">
-              Sign-in failed: {signInError}
+              {creating ? 'Could not create the account' : 'Sign-in failed'}: {signInError}
             </p>
           )}
           <button
@@ -116,8 +140,18 @@ export function SyncSettings({
             disabled={signingIn}
             aria-busy={signingIn}
           >
-            {signingIn ? 'Signing in…' : 'Sign in'}
+            {submitLabel}
           </button>
+          {onCreateAccount && (
+            <button
+              type="button"
+              className={buttonClass}
+              disabled={signingIn}
+              onClick={() => setMode(creating ? 'signIn' : 'create')}
+            >
+              {creating ? 'I already have an account' : 'Create an account'}
+            </button>
+          )}
         </form>
       )}
 

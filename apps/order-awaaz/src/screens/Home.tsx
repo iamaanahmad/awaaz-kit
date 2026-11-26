@@ -12,10 +12,8 @@ import {
 } from '@awaaz-kit/shared-ui';
 import { useActiveShop, useSyncSummary } from '../hooks/useActiveShop';
 import { useRecentOrders } from '../hooks/useLiveQuery';
+import { useOnDeviceVoice } from '../providers/AppProviders';
 import { useSync } from '../providers/SyncProvider';
-
-/** Rough size of the on-device speech model, shown before any download (Req 5.4). */
-const MODEL_APPROX_BYTES = 150 * 1024 * 1024;
 
 const rupees = (paise: number): string =>
   new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(paise / 100);
@@ -118,7 +116,9 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
         />
         {pendingCount > 0 ? (
           <span className="text-sm text-muted" data-testid="pending-count">
-            {pendingCount} pending sync
+            {sync.configured && sync.optedIn
+              ? `${pendingCount} pending sync`
+              : `${pendingCount} not synced (cloud sync is off)`}
           </span>
         ) : null}
         {sync.reportText && sync.optedIn ? (
@@ -141,6 +141,8 @@ function FirstRun({
   createShop: (name: string) => Promise<void>;
 }): ReactElement {
   const navigate = useNavigate();
+  // Real one-time download size from the model manifest (Req 5.4).
+  const { approxBytes } = useOnDeviceVoice();
   const [error, setError] = useState<string | null>(null);
   const guard = (fn: () => Promise<void>) => async (): Promise<void> => {
     try {
@@ -156,7 +158,7 @@ function FirstRun({
         onSelectDemoShop={guard(chooseDemoShop)}
         onCreateLocalShop={(name) => guard(() => createShop(name))()}
         modelStatus={{ kind: 'missing' }}
-        modelApproxSizeBytes={MODEL_APPROX_BYTES}
+        modelApproxSizeBytes={approxBytes}
         onDownloadModel={() => void navigate('/capture')}
         onContinueTyping={() => void navigate('/capture')}
       />

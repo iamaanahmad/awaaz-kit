@@ -176,7 +176,7 @@ Appwrite Cloud and self-hosted both work. The backend is a TablesDB database `aw
 
 The Appwrite API key must never reach `apps/`, `packages/` or a built bundle. `.env.local` is gitignored.
 
-In the app, open About and enable cloud sync, then sign in with email and password. Without that opt-in the app sends no business data to the backend.
+In the app, open About and enable cloud sync, then sign in, or create an account, with email and password. Without that opt-in the app sends no business data to the backend.
 
 ## Privacy and what syncs
 
@@ -217,7 +217,7 @@ The project is spec-driven. Everything is committed under `.kiro/`:
 
 ## Known limitations
 
-- **Voice is not proven.** The default provider is typed input plus labelled samples. The on-device speech model has not been benchmarked on a target phone, so no voice accuracy is claimed.
+- **Voice accuracy is measured on a laptop only.** On-device Shruti is the default provider, with 25.4% WER on 20 MUCS 2021 Hinglish clips on a laptop CPU ([`docs/model-benchmark.md`](docs/model-benchmark.md)). Phone speed and real shop recordings are not measured yet, and misheard words (for example "litre" heard as "leader") are flagged for review, not guessed.
 - The first speech model download needs connectivity. Voice offline requires the model to be cached, and the browser may evict it.
 - Language coverage is rule-based: number words 0 to 100, common fractions and a fixed unit set. Unusual phrasing is flagged for review rather than guessed.
 - Sync is a basic opt-in, email/password flow. It does not resolve conflicts between multiple devices beyond last-write-wins for products and customers.

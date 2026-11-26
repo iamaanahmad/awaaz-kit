@@ -55,9 +55,11 @@ test.describe('Offline journey', () => {
     )?.[1];
     expect(orderNumber).toBeTruthy();
 
-    // Pending sync state is shown on the order home screen.
+    // Unsynced changes are counted on the home screen, worded for sync being off in this build.
     await page.goto(ORDER_URL);
-    await expect(page.getByTestId('pending-count')).toContainText(/[1-9]\d* pending sync/);
+    await expect(page.getByTestId('pending-count')).toContainText(
+      /^[1-9]\d* not synced \(cloud sync is off\)$/,
+    );
 
     // Bill, offline.
     await page.goto(BILL_URL);
@@ -76,7 +78,9 @@ test.describe('Offline journey', () => {
     expect(receipt).toBeTruthy();
 
     await page.goto(BILL_URL);
-    await expect(page.getByTestId('pending-count')).toContainText(/Pending sync: [1-9]\d*/);
+    await expect(page.getByTestId('pending-count')).toContainText(
+      /^[1-9]\d* not synced \(cloud sync is off\)$/,
+    );
 
     // Reload offline: both records persist and nothing blocks the user.
     await page.goto(`${BILL_URL}bills`);

@@ -15,8 +15,6 @@ import { usePendingSyncCount, useRecentBills, useShops } from '../data/homeHooks
 import { useServices } from '../providers/AppProviders';
 import { useSync } from '../providers/SyncProvider';
 
-const MODEL_APPROX_BYTES = 150 * 1024 * 1024;
-
 const timeLabel = (iso: string | null): string => {
   if (!iso) return '';
   const d = new Date(iso);
@@ -29,10 +27,7 @@ function RecentBill({ bill }: { bill: BillRecord }): ReactElement {
   const label = bill.kind === 'void' ? 'Void' : bill.kind === 'correction' ? 'Correction' : null;
   return (
     <li>
-      <Link
-        to={`/bills/${bill.id}`}
-        className="ak-row-link"
-      >
+      <Link to={`/bills/${bill.id}`} className="ak-row-link">
         <span className="flex flex-col">
           <span className="font-semibold">#{bill.receiptNumber}</span>
           <span className="text-sm text-muted">
@@ -81,9 +76,13 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
           onSyncNow={() => void sync.syncNow()}
           onRetry={() => void sync.syncNow()}
         />
-        <span data-testid="pending-count" className="text-muted">
-          Pending sync: {pending ?? 0}
-        </span>
+        {pending ? (
+          <span data-testid="pending-count" className="text-muted">
+            {sync.configured && sync.optedIn
+              ? `${pending} pending sync`
+              : `${pending} not synced (cloud sync is off)`}
+          </span>
+        ) : null}
         {sync.reportText && sync.optedIn ? (
           <span className="text-muted" data-testid="sync-report">
             {sync.reportText}
@@ -119,7 +118,8 @@ function Dashboard({ shop }: { shop: ShopRecord }): ReactElement {
 }
 
 export default function Home(): ReactElement {
-  const { db, repos } = useServices();
+  // Real one-time download size from the model manifest (Req 5.4).
+  const { db, repos, voice } = useServices();
   const navigate = useNavigate();
   const shops = useShops();
   const [error, setError] = useState<string | null>(null);
@@ -139,7 +139,7 @@ export default function Home(): ReactElement {
       <div className="mx-auto max-w-md p-4">
         <Onboarding
           modelStatus={{ kind: 'missing' }}
-          modelApproxSizeBytes={MODEL_APPROX_BYTES}
+          modelApproxSizeBytes={voice.approxBytes}
           onSelectDemoShop={() => run(() => resetDemoShop(db))}
           onCreateLocalShop={(name) =>
             run(async () => {

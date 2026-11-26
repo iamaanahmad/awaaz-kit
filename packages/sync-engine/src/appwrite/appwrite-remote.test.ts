@@ -2,6 +2,7 @@ import { AppwriteException } from 'appwrite';
 import { describe, expect, it, vi } from 'vitest';
 import { SyncError } from '../contracts';
 import { buildPermissions } from '../remote-row';
+import { uuidV5 } from '../row-ids';
 import { AppwriteRemote, type AppwritePort } from './appwrite-remote';
 
 const ex = (code: number) => new AppwriteException('boom', code, 'type', '');
@@ -161,16 +162,31 @@ describe('AppwriteRemote', () => {
     expect(await remote.signedIn()).toBeNull();
   });
 
-  it('ensureShopTeam creates a team with the shop id, and reuses it on 409', async () => {
+  it('ensureShopTeam creates a per-account team for the shop, and reuses it on 409', async () => {
     const { port, remote } = make();
+    // uuidV5 has its own RFC 4122 vector tests in row-ids; here it names the expected team id.
+    const expected = uuidV5('u1:shop-team:shop-1');
+    expect(expected).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
     expect(await remote.ensureShopTeam({ shopId: 'shop-1', name: 'Sharma Store' })).toEqual({
-      remoteShopId: 'shop-1',
+      remoteShopId: expected,
     });
+    expect(port.teams.create).toHaveBeenCalledWith({ teamId: expected, name: 'Sharma Store' });
     port.teams.create.mockRejectedValueOnce(ex(409));
     expect(await remote.ensureShopTeam({ shopId: 'shop-1', name: 'Sharma Store' })).toEqual({
-      remoteShopId: 'shop-1',
+      remoteShopId: expected,
     });
-    expect(port.teams.get).toHaveBeenCalledWith({ teamId: 'shop-1' });
+    expect(port.teams.get).toHaveBeenCalledWith({ teamId: expected });
+  });
+
+  it('ensureShopTeam gives two accounts with the same (demo) shop id different teams', async () => {
+    const demoShopId = '00000000-0000-4000-8000-000000000000';
+    const a = make();
+    const b = make();
+    b.port.account.get.mockResolvedValue({ $id: 'u2' });
+    const teamA = await a.remote.ensureShopTeam({ shopId: demoShopId, name: 'Demo' });
+    const teamB = await b.remote.ensureShopTeam({ shopId: demoShopId, name: 'Demo' });
+    expect(teamA.remoteShopId).not.toBe(teamB.remoteShopId);
+    expect(teamA.remoteShopId).not.toBe(demoShopId);
   });
 
   it('ensureShopTeam requires a session', async () => {

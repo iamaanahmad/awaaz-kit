@@ -24,6 +24,7 @@ export default function Capture(): ReactElement {
   const provider = voice.provider;
   const capture = useOrderCapture();
   const { session, editTranscript, submitTyped, setParser } = capture;
+  // Typing parses live, so the editor has no separate submit button; sample chips still submit.
   const customerSelectId = useId();
   const typedRef = useRef<HTMLDivElement>(null);
 
@@ -167,9 +168,7 @@ export default function Capture(): ReactElement {
           value={session.transcript}
           {...(session.rawTranscript !== null ? { rawTranscript: session.rawTranscript } : {})}
           label="Order text"
-          submitLabel="Check order"
           onChange={editTranscript}
-          onSubmit={submitTyped}
         />
         <SampleUtteranceChips samples={ORDER_SAMPLES} onSelect={submitTyped} />
       </div>

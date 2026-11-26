@@ -25,7 +25,7 @@ For a fast-check counterexample, also record the shrunk input exactly as fast-ch
 - Done in the spec: the day-1 speech spike harness, scaffold and tooling, and the engine, storage and app tasks recorded as `[x]` in `tasks.md`.
 - Steering files and hooks (tasks 27.1 to 27.4) were being written in the same execution wave as this journal. This journal does not claim any hook has fired or caught anything. The hook catch section below is empty on purpose.
 - No fast-check shrunk counterexample has been recorded here yet.
-- The spike has not been run on a target device (see the speech entry).
+- The spike had not been run on a target device at seeding time. It was later benchmarked on a laptop, not yet on a phone (see the speech entry).
 
 ## Entries
 
@@ -71,9 +71,10 @@ For a fast-check counterexample, also record the shrunk input exactly as fast-ch
 - Kind: decision
 - Where: task 1, `docs/model-benchmark.md`, `design.md` "Speech provider spike and fallback strategy"
 - What happened: The design treated on-device Hindi and Hinglish recognition as the largest risk and put a spike first in the plan, with a fixed fallback order: Shruti, then Whisper WASM, then typed input plus scripted sample clips. The harness exists at `spikes/shruti-bare-vite/` and tasks 1.1 to 1.3 are marked done. The benchmark document is provisional. Every measurement in it reads "pending manual run", and no device result has been recorded.
-- What it changed: `scripted` is the provisional default provider, and the product claim stays "voice is local and optional, typed input is first-class". The `SpeechToTextProvider` interface, `ScriptedProvider`, the provider registry and `ModelManager` were built so the app and tests do not depend on a microphone or model (tasks 3.1 to 3.4). Adapters never populate `confidence`, so the UI shows no number unless one is calibrated (Requirements 5.11, 10.9).
-- What I cannot say: that Shruti or Whisper WASM meets the 10 second, 5 second clip bar on a target Android phone. That has not been measured. Task 3.6 is marked done but the benchmark still lists `scripted` as the default until section 6 is filled in.
-- Evidence: `docs/model-benchmark.md` sections 1, 5, 6 and 7.
+- What it changed: `scripted` was the provisional default provider, and the product claim stayed "voice is local and optional, typed input is first-class". The `SpeechToTextProvider` interface, `ScriptedProvider`, the provider registry and `ModelManager` were built so the app and tests do not depend on a microphone or model (tasks 3.1 to 3.4). Adapters never populate `confidence`, so the UI shows no number unless one is calibrated (Requirements 5.11, 10.9).
+- Update (after the spike was run): the benchmark was measured and `shruti` became the default provider, using the published int8 Shruti Hindi build through `shruti-onnx` in a Web Worker. Measured on a laptop CPU (i7-13700H): 25.4% WER on 20 MUCS 2021 Hinglish clips, real-time factor 0.25. The int8 build was chosen over 4-bit for the same accuracy at under half the load time. Real-audio E2E journeys cover one exact transcription and one mishear ("litre" heard as "leader") that the review step flags.
+- What I still cannot say: that Shruti meets the 10 second, 5 second clip bar on a target Android phone. No phone run is recorded.
+- Evidence: `docs/model-benchmark.md`, `docs/voice-benchmark-mucs.json`, `tests/e2e/voice-journey.e2e.ts`, `tests/e2e/voice-mishear.e2e.ts`.
 
 ### Concurrency and orchestration
 

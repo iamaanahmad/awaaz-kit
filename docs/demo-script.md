@@ -1,82 +1,98 @@
-# Demo script (2:40 video)
+# Demo script (2:50 video)
 
-Maps to the "Demo readiness" table in `.kiro/specs/awaaz-kit/design.md`. Total target: 2:40.
+Target 2:50, hard limit 3:00. Every value below was checked against the Demo_Shop seed and the parser on the current `main` build.
+
+## Before recording (off camera)
+
+1. The live site must run the latest build (no "Check order" button on Order capture, model size "about 50 MB" everywhere).
+2. Use one browser profile on `https://awaazkit.vercel.app` so the hub, `/order/` and `/bill/` share one catalog.
+3. On About in each app, press **Reset demo** and confirm, so receipt and order numbers start fresh.
+4. On Order capture, press **Download model** and wait until the card says **Voice is ready on this device**. Then reload once, so the first load (about 10 s) is not on camera.
+5. Do one practice mic take of the utterance in segment 2. If it fails twice, use the typed fallback written under that step.
+6. Window about 390 px wide (or a real phone screen recording), zoom 100%. Hide bookmarks, personal tabs, `.env.local` and any credentials.
 
 Recording rules:
 
-- Use the Demo_Shop ("Sharma Kirana (Demo)"). Press **Reset demo** on About before each take so totals match this script.
-- Use **Sample** chips or typed text for the scripted path. Say "Sample" out loud when a chip is used. Do not describe chips as recognized speech.
-- Show the real microphone path only if the Speech_Model is cached and the take works. Otherwise skip it. Do not claim voice accuracy beyond `docs/model-benchmark.md`.
-- All names and products are fictional. No GST claims; the receipt is a "Cash memo / receipt".
-- Screenshots and recordings are captured by hand. Nothing in this repo is pre-recorded.
+- Say "Sample" out loud whenever a Sample chip is used. Never describe a chip as recognized speech.
+- Claim only what `docs/model-benchmark.md` measured: 25.4% word error rate on 20 Hinglish clips, on a laptop CPU. Do not claim phone speed or accuracy.
+- Do not demo cloud sync. It is not configured on the live build, and the app says so.
+- All names and products are fictional. The receipt is a "Cash memo / receipt" and makes no GST claims.
 
-| #   | Time | Segment                                     | Length |
-| --- | ---- | ------------------------------------------- | ------ |
-| 1   | 0:00 | Problem and kit                             | 0:20   |
-| 2   | 0:20 | Order Awaaz, including the "Amul" ambiguity | 0:50   |
-| 3   | 1:10 | Bill Awaaz                                  | 0:35   |
-| 4   | 1:45 | Offline to synced                           | 0:30   |
-| 5   | 2:15 | Reuse proof                                 | 0:15   |
-| 6   | 2:30 | Judge access and close                      | 0:10   |
+| #   | Time | Segment                                | Length |
+| --- | ---- | -------------------------------------- | ------ |
+| 1   | 0:00 | Problem and kit                        | 0:15   |
+| 2   | 0:15 | Order Awaaz: real voice, on the device | 0:35   |
+| 3   | 0:50 | Order Awaaz: the app does not guess    | 0:35   |
+| 4   | 1:25 | Bill Awaaz: exact money                | 0:35   |
+| 5   | 2:00 | Offline                                | 0:20   |
+| 6   | 2:20 | Reuse proof                            | 0:15   |
+| 7   | 2:35 | How Kiro built it, and close           | 0:15   |
 
-## 1. Problem and kit (0:00 to 0:20)
+## 1. Problem and kit (0:00 to 0:15)
 
-Screen: hub page at `/`, then the layered diagram from `docs/architecture.md`.
+Screen: hub page at `/`.
 
-Narration:
+> Small shops take orders and write bills by speaking, in Hindi, Hinglish and English. Awaaz Kit is an open-source, offline-first starter kit for that: one shared engine, two installable apps, Order Awaaz and Bill Awaaz.
 
-> Small shops take orders and write bills by speaking, in Hindi, Hinglish and English. Awaaz Kit is an open-source, offline-first starter kit for that. One shared engine, two installable apps: Order Awaaz and Bill Awaaz.
+## 2. Order Awaaz: real voice (0:15 to 0:50)
 
-## 2. Order Awaaz (0:20 to 1:10)
+Screen: `/order/`, **New Order**. The model card reads **Voice is ready on this device**.
 
-Screen: `/order/`, Capture.
+1. (0:15) Tap the mic and say: **"two kilo sugar and five kilo rice"**. Tap stop.
+2. (0:22) The transcript appears and the status reads **2 items found.** Narrate:
+   > The speech model runs in the browser. Audio never leaves the phone, and it works offline once downloaded. We measured 25.4% word error rate on real Hinglish clips, so every transcript stays editable.
+3. (0:35) If a word was misheard, fix it in the text box on camera. That is part of the story, not a failure.
 
-1. (0:20) Tap the chip **Sample: Aata, tel, chawal**. Transcript fills with `do kilo aata, ek litre tel aur paanch kilo chawal`. Narrate: "This is a sample clip, so it works without a microphone."
-2. (0:30) Open **How it understood this**. Walk the stages: normalize, extract, match, gate. Point at the number words becoming quantities.
-3. (0:40) Edit the transcript by typing a new line: `do kilo aata aur ek litre Amul`. Narrate: "Typed input is first-class."
-4. (0:45) Review shows atta as confirmed and the Amul line with the **Needs review** label. Narrate: "Amul matches milk, butter and ghee. The app does not guess. Confirm stays disabled."
-5. (0:55) Pick **Amul Gold Milk** from the options (up to three shown). The line becomes confirmed by a user action.
-6. (1:02) Press **Confirm order**. Show **Saved on this device**.
+Expected: Sugar 2 kg, India Gate Basmati Rice 5 kg.
 
-Expected review values: atta 2 kg, Amul Gold Milk 1 litre.
+Typed fallback (if the mic take fails): type the same sentence into **Order text** and say "typed this time". Do not present typed text as speech.
 
-## 3. Bill Awaaz (1:10 to 1:45)
+## 3. Order Awaaz: the app does not guess (0:50 to 1:25)
 
-Screen: `/bill/`, Capture.
+1. (0:50) At the end of the transcript, type **` and one litre Amul`**. The status reads **3 items found.** Narrate: "Typed input is first-class."
+2. (0:58) Tap **Continue to review items**. On **Resolve items**, the Amul line asks which item it is. Narrate:
+   > Amul matches milk, butter and ghee. The app does not guess, and Continue stays locked.
+3. (1:05) Optional: tap **Show how it understood this** and point at the candidates.
+4. (1:10) Choose **Amul Gold Milk**. **Continue to review** unlocks. Tap it.
+5. (1:15) Tap **Confirm order**. **Saved on this device** appears with the order number.
 
-1. (1:10) Type: `तीन किलो आलू और दो किलो प्याज और एक किलो टमाटर`. Three lines appear with catalog prices.
-2. (1:20) Lines screen: total shows ₹200.00 (potato 3 kg ₹90.00, onion 2 kg ₹70.00, tomato 1 kg ₹40.00).
-3. (1:28) Quantity correction: change onion from 2 kg to 3 kg. Total updates to ₹235.00. Narrate: "Money is integer paise, so the total is exact."
-4. (1:35) Confirm and finalize. Open the print preview titled **Cash memo / receipt**. Note: no GST claims.
+Expected lines: Sugar 2 kg, India Gate Basmati Rice 5 kg, Amul Gold Milk 1 litre. Review shows **Estimated total: ₹618.00** (₹96 + ₹450 + ₹72).
 
-## 4. Offline to synced (1:45 to 2:15)
+## 4. Bill Awaaz: exact money (1:25 to 2:00)
 
-Prerequisite: sync opted in and signed in beforehand (off camera) with a test account or the local test backend (`docs/test-backend.md`). If sync is not configured, show only steps 1 to 3 and say so.
+Screen: `/bill/`, **New Bill**.
 
-1. (1:45) DevTools, Network, **Offline** (or airplane mode). The **Offline** badge appears.
-2. (1:50) Create a second bill by typing `Ramesh ka bill banao, dedh kilo cheeni aur ek litre tel`. Expected total ₹217.00 (sugar 1.5 kg ₹72.00, oil 1 litre ₹145.00). Confirm. Badge reads **Pending (1)** or similar.
-3. (2:00) Reload the page while offline. The bill is still in the list.
-4. (2:05) Go back online. The `SyncBadge` goes from **Pending** to **Synced**. Narrate: "Retries cannot create a duplicate, the mutation id is idempotent."
+1. (1:25) Type into **Bill text**: `तीन किलो आलू और दो किलो प्याज और एक किलो टमाटर`. Status reads **3 lines found.**
+2. (1:32) Tap **Review lines**. Total **₹200.00** (Potato 3 kg ₹90.00, Onion 2 kg ₹70.00, Tomato 1 kg ₹40.00).
+3. (1:40) Change the onion quantity from 2 to 3. Total updates to **₹235.00**. Narrate: "Money is stored as integer paise, so totals are exact."
+4. (1:48) Tap **Review bill**, then **Finalize**. Show the **Cash memo / receipt** with its receipt number, then **Print** to open the print preview. Narrate: "A finalized bill can't be edited. Fixes are separate void or correction records."
 
-## 5. Reuse proof (2:15 to 2:30)
+## 5. Offline (2:00 to 2:20)
 
-Screen: About, package list for each app, then `docs/reuse-proof.md`.
+1. (2:00) DevTools, Network, **Offline** (or airplane mode on a phone). The **Offline** status appears.
+2. (2:05) Reload `/bill/`. The app and the receipt from segment 4 are still there.
+3. (2:10) Tap a Sample chip, for example **Sample: Ramesh ka bill banao, dedh kilo cheeni aur ek litre tel**, and say "Sample". It parses offline: Sugar 1.5 kg ₹72.00, Fortune Sunflower Oil 1 litre ₹145.00, total ₹217.00. You don't need to finalize it.
+4. Narrate: "Everything is saved on the device first. Cloud sync to Appwrite is opt-in and off by default."
 
-Narration:
+Do not show sync going to Synced. The home screen honestly reads "N not synced (cloud sync is off)".
 
-> Both apps import the same engine packages. This report is generated from the real import graph, and lint fails if an engine package imports a domain package.
+## 6. Reuse proof (2:20 to 2:35)
 
-## 6. Judge access and close (2:30 to 2:40)
+Screen: About in either app (the **Shared packages** list), then `docs/reuse-proof.md` on GitHub.
 
-Screen: About, **Reset demo** button; repo README.
+> Both apps import the same ten engine packages. This table is generated from the real import graph, and lint fails if an engine package imports app-specific code. A third workflow example lives in `examples/appointment-workflow`.
 
-Narration:
+## 7. How Kiro built it, and close (2:35 to 2:50)
 
-> The Demo_Shop loads without login, and Reset demo restores it. Built with Kiro specs, steering, hooks and property tests. Code is open source.
+Screen: the repo's `.kiro/` folder (specs, steering, hooks), then `docs/kiro-journal.md` at "Property 29: finalized bills could be deleted".
+
+> Built spec-first with Kiro: requirements, design and tasks, steering rules for safety and privacy, and a commit-gate hook that runs lint, typecheck, tests and build. A property test found that a finalized bill could be deleted, and we fixed it. Open source, MIT.
+
+Say only that the hook runs the gates. The journal records no bug caught by a hook.
 
 ## Retake checklist
 
-- Reset demo before each take; clear the draft.
-- Browser window about 390 px wide for the phone view; zoom 100 percent.
-- Hide bookmarks, personal tabs and the `.env.local` file from the screen.
-- No account credentials visible on screen.
+- Reset demo before each take.
+- Model card reads **Voice is ready on this device** before segment 2.
+- Network back online before starting a new take.
+- No credentials or `.env.local` on screen.
